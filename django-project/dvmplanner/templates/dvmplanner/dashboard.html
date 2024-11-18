@@ -3,25 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="{% static 'styles/home.css' %}">
+  <link rel="stylesheet" href="{% static 'styles/main.css' %}">
   <title>Dashboard - DVM Planner</title>
   <style>
     
   </style>
 </head>
 <body>
+  <!-- NAVBAR -->
   <div class="navbar">
-    <div class="">
-      <img src="{% static 'imgs/logo.png' %}" alt="Icon DVM Planner">
+    <div class="navbar_header">
+      <img src="{% static 'imgs/logo_clock.png' %}" alt="Icon DVM Planner">
       <p>DVM Planner</p>
     </div>
     <ul>
-      <li><a>Dashboard</a></li>
+      <li><a class="highlighted">Dashboard</a></li>
       <li><a>Arbeitsberichte</a></li>
       <li><a>Ergebnisse</a></li>
       <li><a>Admin Dashboard</a></li>
       <li><a>Profil</a></li>
     </ul>
+    <div class="navbar_add_button">
+      <img src="{% static 'imgs/red_plus_icon.png' %}" alt="Add Icon">
+      <a>Hinzufügen</a>
+    </div>
+  </div>
+  <div class="content">
+    
   </div>
 </body>
 </html>

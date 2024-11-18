@@ -1,0 +1,132 @@
+/* --- GENERAL --- */
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+
+  --bg: #fff;
+  --fg1: #f2f2f2;
+  --fg2: #c5c5c5;
+  --fg3: #adadad;
+  --ac1: #ff0000;
+  --bg-font: #000;
+  --fg1-font: #000;
+  --ac1-font: #fff;
+  --font-ac1: #ff0000;
+}
+
+::-webkit-scrollbar {
+  width: 15px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--fg2);
+}
+
+::-webkit-scrollbar-track {
+  background: var(--fg1);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--fg3);
+}
+
+/* --- NAVBAR --- */
+
+.navbar {
+  background-color: var(--fg1);
+  width: 400px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  z-index: 100;
+  overflow: auto;
+}
+
+.navbar ul {
+  padding: 0;
+  margin-left: 30px;
+  margin-top: 20px;
+  color: var(--fg1-font);
+}
+
+.navbar li {
+  list-style-type: none;
+  margin-bottom: 20px;
+  font-size: 30px;
+  cursor: pointer;
+  height: 70px;
+  display: flex;
+  align-items: center;
+}
+
+.navbar a {
+  position: relative;
+  display: inline-block;
+}
+
+.navbar .highlighted::after {
+  content: "";
+  position: absolute;
+  left: -5px;
+  right: -5px;
+  bottom: -12px;
+  height: 5px;
+  background-color: var(--ac1);
+  border-radius: 10px;
+  z-index: -1;
+}
+
+.navbar_header {
+  background-color: var(--ac1);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.navbar_header p {
+  color: var(--ac1-font);
+  font-weight: bold;
+  font-size: 30px;
+  margin: 0;
+}
+
+.navbar_header img {
+  width: 80px;
+  height: 80px;
+  margin-right: 20px;
+}
+
+.navbar_add_button {
+  background-color: var(--bg);
+  border-color: var(--ac1);
+  border-radius: 100px;
+  border-style: solid;
+  margin-left: 25px;
+  margin-right: 25px;
+  display: flex;
+  align-items: center;
+  height: 60px;
+  cursor: pointer;
+  margin-bottom: 50px;
+}
+
+.navbar_add_button img {
+  width: 50px;
+  height: 50px;
+  margin-left: 5px;
+}
+
+.navbar_add_button a {
+  color: var(--font-ac1);
+  font-size: 30px;
+  margin-left: 50px;
+}
+
+/* --- CONTENT --- */
+
+.content {
+  margin-left: 400px;
+}
