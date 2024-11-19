@@ -67,7 +67,27 @@ body {
   display: inline-block;
 }
 
-.navbar .highlighted::after {
+.navbar .highlighted a {
+  font-weight: bold;
+}
+
+.navbar .highlighted a::after {
+  content: "";
+  position: absolute;
+  left: -5px;
+  right: -5px;
+  bottom: -12px;
+  height: 5px;
+  background-color: var(--ac1);
+  border-radius: 10px;
+  z-index: -1;
+}
+
+.navbar li:hover a {
+  font-weight: bold;
+}
+
+.navbar li:hover a::after {
   content: "";
   position: absolute;
   left: -5px;
