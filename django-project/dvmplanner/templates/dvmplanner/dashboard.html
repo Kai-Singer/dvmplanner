@@ -13,7 +13,7 @@
   <!-- NAVBAR -->
   <div class="navbar">
     <div class="navbar_header">
-      <img src="{% static 'imgs/logo_clock.png' %}" alt="Icon DVM Planner">
+      <img src="{% static 'imgs/logo_clock.png' %}" alt="Icon DVM Planner" draggable="false">
       <p>DVM Planner</p>
     </div>
     <ul>
@@ -23,9 +23,11 @@
       <li><a>Admin Dashboard</a></li>
       <li><a>Profil</a></li>
     </ul>
-    <div class="navbar_add_button">
-      <img src="{% static 'imgs/red_plus_icon.png' %}" alt="Add Icon">
-      <a>Hinzufügen</a>
+    <div class="button_box">
+      <div class="button navbar_add_button">
+        <img src="{% static 'imgs/red_plus_icon.png' %}" alt="Add Icon" draggable="false">
+        <a>Hinzufügen</a>
+      </div>
     </div>
   </div>
   <div class="content">

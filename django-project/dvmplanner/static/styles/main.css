@@ -32,6 +32,52 @@ body {
   background: var(--fg3);
 }
 
+.button {
+  border-radius: 100px;
+  border-style: solid;
+  border-width: 5px;
+  display: flex;
+  align-items: center;
+  height: 60px;
+  width: 340px;
+  cursor: pointer;
+  user-select: none;
+  margin-bottom: 50px;
+}
+
+.button img {
+  width: 50px;
+  height: 50px;
+  margin-left: 5px;
+}
+
+.button a {
+  font-size: 30px;
+  margin-left: 50px;
+}
+
+.button:hover {
+  height: 65px;
+  width: 350px;
+}
+
+.button:hover img {
+  width: 55px;
+  height: 55px;
+}
+
+.button:hover a {
+  font-size: 35px;
+  margin-left: 40px;
+}
+
+.button_box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+}
+
 /* --- NAVBAR --- */
 
 .navbar {
@@ -57,9 +103,14 @@ body {
   margin-bottom: 20px;
   font-size: 30px;
   cursor: pointer;
+  user-select: none;
   height: 70px;
   display: flex;
   align-items: center;
+}
+
+.navbar li.highlighted {
+  cursor: default;
 }
 
 .navbar a {
@@ -104,6 +155,7 @@ body {
   padding: 20px;
   display: flex;
   align-items: center;
+  user-select: none;
 }
 
 .navbar_header p {
@@ -122,28 +174,11 @@ body {
 .navbar_add_button {
   background-color: var(--bg);
   border-color: var(--ac1);
-  border-radius: 100px;
-  border-style: solid;
-  border-width: 5px;
-  margin-left: 25px;
-  margin-right: 25px;
-  display: flex;
-  align-items: center;
-  height: 60px;
-  cursor: pointer;
-  margin-bottom: 50px;
-}
-
-.navbar_add_button img {
-  width: 50px;
-  height: 50px;
-  margin-left: 5px;
+  margin: auto
 }
 
 .navbar_add_button a {
   color: var(--font-ac1);
-  font-size: 30px;
-  margin-left: 50px;
 }
 
 /* --- CONTENT --- */
