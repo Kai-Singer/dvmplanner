@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="{% static 'imgs/logo_favicon.png' %}">
   <link rel="stylesheet" href="{% static 'styles/main.css' %}">
-  <title>Dashboard - DVM Planner</title>
+  <title>Profil - DVM Planner</title>
   <style>
     
   </style>
@@ -13,7 +14,7 @@
   <!-- NAVBAR -->
   <div class="navbar">
     <div class="navbar_header">
-      <img src="{% static 'imgs/logo_clock.png' %}" alt="Icon DVM Planner" draggable="false">
+      <img src="{% static 'imgs/logo_clock.png' %}" alt="DVM Planner Logo" draggable="false">
       <p>DVM Planner</p>
     </div>
     <ul>
@@ -24,7 +25,7 @@
       <li><div class="navbar_item highlighted"><a>Profil</a></div></li>
     </ul>
       <div class="button navbar_add_button" onclick="window.location.href='/addreport/'">
-        <img src="{% static 'imgs/red_plus_icon.png' %}" alt="Add Icon" draggable="false">
+        <img src="{% static 'imgs/red_plus_icon.png' %}" alt="Add Report Icon" draggable="false">
         <a>Hinzufügen</a>
       </div>
     </div>
