@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="{% static 'imgs/logo_favicon.png' %}">
   <link rel="stylesheet" href="{% static 'styles/main.css' %}">
+  <script src="{% static 'scripts/main.js' %}" defer></script>
   <title>Arbeitsberichte - DVM Planner</title>
   <style>
     
@@ -12,23 +13,23 @@
 </head>
 <body>
   <!-- NAVBAR -->
-  <div class="navbar">
+  <div class="navbar_hide_button" onclick="toggleNavbar()"><img src="{% static 'imgs/menu_icon.png' %}" alt="Open Menu" draggable="false"></div>
+  <div class="navbar" id="navbar">
     <div class="navbar_header">
       <img src="{% static 'imgs/logo_clock.png' %}" alt="DVM Planner Logo" draggable="false">
       <p>DVM Planner</p>
     </div>
     <ul>
-      <li><div class="navbar_item" onclick="window.location.href='/dashboard/'"><a>Dashboard</a></div></li>
-      <li><div class="navbar_item highlighted"><a>Arbeitsberichte</a></div></li>
-      <li><div class="navbar_item" onclick="window.location.href='/review/'"><a>Ergebnisse</a></div></li>
-      <li><div class="navbar_item" onclick="window.location.href='/admin/'"><a>Admin Dashboard</a></div></li>
-      <li><div class="navbar_item" onclick="window.location.href='/profile/'"><a>Profil</a></div></li>
+      <li><a class="navbar_item" href="/dashboard/"><div>Dashboard</div></a></li>
+      <li><a class="navbar_item highlighted"><div>Arbeitsberichte</div></a></li>
+      <li><a class="navbar_item" href="/review/"><div>Ergebnisse</div></a></li>
+      <li><a class="navbar_item" href="/admin/"><div>Admin Dashboard</div></a></li>
+      <li><a class="navbar_item" href="/profile/"><div>Profil</div></a></li>
     </ul>
-      <div class="button navbar_add_button" onclick="window.location.href='/addreport/'">
-        <img src="{% static 'imgs/red_plus_icon.png' %}" alt="Add Report Icon" draggable="false">
-        <a>Hinzufügen</a>
-      </div>
-    </div>
+    <a class="button navbar_add_button" href="/addreport/">
+      <img src="{% static 'imgs/red_plus_icon.png' %}" alt="Add Report" draggable="false">
+      <div>Hinzufügen</div>
+    </a>
   </div>    
   </div>
 </body>

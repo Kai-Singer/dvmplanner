@@ -42,6 +42,7 @@ body {
   cursor: pointer;
   user-select: none;
   transition: all .2s;
+  text-decoration: none;
 }
 
 .button img {
@@ -50,7 +51,7 @@ body {
   margin-left: 5px;
 }
 
-.button a {
+.button div {
   font-size: 30px;
   margin-left: 50px;
 }
@@ -68,7 +69,7 @@ body {
   top: 0;
   left: 0;
   height: 100%;
-  z-index: 100;
+  z-index: 10;
   overflow: auto;
 }
 
@@ -93,9 +94,11 @@ body {
   align-items: center;
   transition: all .2s;
   width: 340px;
+  color: var(--bg-font);
+  text-decoration: none;
 }
 
-.navbar_item a {
+.navbar_item div {
   position: relative;
   display: inline-block;
 }
@@ -104,11 +107,11 @@ body {
   cursor: default;
 }
 
-.navbar_item.highlighted a {
+.navbar_item.highlighted div {
   font-weight: bold;
 }
 
-.navbar_item.highlighted a::after {
+.navbar_item.highlighted div::after {
   content: "";
   position: absolute;
   left: -5px;
@@ -128,11 +131,11 @@ body {
   transform: scale(1);
 }
 
-.navbar_item:hover a {
+.navbar_item:hover div {
   font-weight: bold;
 }
 
-.navbar_item:hover a::after {
+.navbar_item:hover div::after {
   content: "";
   position: absolute;
   left: -5px;
@@ -173,12 +176,64 @@ body {
   margin-bottom: 20px;
 }
 
-.navbar_add_button a {
+.navbar_add_button div {
   color: var(--font-ac1);
+}
+
+.navbar_hide_button {
+  margin: 10px;
+  padding: 10px;
+  height: 35px;
+  background-color: var(--ac1);
+  border-radius: 10px;
+  cursor: pointer;
+  user-select: none;
+  transition: all .2s;
+  z-index: 20;
+  position: fixed;
+  right: 0;
+}
+
+.navbar_hide_button:hover {
+  transform: scale(1.1);
+}
+
+.navbar_hide_button img {
+  width: 35px;
+  height: 35px;
+}
+
+@media (min-width: 1000px) {
+  .navbar_hide_button {
+    display: none;
+  }
+}
+
+@media (max-width: 999px) {
+  .navbar {
+    width: 100%;
+    display: none;
+  }
+
+  .shown_navbar {
+    display: block;
+  }
 }
 
 /* --- CONTENT --- */
 
 .content {
-  margin-left: 400px;
+  
+}
+
+@media (min-width: 1000px) {
+  .content {
+    margin-left: 400px;
+  }
+}
+
+@media (max-width: 999px) {
+  .hidden_content {
+    display: none;
+  }
 }
