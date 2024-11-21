@@ -1,11 +1,19 @@
 from django.shortcuts import redirect, render
 from django.core.files.storage import FileSystemStorage
+import dvmplanner.scripts.users as userscript
 
 def home(request):
   return redirect(dashboard)
 
 def dashboard(request):
-  return render(request, 'dvmplanner/dashboard.html')
+  usernames = []
+  users = userscript.getUsers()
+  for user in users:
+    usernames.append(user.getUsername())
+    data = {
+      'usernames': usernames
+    }
+  return render(request, 'dvmplanner/dashboard.html', data)
 
 def reports(request):
   return render(request, 'dvmplanner/reports.html')
