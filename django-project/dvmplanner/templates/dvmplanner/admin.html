@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="{% static 'imgs/logo_favicon.png' %}">
   <link rel="stylesheet" href="{% static 'styles/main.css' %}">
+  <script>
+    const staticMenuIcon = "{% static 'imgs/menu_icon.png' %}";
+    const staticCloseMenuIcon = "{% static 'imgs/close_menu_icon.png' %}";
+  </script>
   <script src="{% static 'scripts/main.js' %}" defer></script>
   <title>Admin Dashboard - DVM Planner</title>
   <style>
@@ -13,7 +17,7 @@
 </head>
 <body>
   <!-- NAVBAR -->
-  <div class="navbar_hide_button" onclick="toggleNavbar()"><img src="{% static 'imgs/menu_icon.png' %}" alt="Open Menu" draggable="false"></div>
+  <div class="navbar_hide_button" onclick="toggleNavbar()"><img id="navbar_hide_button_img" src="{% static 'imgs/menu_icon.png' %}" alt="Open Menu" draggable="false"></div>
   <div class="navbar" id="navbar">
     <div class="navbar_header">
       <img src="{% static 'imgs/logo_clock.png' %}" alt="DVM Planner Logo" draggable="false">
