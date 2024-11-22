@@ -304,3 +304,33 @@ body {
     margin-right: 60px;
   }
 }
+
+/* --- TABLE --- */
+
+.table {
+  overflow: auto;
+}
+
+.table table {
+  border-radius: 15px 15px 0 0;
+  overflow: hidden;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  padding: 8px;
+  text-align: center;
+}
+
+.table th {
+  background-color: var(--fg2);
+}
+
+.table td {
+  background-color: var(--fg1);
+}
+
+.table .nowrap {
+  white-space: nowrap;
+}

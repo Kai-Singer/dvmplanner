@@ -22,6 +22,20 @@ function toggleUserMenu() {
   if (usermenu.classList.contains('hidden_usermenu')) {
     usermenu.classList.remove('hidden_usermenu');
   } else {
-    usermenu.classList.add('hidden_usermenu')
+    usermenu.classList.add('hidden_usermenu');
+  }
+}
+
+function toggleLongNote(button, notes, longNotes) {
+  const parent = button.parentElement;
+  const textElement = parent.querySelector('div');
+  if (button.classList.contains('toggled_note')) {
+    button.classList.remove('toggled_note');
+    button.innerText = 'Ausklappen';
+    textElement.innerText = notes;
+  } else {
+    button.classList.add('toggled_note');
+    button.innerText = 'Einklappen';
+    textElement.innerText = longNotes;
   }
 }
