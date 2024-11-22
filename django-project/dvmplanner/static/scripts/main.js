@@ -16,3 +16,12 @@ function toggleNavbar() {
     img.alt = 'Close Menu';
   }
 }
+
+function toggleUserMenu() {
+  const usermenu = document.getElementById('usermenu');
+  if (usermenu.classList.contains('hidden_usermenu')) {
+    usermenu.classList.remove('hidden_usermenu');
+  } else {
+    usermenu.classList.add('hidden_usermenu')
+  }
+}

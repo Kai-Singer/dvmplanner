@@ -36,9 +36,19 @@
   <div class="content" id="content">
     <div class="topbar">
       <div class="topbar_text">Profil</div>
-      <a class="button profile_button" href="/profile/">
-        <img src="{% static 'profiles/' %}{{uid}}.png" alt="Add Report" draggable="false">
+      <div class="button profile_button" onclick="toggleUserMenu()">
+        <img src="{% static 'profiles/' %}{{uid}}.png" alt="Profile Picture of {{uid}}" draggable="false">
         <div><p>{{ username }}</p></div>
+      </div>
+    </div>
+    <div class="usermenu hidden_usermenu" id="usermenu">
+      <a class="button usermenu_button" href="">
+        <img src="{% static 'imgs/change_user_icon.png' %}" alt="Change User" draggable="false">
+        <div><p>Profil wechseln</p></div>
+      </a>
+      <a class="button usermenu_button" href="">
+        <img src="{% static 'imgs/logout_icon.png' %}" alt="Logout" draggable="false">
+        <div><p>Ausloggen</p></div>
       </a>
     </div>
     Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex, voluptatibus. Alias voluptate accusamus eos officia, corrupti quis inventore ea nam dolor unde nihil aut, at ratione fugiat. Dolore, saepe? Quam quidem numquam velit facere repellendus ab temporibus dicta, delectus deleniti consequuntur nisi iste blanditiis magnam unde molestiae sint ad placeat facilis, neque, quae alias ipsam. Labore eum a ipsum. Autem illum, provident laborum et error laboriosam voluptatibus repellendus numquam. Qui, dicta? Tempora at magnam laboriosam quidem unde, fugit esse maiores earum. Obcaecati similique nihil saepe alias eligendi, veniam expedita quidem! Commodi porro et non corporis animi sunt tenetur deleniti recusandae.

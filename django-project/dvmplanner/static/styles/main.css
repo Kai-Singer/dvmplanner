@@ -263,6 +263,32 @@ body {
   border-radius: 100%;
 }
 
+.usermenu {
+  position: absolute;
+  right: 0;
+  margin-right: 20px;
+  background-color: var(--fg1);
+  padding: 15px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.usermenu_button {
+  background-color: var(--bg);
+  border-color: var(--bg-font);
+  width: 340px;
+}
+
+.usermenu_button div {
+  color: var(--bg-font);
+}
+
+.hidden_usermenu {
+  display: none;
+}
+
 @media (min-width: 1000px) {
   .content {
     margin-left: 400px;
