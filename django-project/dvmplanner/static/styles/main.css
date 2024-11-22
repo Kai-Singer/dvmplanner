@@ -43,17 +43,24 @@ body {
   user-select: none;
   transition: all .2s;
   text-decoration: none;
+  font-weight: bold;
 }
 
 .button img {
   width: 50px;
   height: 50px;
-  margin-left: 5px;
+  margin: 0 5px;
 }
 
 .button div {
+  display: flex;
+  width: 100%;
+  margin-right: 25px;
+}
+
+.button p {
   font-size: 30px;
-  margin-left: 50px;
+  margin: auto;
 }
 
 .button:hover {
@@ -222,9 +229,39 @@ body {
 
 /* --- CONTENT --- */
 
-/* .content {
-  
-} */
+.content {
+  padding: 0 20px;
+}
+
+.topbar {
+  height: 120px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 20px;
+}
+
+.topbar_text {
+  font-size: 50px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: 40px;
+}
+
+.profile_button {
+  background-color: var(--bg);
+  border-color: var(--bg-font);
+  width: 340px;
+}
+
+.profile_button div {
+  color: var(--bg-font);
+}
+
+.profile_button img {
+  border-radius: 100%;
+}
 
 @media (min-width: 1000px) {
   .content {
@@ -235,5 +272,9 @@ body {
 @media (max-width: 999px) {
   .hidden_content {
     display: none;
+  }
+
+  .profile_button {
+    margin-right: 60px;
   }
 }
