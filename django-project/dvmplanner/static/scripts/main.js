@@ -12,7 +12,7 @@ function toggleNavbar() {
   } else {
     navbar.classList.add('shown_navbar');
     content.classList.add('hidden_content');
-    img.src = staticCloseMenuIcon;
+    img.src = staticCloseIcon;
     img.alt = 'Close Menu';
   }
 }
