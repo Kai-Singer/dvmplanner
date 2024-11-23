@@ -36,6 +36,7 @@ def reports(request):
   data = {
     'uid': uid,
     'username': 'testuser',
+    'role': 'vip',
     'reports': [
       {
         'day': '21.11.2024',

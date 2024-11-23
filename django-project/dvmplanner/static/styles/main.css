@@ -305,32 +305,98 @@ body {
   }
 }
 
-/* --- TABLE --- */
+/* --- CARDS --- */
 
-.table {
+.card {
+  margin-bottom: 30px;
+  background-color: var(--fg1);
+  padding: 20px;
+  border-radius: 15px;
   overflow: auto;
 }
 
-.table table {
-  border-radius: 15px 15px 0 0;
+.card h1 {
+  margin: 0;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.card .wrapped_content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.card .border_item {
+  border-style: solid;
+  border-width: 5px;
+  border-color: var(--bg-font);
+  border-radius: 15px;
+  overflow: auto;
+}
+
+.card_button {
+  background-color: var(--bg);
+  border-color: var(--bg-font);
+  flex: 1;
+  min-width: 340px;
+  max-width: 340px;
+}
+
+.card_button div {
+  color: var(--bg-font);
+}
+
+.card table {
   overflow: hidden;
   width: 100%;
   border-collapse: collapse;
 }
 
-.table th, .table td {
+.card th, .card td {
   padding: 8px;
   text-align: center;
 }
 
-.table th {
+.card th {
   background-color: var(--fg2);
 }
 
-.table td {
-  background-color: var(--fg1);
+.card td {
+  background-color: var(--bg);
 }
 
-.table .nowrap {
+.card .nowrap {
   white-space: nowrap;
+}
+
+.card .flex_td {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.table_button {
+  background-color: var(--bg-font);
+  transition: all .2s;
+  border-radius: 10px;
+  border: none;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.table_button img {
+  width: 15px;
+  height: 15px;
+}
+
+.table_button.red {
+  background-color: var(--ac1);
+}
+
+.table_button:hover {
+  transform: scale(1.2);
 }

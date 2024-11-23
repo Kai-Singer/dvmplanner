@@ -29,13 +29,16 @@ function toggleUserMenu() {
 function toggleLongNote(button, notes, longNotes) {
   const parent = button.parentElement;
   const textElement = parent.querySelector('div');
+  const img = button.querySelector('img');
   if (button.classList.contains('toggled_note')) {
     button.classList.remove('toggled_note');
-    button.innerText = 'Ausklappen';
+    img.src = staticArrowRightIcon;
+    img.alt = 'Expand';
     textElement.innerText = notes;
   } else {
     button.classList.add('toggled_note');
-    button.innerText = 'Einklappen';
+    img.src = staticArrowLeftIcon;
+    img.alt = 'Shrink';
     textElement.innerText = longNotes;
   }
 }

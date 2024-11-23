@@ -8,6 +8,8 @@
   <script>
     const staticMenuIcon = "{% static 'imgs/menu_icon.png' %}";
     const staticCloseIcon = "{% static 'imgs/close_icon.png' %}";
+    const staticArrowRightIcon = "{% static 'imgs/arrow_right_icon.png' %}";
+    const staticArrowLeftIcon = "{% static 'imgs/arrow_left_icon.png' %}";
   </script>
   <script src="{% static 'scripts/main.js' %}" defer></script>
   <title>Arbeitsberichte - DVM Planner</title>
@@ -52,43 +54,74 @@
       </a>
     </div>
     <!-- REPORTS -->
-    <div class="table">
-      <table>
-        <tr>
-          <th>Tag</th>
-          <th>Start</th>
-          <th>Ende</th>
-          <th>Dauer</th>
-          <th>Modul</th>
-          <th>Notizen</th>
-          <th>Aktionen</th>
-        </tr>
-        {% for report in reports %}
+    <div class="card">
+      <h1>Alle Arbeitsberichte von {{ username }}</h1>
+      <div class="border_item">
+        <table>
           <tr>
-            <td>{{ report.day }}</td>
-            <td class="nowrap">{{ report.start }}</td>
-            <td class="nowrap">
-              {% if report.end_day != '' %}
-                {{ report.end_day }}<br>
-              {% endif %}
-              {{ report.end }}
-            </td>
-            <td>{{ report.time }}</td>
-            <td>{{ report.module }}</td>
-            <td>
-              <div>{{ report.notes }}</div>
-              {% if report.long_notes != '' %}
-              <button onclick="toggleLongNote(this, '{{ report.notes }}', '{{ report.long_notes }}')">Ausklappen</button>
-              {% endif %}
-            </td>
-            <td>
-              <button>Bearbeiten</button>
-              <button>Löschen</button>
-            </td>
+            <th>Tag</th>
+            <th>Start</th>
+            <th>Ende</th>
+            <th>Dauer</th>
+            <th>Modul</th>
+            <th>Notizen</th>
+            <th>Aktionen</th>
           </tr>
-        {% endfor %}
-      </table>
+          {% for report in reports %}
+            <tr>
+              <td>{{ report.day }}</td>
+              <td class="nowrap">{{ report.start }}</td>
+              <td class="nowrap">
+                {% if report.end_day != '' %}
+                  {{ report.end_day }}<br>
+                {% endif %}
+                {{ report.end }}
+              </td>
+              <td>{{ report.time }}</td>
+              <td>{{ report.module }}</td>
+              {% if report.long_notes != '' %}
+                <td class="flex_td">
+                  <div>{{ report.notes }}</div>
+                  <button class="table_button" onclick="toggleLongNote(this, '{{ report.notes }}', '{{ report.long_notes }}')"><img src="{% static 'imgs/arrow_right_icon.png' %}" alt="Expand" draggable="false"></button>
+                </td>
+              {% else %}
+                <td>
+                  <div>{{ report.notes }}</div>
+                </td>
+              {% endif %}
+              <td>
+                <button class="table_button"><img src="{% static 'imgs/edit_icon.png' %}" alt="Edit" draggable="false"></button>
+                <button class="table_button red"><img src="{% static 'imgs/delete_icon.png' %}" alt="Delete" draggable="false"></button>
+              </td>
+            </tr>
+          {% endfor %}
+        </table>
+      </div>
     </div>
+    <!-- VIP-TOOLS -->
+    {% if role == 'vip' or role == 'admin' %}
+      <div class="card">
+        <h1>VIP Werkzeuge</h1>
+        <div class="wrapped_content">
+          <a class="button card_button" href="">
+            <img src="{% static 'imgs/download_file_icon.png' %}" alt="JSON Download" draggable="false">
+            <div><p>JSON Download</p></div>
+          </a>
+          <a class="button card_button" href="">
+            <img src="{% static 'imgs/download_file_icon.png' %}" alt="CSV Download" draggable="false">
+            <div><p>CSV Download</p></div>
+          </a>
+          <a class="button card_button" href="">
+            <img src="{% static 'imgs/download_file_icon.png' %}" alt="XML Download" draggable="false">
+            <div><p>XML Download</p></div>
+          </a>
+          <a class="button card_button" href="">
+            <img src="{% static 'imgs/upload_file_icon.png' %}" alt="Daten Upload" draggable="false">
+            <div><p>Daten Upload</p></div>
+          </a>
+        </div>
+      </div>
+    {% endif %}
   </div>
 </body>
 </html>
