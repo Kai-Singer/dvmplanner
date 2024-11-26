@@ -247,6 +247,7 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   margin-right: 40px;
+  user-select: none;
 }
 
 .profile_button {
@@ -347,6 +348,10 @@ body {
   color: var(--bg-font);
 }
 
+.card .no_select {
+  user-select: none;
+} 
+
 .card table {
   overflow: hidden;
   width: 100%;
@@ -375,6 +380,10 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 10px;
+}
+
+.card .left_td {
+  text-align: left;
 }
 
 .table_button {

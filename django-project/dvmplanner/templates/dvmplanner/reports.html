@@ -56,6 +56,17 @@
     <!-- REPORTS -->
     <div class="card">
       <h1>Alle Arbeitsberichte von {{ username }}</h1>
+      <div>
+        {% for modulegroup, modules in modules.items %}
+          <div>{{ modulegroup }}</div>
+          {% for module, submodules in modules.items %}
+            <div style="margin-left: 50px;">{{ module }}</div>
+            {% for submodule in submodules %}
+              <div style="margin-left: 100px;">{{ submodule }}</div>
+            {% endfor %}
+          {% endfor %}
+        {% endfor %}
+      </div>
       <div class="border_item">
         <table>
           <tr>
@@ -85,11 +96,11 @@
                   <button class="table_button" onclick="toggleLongNote(this, '{{ report.notes }}', '{{ report.long_notes }}')"><img src="{% static 'imgs/arrow_right_icon.png' %}" alt="Expand" draggable="false"></button>
                 </td>
               {% else %}
-                <td>
+                <td class="left_td">
                   <div>{{ report.notes }}</div>
                 </td>
               {% endif %}
-              <td>
+              <td class="no_select">
                 <button class="table_button"><img src="{% static 'imgs/edit_icon.png' %}" alt="Edit" draggable="false"></button>
                 <button class="table_button red"><img src="{% static 'imgs/delete_icon.png' %}" alt="Delete" draggable="false"></button>
               </td>
