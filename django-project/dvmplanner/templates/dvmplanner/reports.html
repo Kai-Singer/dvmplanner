@@ -56,17 +56,24 @@
     <!-- REPORTS -->
     <div class="card">
       <h1>Alle Arbeitsberichte von {{ username }}</h1>
-      <div>
-        {% for modulegroup, modules in modules.items %}
-          <div>{{ modulegroup }}</div>
-          {% for module, submodules in modules.items %}
-            <div style="margin-left: 50px;">{{ module }}</div>
-            {% for submodule in submodules %}
-              <div style="margin-left: 100px;">{{ submodule }}</div>
+
+      <div class="filter no_select">
+        <form action="">
+          <select name="module" id="module" class="filter_dropdown">
+            {% for modulegroup in modules %}
+            <option value="{{ modulegroup.index }}">{{ modulegroup.index }} {{ modulegroup.name }}</option>
+            {% for module in modulegroup.modules %}
+              <option value="{{ module.index }}">{{ module.index }} {{ module.name }}</option>
+              {% for submodule in module.submodules %}
+                <option value="{{ submodule.index }}">{{ submodule.index }} {{ submodule.name }}</option>
+              {% endfor %}
             {% endfor %}
           {% endfor %}
-        {% endfor %}
+          </select>
+          <input type="submit" value="Filtern" class="filter_button">
+        </form>
       </div>
+
       <div class="border_item">
         <table>
           <tr>

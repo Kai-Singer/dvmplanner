@@ -37,125 +37,408 @@ def reports(request):
     'uid': uid,
     'username': 'testuser',
     'role': 'vip',
-    'modules': {
-      '1 Technische Dimensionen der Digitalisierung': {
-        '1.1 Informatik Einführung und Vertiefung': [
-          '1.1.2 Einführung in die Informatik',
-          '1.1.3 Vertiefung Informatik'
-        ],
-        '1.2 E-Government mit Exkursionen': [
-          '1.2.0 E-Government mit Exkursionen'
-        ],
-        '1.3 Betriebs- und Kommunikationssysteme/ verteilte Systeme': [
-          '1.3.1 Betriebs- und Kommunikationssysteme',
-          '1.3.2 Verteilte Systeme',
-          '1.3.3 Aktuelle Anwendungen erproben, Web Collagen, Roboter bauen, Raspberry Pi'
-        ],
-        '1.4 Vorgehensmodelle der Softwareentwicklung, Requirements-Engineering und Requirements-Management': [
-          '1.4.1 Vorgehensmodelle (Software-Engineering 1)',
-          '1.4.2 Requirements-Engineering und Requirements-Management (Software-Engineering 2)'
-        ],
-        '1.5 Systemanalyse, Softwareentwurf und Implementierung, Softwarequilität und Test': [
-          '1.5.1 Systemanalyse (Software-Engineering 3)',
-          '1.5.2 Softwareentwurf und Implementierung (Software-Engineering 4)',
-          '1.5.3 Softwarequalität und Test (Software-Engineering 5)'
-        ],
-        '1.6 Cybersecurity und ITIL': [
-          '1.6.1 Cybersecurity',
-          '1.6.2 ITIL'
-        ],
-        '1.7 IT-Management': [
-          '1.7.0 IT-Management'
-        ],
-        '1.8 IT-Systeme und Informationssysteme': [
-          '1.8.0 IT-Systeme und Informationssysteme'
+    'modules': [
+      {
+        "index": "1",
+        "name": "Technische Dimensionen der Digitalisierung",
+        "modules": [
+          {
+            "index": "1.1",
+            "name": "Informatik Einführung und Vertiefung",
+            "submodules": [
+              {
+                "index": "1.1.1",
+                "name": "Einführung in die Informatik"
+              },
+              {
+                "index": "1.1.2",
+                "name": "Vertiefung Informatik"
+              }
+            ]
+          },
+          {
+            "index": "1.2",
+            "name": "E-Government mit Exkursionen",
+            "submodules": [
+              {
+                "index": "1.2.0",
+                "name": "E-Government mit Exkursionen"
+              }
+            ]
+          },
+          {
+            "index": "1.3",
+            "name": "Betriebs- und Kommunikationssysteme/ verteilte Systeme",
+            "submodules": [
+              {
+                "index": "1.3.1",
+                "name": "Betriebs- und Kommunikationssysteme"
+              },
+              {
+                "index": "1.3.2",
+                "name": "Verteilte Systeme"
+              },
+              {
+                "index": "1.3.3",
+                "name": "Aktuelle Anwendungen erproben, Web Collagen, Roboter bauen, Raspberry Pi"
+              }
+            ]
+          },
+          {
+            "index": "1.4",
+            "name": "Vorgehensmodelle der Softwareentwicklung, Requirements-Engineering und Requirements-Management",
+            "submodules": [
+              {
+                "index": "1.4.1",
+                "name": "Vorgehensmodelle (Software-Engineering 1)"
+              },
+              {
+                "index": "1.4.2",
+                "name": "Requirements-Engineering und Requirements-Management (Software-Engineering 2)"
+              }
+            ]
+          },
+          {
+            "index": "1.5",
+            "name": "Systemanalyse, Softwareentwurf und Implementierung, Softwarequilität und Test",
+            "submodules": [
+              {
+                "index": "1.5.1",
+                "name": "Systemanalyse (Software-Engineering 3)"
+              },
+              {
+                "index": "1.5.2",
+                "name": "Softwareentwurf und Implementierung (Software-Engineering 4)"
+              },
+              {
+                "index": "1.5.3",
+                "name": "Softwarequalität und Test (Software-Engineering 5)"
+              }
+            ]
+          },
+          {
+            "index": "1.6",
+            "name": "Cybersecurity und ITIL",
+            "submodules": [
+              {
+                "index": "1.6.1",
+                "name": "Cybersecurity"
+              },
+              {
+                "index": "1.6.2",
+                "name": "ITIL"
+              }
+            ]
+          },
+          {
+            "index": "1.7",
+            "name": "IT-Management",
+            "submodules": [
+              {
+                "index": "1.7.0",
+                "name": "IT-Management"
+              }
+            ]
+          },
+          {
+            "index": "1.8",
+            "name": "IT-Systeme und Informationssysteme",
+            "submodules": [
+              {
+                "index": "1.8.0",
+                "name": "IT-Systeme und Informationssysteme"
+              }
+            ]
+          }
         ]
       },
-      '2 Verwaltungsmanagement': {
-        '2.1 Steuerung, Public Management und Projektmanagement': [
-          '2.1.0 Steuerung, Public Management und Projektmanagement'
-        ],
-        '2.2 Organisations- und Prozessmanagement': [
-          '2.2.0 Organisations- und Prozessmanagement'
-        ],
-        '2.3 Öffentliche Betriebswirtschaftslehre': [
-          '2.3.0 Öffentliche Betriebswirtschaftslehre'
+      {
+        "index": "2",
+        "name": "Verwaltungsmanagement",
+        "modules": [
+          {
+            "index": "2.1",
+            "name": "Steuerung, Public Management und Projektmanagement",
+            "submodules": [
+              {
+                "index": "2.1.0",
+                "name": "Steuerung, Public Management und Projektmanagement"
+              }
+            ]
+          },
+          {
+            "index": "2.2",
+            "name": "Organisations- und Prozessmanagement",
+            "submodules": [
+              {
+                "index": "2.2.0",
+                "name": "Organisations- und Prozessmanagement"
+              }
+            ]
+          },
+          {
+            "index": "2.3",
+            "name": "Öffentliche Betriebswirtschaftslehre",
+            "submodules": [
+              {
+                "index": "2.3.0",
+                "name": "Öffentliche Betriebswirtschaftslehre"
+              }
+            ]
+          }
         ]
       },
-      '3 Rechtliche Grundlagen der öffentlichen Verwaltung': {
-        '3.1 Öffentlich-rechtliche Grundlagen der Verwaltungsorganisation und des Verwaltungshandelns': [
-          '3.1.1 Grundlagen des Staats- und Europarechts',
-          '3.1.2 Verwaltungsrecht'
-        ],
-        '3.2 Kommunales Wirtschaftsrecht': [
-          '3.2.1 Kommunalrecht',
-          '3.2.2 Finanzwirtschaft der Kommunen',
-          '3.2.3 Staatliches Haushaltsrecht'
-        ],
-        '3.3 Zivilrechtliche Grundlagen des Verwaltungshandelns': [
-          '3.3.1 Grundlagen des Zivilrechts',
-          '3.3.2 Grundlagen des Kartell- und Wettbewerbsrechts',
-          '3.3.3 Grundlagen des Handels- und Gesellschaftsrechts',
-          '3.3.4 IT-Recht'
-        ],
-        '3.4 Rechtliche Grundlagen der öffentlichen Beschaffung': [
-          '3.4.1 Vergaberecht (einschließlich E-Government)',
-          '3.4.2 Beihilferecht'
-        ],
-        '3.5 Rechtliche Grundlagen des Datenschutzes, Informationszugangsrecht und Personalrecht': [
-          '3.5.1 Recht Datenschutzes',
-          '3.5.2 Informationszugangsrecht',
-          '3.5.3 Arbeitsrecht',
-          '3.5.4 Beamtenrecht'
-        ],
-        '3.6 Vertragsgestaltung und rechtliche Kernkompetenzen': [
-          '3.6.1 Vertragsgestaltung',
-          '3.6.2 Rechtliche Kernkompetenzen bei Digitalisierungsprojekten'
+      {
+        "index": "3",
+        "name": "Rechtliche Grundlagen der öffentlichen Verwaltung",
+        "modules": [
+          {
+            "index": "3.1",
+            "name": "Öffentlich-rechtliche Grundlagen der Verwaltungsorganisation und des Verwaltungshandelns",
+            "submodules": [
+              {
+                "index": "3.1.1",
+                "name": "Grundlagen des Staats- und Europarechts"
+              },
+              {
+                "index": "3.1.2",
+                "name": "Verwaltungsrecht"
+              }
+            ]
+          },
+          {
+            "index": "3.2",
+            "name": "Kommunales Wirtschaftsrecht",
+            "submodules": [
+              {
+                "index": "3.2.1",
+                "name": "Kommunalrecht"
+              },
+              {
+                "index": "3.2.2",
+                "name": "Finanzwirtschaft der Kommunen"
+              },
+              {
+                "index": "3.2.3",
+                "name": "Staatliches Haushaltsrecht"
+              }
+            ]
+          },
+          {
+            "index": "3.3",
+            "name": "Zivilrechtliche Grundlagen des Verwaltungshandelns",
+            "submodules": [
+              {
+                "index": "3.3.1",
+                "name": "Grundlagen des Zivilrechts"
+              },
+              {
+                "index": "3.3.2",
+                "name": "Grundlagen des Kartell- und Wettbewerbsrechts"
+              },
+              {
+                "index": "3.3.3",
+                "name": "Grundlagen des Handels- und Gesellschaftsrechts"
+              },
+              {
+                "index": "3.3.4",
+                "name": "IT-Recht"
+              }
+            ]
+          },
+          {
+            "index": "3.4",
+            "name": "Rechtliche Grundlagen der öffentlichen Beschaffung",
+            "submodules": [
+              {
+                "index": "3.4.1",
+                "name": "Vergaberecht (einschließlich E-Government)"
+              },
+              {
+                "index": "3.4.2",
+                "name": "Beihilferecht"
+              }
+            ]
+          },
+          {
+            "index": "3.5",
+            "name": "Rechtliche Grundlagen des Datenschutzes, Informationszugangsrecht und Personalrecht",
+            "submodules": [
+              {
+                "index": "3.5.1",
+                "name": "Recht Datenschutzes"
+              },
+              {
+                "index": "3.5.2",
+                "name": "Informationszugangsrecht"
+              },
+              {
+                "index": "3.5.3",
+                "name": "Arbeitsrecht"
+              },
+              {
+                "index": "3.5.4",
+                "name": "Beamtenrecht"
+              }
+            ]
+          },
+          {
+            "index": "3.6",
+            "name": "Vertragsgestaltung und rechtliche Kernkompetenzen",
+            "submodules": [
+              {
+                "index": "3.6.1",
+                "name": "Vertragsgestaltung"
+              },
+              {
+                "index": "3.6.2",
+                "name": "Rechtliche Kernkompetenzen bei Digitalisierungsprojekten"
+              }
+            ]
+          }
         ]
       },
-      '4 Digital Leadership': {
-        '4.1 Digital Governance: Von der ganzheitlichen Strategie zur Umsetzung': [
-          '4.1.1 Strategische und integrale Steuerung',
-          '4.1.2 Smart Cities und Smart Services',
-          '4.1.3 Grundlagen des Change Managements'
-        ],
-        '4.2 Führung, Kommunikation und Partizipation im digitalen Kontext': [
-          '4.2.1 Gestaltung von Kommunikation und Partizipation mit digitalen Medien',
-          '4.2.2 Führung und Teamentwicklung mit digitalen Medien',
-          '4.2.3 Digitalisierung und digitales Wissensmanagement'
+      {
+        "index": "4",
+        "name": "Digital Leadership",
+        "modules": [
+          {
+            "index": "4.1",
+            "name": "Digital Governance: Von der ganzheitlichen Strategie zur Umsetzung",
+            "submodules": [
+              {
+                "index": "4.1.1",
+                "name": "Strategische und integrale Steuerung"
+              },
+              {
+                "index": "4.1.2",
+                "name": "Smart Cities und Smart Services"
+              },
+              {
+                "index": "4.1.3",
+                "name": "Grundlagen des Change Managements"
+              }
+            ]
+          },
+          {
+            "index": "4.2",
+            "name": "Führung, Kommunikation und Partizipation im digitalen Kontext",
+            "submodules": [
+              {
+                "index": "4.2.1",
+                "name": "Gestaltung von Kommunikation und Partizipation mit digitalen Medien"
+              },
+              {
+                "index": "4.2.2",
+                "name": "Führung und Teamentwicklung mit digitalen Medien"
+              },
+              {
+                "index": "4.2.3",
+                "name": "Digitalisierung und digitales Wissensmanagement"
+              }
+            ]
+          }
         ]
       },
-      '5 Praxisphasen Praktika 1 und 7': {
-        '5.1 Praktikum 1': [
-          '5.1.0 Praktikum 1'
-        ],
-        '5.2 Praktikum 7': [
-          '5.2.0 Praktikum 7'
+      {
+        "index": "5",
+        "name": "Praxisphasen Praktika 1 und 7",
+        "modules": [
+          {
+            "index": "5.1",
+            "name": "Praktikum 1",
+            "submodules": [
+              {
+                "index": "5.1.0",
+                "name": "Praktikum 1"
+              }
+            ]
+          },
+          {
+            "index": "5.2",
+            "name": "Praktikum 7",
+            "submodules": [
+              {
+                "index": "5.2.0",
+                "name": "Praktikum 7"
+              }
+            ]
+          }
         ]
       },
-      '6 Fallstudien': {
-        '6.1 Fallstudie 1': [
-          '6.1.0 Fallstudie 1'
-        ],
-        '6.2 Fallstudie 2': [
-          '6.2.0 Fallstudie 2'
-        ],
-        '6.3 Fallstudie 3': [
-          '6.3.0 Fallstudie 3'
-        ],
-        '6.4 Fallstudie 4': [
-          '6.4.0 Fallstudie 4'
-        ],
-        '6.5 Fallstudie 5': [
-          '6.5.0 Fallstudie 5'
+      {
+        "index": "6",
+        "name": "Fallstudien",
+        "modules": [
+          {
+            "index": "6.1",
+            "name": "Fallstudie 1",
+            "submodules": [
+              {
+                "index": "6.1.0",
+                "name": "Fallstudie 1"
+              }
+            ]
+          },
+          {
+            "index": "6.2",
+            "name": "Fallstudie 2",
+            "submodules": [
+              {
+                "index": "6.2.0",
+                "name": "Fallstudie 2"
+              }
+            ]
+          },
+          {
+            "index": "6.3",
+            "name": "Fallstudie 3",
+            "submodules": [
+              {
+                "index": "6.3.0",
+                "name": "Fallstudie 3"
+              }
+            ]
+          },
+          {
+            "index": "6.4",
+            "name": "Fallstudie 4",
+            "submodules": [
+              {
+                "index": "6.4.0",
+                "name": "Fallstudie 4"
+              }
+            ]
+          },
+          {
+            "index": "6.5",
+            "name": "Fallstudie 5",
+            "submodules": [
+              {
+                "index": "6.5.0",
+                "name": "Fallstudie 5"
+              }
+            ]
+          }
         ]
       },
-      '7 Bachelorarbeit': {
-        '7.0 Bachelorarbeit': [
-          '7.0.0 Bachelorarbeit'
+      {
+        "index": "7",
+        "name": "Bachelorarbeit",
+        "modules": [
+          {
+            "index": "7.0",
+            "name": "Bachelorarbeit",
+            "submodules": [
+              {
+                "index": "7.0.0",
+                "name": "Bachelorarbeit"
+              }
+            ]
+          }
         ]
       }
-    },
+    ],
     'reports': [
       {
         'day': '21.11.2024',

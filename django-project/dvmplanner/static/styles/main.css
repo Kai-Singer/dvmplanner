@@ -352,10 +352,13 @@ body {
   user-select: none;
 } 
 
+/* --- TABLES --- */
+
 .card table {
   overflow: hidden;
   width: 100%;
   border-collapse: collapse;
+  font-size: 16px;
 }
 
 .card th, .card td {
@@ -408,4 +411,19 @@ body {
 
 .table_button:hover {
   transform: scale(1.2);
+}
+
+/* --- FILTERS --- */
+
+.filter {
+  margin-bottom: 20px;
+}
+
+.filter_dropdown {
+  font-size: 16px;
+  padding: 8px;
+}
+
+.filter_button {
+  font-size: 16px;
 }
