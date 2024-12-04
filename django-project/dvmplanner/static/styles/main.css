@@ -256,6 +256,7 @@ body {
   background-color: var(--bg);
   border-color: var(--bg-font);
   width: 340px;
+  z-index: 15;
 }
 
 .profile_button div {
@@ -276,6 +277,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  z-index: 15;
 }
 
 .usermenu_button {
