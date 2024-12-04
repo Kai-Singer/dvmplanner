@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="{% static 'imgs/logo_favicon.png' %}">
   <link rel="stylesheet" href="{% static 'styles/main.css' %}">
+  <link rel="stylesheet" href="{% static 'styles/reports.css' %}">
   <script>
     const staticMenuIcon = "{% static 'imgs/menu_icon.png' %}";
     const staticCloseIcon = "{% static 'imgs/close_icon.png' %}";
@@ -55,25 +56,28 @@
     </div>
     <!-- REPORTS -->
     <div class="card">
-      <h1>Alle Arbeitsberichte von {{ username }}</h1>
-
-      <div class="filter no_select">
-        <form action="">
-          <select name="module" id="module" class="filter_dropdown">
+      <h1>Alle Arbeitsberichte von {{ first_name }} {{ last_name }}</h1>
+      <div class="reports_table_filter">
+        <div class="reports_table_filter_text">Modul:</div>
+        <div class="dropdown reports_table_filter_dropdown">
+          <button class="dropdown_button">
+            <div>{{ current_module }}</div>
+            <img src="{% static 'imgs/expand_dropdown.png' %}" alt="" draggable="false">
+          </button>
+          <div class="dropdown_content">
+            <a class="dropdown_item" href="">[Alle]</a>
             {% for modulegroup in modules %}
-            <option value="{{ modulegroup.index }}">{{ modulegroup.index }} {{ modulegroup.name }}</option>
-            {% for module in modulegroup.modules %}
-              <option value="{{ module.index }}">{{ module.index }} {{ module.name }}</option>
-              {% for submodule in module.submodules %}
-                <option value="{{ submodule.index }}">{{ submodule.index }} {{ submodule.name }}</option>
+              <a class="dropdown_item">{{ modulegroup.index }} {{ modulegroup.name }}</a>
+              {% for module in modulegroup.modules %}
+                <a class="dropdown_item indent_1">{{ module.index }} {{ module.name }}</a>
+                {% for submodule in module.submodules %}
+                  <a class="dropdown_item indent_2">{{ submodule.index }} {{ submodule.name }}</a>
+                {% endfor %}
               {% endfor %}
             {% endfor %}
-          {% endfor %}
-          </select>
-          <input type="submit" value="Filtern" class="filter_button">
-        </form>
+          </div>
+        </div>
       </div>
-
       <div class="border_item">
         <table>
           <tr>

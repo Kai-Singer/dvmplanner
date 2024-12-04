@@ -1,0 +1,17 @@
+.reports_table_filter {
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.reports_table_filter_text {
+  padding-right: 15px;
+  font-size: 20px;
+  text-align: center;
+}
+
+.reports_table_filter_dropdown {
+  max-width: 600px;
+  flex-grow: 1;
+}

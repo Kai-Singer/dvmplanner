@@ -42,3 +42,24 @@ function toggleLongNote(button, notes, longNotes) {
     textElement.innerText = longNotes;
   }
 }
+
+document.querySelectorAll('.dropdown').forEach(dropdown => {
+  const button = dropdown.querySelector('.dropdown_button');
+  const content = dropdown.querySelector('.dropdown_content');
+
+  button.addEventListener('click', () => {
+    dropdown.classList.toggle('dropdown_expanded');
+  });
+
+  content.querySelectorAll('.dropdown_item').forEach(item => {
+    item.addEventListener('click', () => {
+      dropdown.classList.remove('dropdown_expanded');
+    });
+  });
+
+  document.addEventListener('click', element => {
+    if (!dropdown.contains(element.target)) {
+      dropdown.classList.remove('dropdown_expanded');
+    }
+  });
+});

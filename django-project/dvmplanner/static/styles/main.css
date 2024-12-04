@@ -22,10 +22,12 @@ body {
 
 ::-webkit-scrollbar-thumb {
   background: var(--fg2);
+  border-radius: 15px;
 }
 
 ::-webkit-scrollbar-track {
   background: var(--fg1);
+  border-radius: 15px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -313,7 +315,7 @@ body {
   background-color: var(--fg1);
   padding: 20px;
   border-radius: 15px;
-  overflow: auto;
+  overflow: visible;
 }
 
 .card h1 {
@@ -413,17 +415,85 @@ body {
   transform: scale(1.2);
 }
 
-/* --- FILTERS --- */
+/* --- DROPDOWNS --- */
 
-.filter {
-  margin-bottom: 20px;
+.dropdown {
+  position: relative;
+  display: inline-block;
 }
 
-.filter_dropdown {
-  font-size: 16px;
-  padding: 8px;
+.dropdown_button {
+  border-radius: 15px;
+  border-style: solid;
+  border-width: 5px;
+  border-color: var(--bg-font);
+  background-color: var(--bg);
+  width: 100%;
+  cursor: pointer;
+  user-select: none;
+  transition: all .2s;
+  padding: 10px;
+  display: flex;
 }
 
-.filter_button {
+.dropdown_button div {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-decoration: none;
+  font-weight: bold;
   font-size: 16px;
+  flex-grow: 1;
+  margin-right: 10px;
+  text-align: left;
+}
+
+.dropdown_button img {
+  width: 20px;
+  height: 20px;
+  float: right;
+}
+
+.dropdown_button:hover {
+  transform: scale(1.05);
+}
+
+.dropdown_content {
+  display: none;
+  position: absolute;
+  background-color: var(--bg);
+  border-radius: 15px;
+  border-style: solid;
+  border-width: 5px;
+  border-color: var(--bg-font);
+  margin-top: 5px;
+  z-index: 10;
+  width: 100%;
+  overflow: auto;
+  max-height: 500px;
+}
+
+.dropdown.dropdown_expanded .dropdown_content {
+  display: block;
+}
+
+.dropdown_content .dropdown_item {
+  padding: 10px;
+  cursor: pointer;
+  transition: all .2s;
+  text-decoration: none;
+  color: var(--bg-font);
+  display: block;
+}
+
+.dropdown_content .dropdown_item.indent_1 {
+  margin-left: 20px;
+}
+
+.dropdown_content .dropdown_item.indent_2 {
+  margin-left: 40px;
+}
+
+.dropdown_content .dropdown_item:hover {
+  background-color: var(--fg2);
 }

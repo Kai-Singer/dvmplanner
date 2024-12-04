@@ -36,7 +36,10 @@ def reports(request):
   data = {
     'uid': uid,
     'username': 'testuser',
+    'first_name': 'Max',
+    'last_name': 'Mustermann',
     'role': 'vip',
+    'current_module': '[Alle]',
     'modules': [
       {
         "index": "1",
