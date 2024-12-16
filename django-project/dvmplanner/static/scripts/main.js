@@ -30,16 +30,19 @@ function toggleLongNote(button, notes, longNotes) {
   const parent = button.parentElement;
   const textElement = parent.querySelector('div');
   const img = button.querySelector('img');
+  const tooltip = button.querySelector('div');
   if (button.classList.contains('toggled_note')) {
     button.classList.remove('toggled_note');
     img.src = staticArrowRightIcon;
     img.alt = 'Expand';
     textElement.innerText = notes;
+    tooltip.innerText = 'Ausklappen';
   } else {
     button.classList.add('toggled_note');
     img.src = staticArrowLeftIcon;
     img.alt = 'Shrink';
     textElement.innerText = longNotes;
+    tooltip.innerText = 'Einklappen';
   }
 }
 

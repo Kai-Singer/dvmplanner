@@ -24,7 +24,9 @@
       <li><a class="navbar_item" href="/dashboard/"><div>Dashboard</div></a></li>
       <li><a class="navbar_item" href="/reports/"><div>Arbeitsberichte</div></a></li>
       <li><a class="navbar_item highlighted"><div>Ergebnisse</div></a></li>
-      <li><a class="navbar_item" href="/admin/"><div>Admin Dashboard</div></a></li>
+      {% if role == 'admin' %}
+        <li><a class="navbar_item" href="/admin/"><div>Admin Dashboard</div></a></li>
+      {% endif %}
       <li><a class="navbar_item" href="/profile/"><div>Profil</div></a></li>
     </ul>
     <a class="button navbar_add_button" href="/addreport/">
@@ -56,6 +58,7 @@
       <h1>Ergebnisse von {{ first_name }} {{ last_name }}</h1>
       <!-- Tabellen, Diagramme & Filter zur Darstellung der Ergebnisse -->
     </div>
+    <!-- DOWNLOAD & PRINT -->
     <div class="card">
       <h1>Ergebnisbericht</h1>
       <div class="wrapped_content">

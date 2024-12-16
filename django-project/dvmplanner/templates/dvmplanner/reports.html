@@ -27,7 +27,9 @@
       <li><a class="navbar_item" href="/dashboard/"><div>Dashboard</div></a></li>
       <li><a class="navbar_item highlighted"><div>Arbeitsberichte</div></a></li>
       <li><a class="navbar_item" href="/review/"><div>Ergebnisse</div></a></li>
-      <li><a class="navbar_item" href="/admin/"><div>Admin Dashboard</div></a></li>
+      {% if role == 'admin' %}
+        <li><a class="navbar_item" href="/admin/"><div>Admin Dashboard</div></a></li>
+      {% endif %}
       <li><a class="navbar_item" href="/profile/"><div>Profil</div></a></li>
     </ul>
     <a class="button navbar_add_button" href="/addreport/">
@@ -57,9 +59,9 @@
     <!-- REPORTS -->
     <div class="card">
       <h1>Alle Arbeitsberichte von {{ first_name }} {{ last_name }}</h1>
-      <div class="reports_table_filter">
-        <div class="reports_table_filter_text">Modul:</div>
-        <div class="dropdown reports_table_filter_dropdown">
+      <div class="table_filter">
+        <div class="table_filter_text">Modul:</div>
+        <div class="dropdown table_filter_dropdown reports_table">
           <button class="dropdown_button">
             <div>{{ current_module }}</div>
             <img src="{% static 'imgs/expand_dropdown.png' %}" alt="" draggable="false">
@@ -104,7 +106,7 @@
               {% if report.long_notes != '' %}
                 <td class="flex_td">
                   <div>{{ report.notes }}</div>
-                  <button class="table_button" onclick="toggleLongNote(this, '{{ report.notes }}', '{{ report.long_notes }}')"><img src="{% static 'imgs/arrow_right_icon.png' %}" alt="Expand" draggable="false"></button>
+                  <button class="table_button tooltip_elem" onclick="toggleLongNote(this, '{{ report.notes }}', '{{ report.long_notes }}')"><img src="{% static 'imgs/arrow_right_icon.png' %}" alt="Expand" draggable="false"><div class="tooltip_text" >Ausklappen</div></button>
                 </td>
               {% else %}
                 <td class="left_td">
@@ -112,8 +114,8 @@
                 </td>
               {% endif %}
               <td class="no_select">
-                <button class="table_button"><img src="{% static 'imgs/edit_icon.png' %}" alt="Edit" draggable="false"></button>
-                <button class="table_button red"><img src="{% static 'imgs/delete_icon.png' %}" alt="Delete" draggable="false"></button>
+                <button class="table_button tooltip_elem"><img src="{% static 'imgs/edit_icon.png' %}" alt="Edit" draggable="false"><div class="tooltip_text" >Bearbeiten</div></button>
+                <button class="table_button red tooltip_elem"><img src="{% static 'imgs/delete_icon.png' %}" alt="Delete" draggable="false"><div class="tooltip_text" >Löschen</div></button>
               </td>
             </tr>
           {% endfor %}

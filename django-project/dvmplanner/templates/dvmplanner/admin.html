@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="{% static 'imgs/logo_favicon.png' %}">
   <link rel="stylesheet" href="{% static 'styles/main.css' %}">
+  <link rel="stylesheet" href="{% static 'styles/admin.css' %}">
   <script>
     const staticMenuIcon = "{% static 'imgs/menu_icon.png' %}";
     const staticCloseIcon = "{% static 'imgs/close_icon.png' %}";
@@ -52,6 +53,72 @@
       </a>
     </div>
     <!-- ADMIN -->
+    <!-- REQUESTS -->
+    <div class="card">
+      <h1>Anfragen</h1>
+      <div class="table_filter">
+        <div class="table_filter_text">Angefragte Rolle:</div>
+        <div class="dropdown table_filter_dropdown requests_table">
+          <button class="dropdown_button">
+            <div>{{ current_filter_role }}</div>
+            <img src="{% static 'imgs/expand_dropdown.png' %}" alt="" draggable="false">
+          </button>
+          <div class="dropdown_content">
+            <a class="dropdown_item" href="">[Alle]</a>
+            {% for filter_role in filter_roles %}
+              <a class="dropdown_item">{{ filter_role }}</a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <div class="border_item">
+        <table>
+          <tr>
+            <th>Datum</th>
+            <th>Vorname</th>
+            <th>Nachname</th>
+            <th>Nutzername</th>
+            <th>Aktuelle Rolle</th>
+            <th>Anfrage auf</th>
+            <th>Aktionen</th>
+          </tr>
+          {% for request in requests %}
+            <tr>
+              <td class="nowrap">{{ request.day }}<br>{{ request.time }}</td>
+              <td class="nowrap">{{ request.first_name }}</td>
+              <td class="nowrap">{{ request.last_name }}</td>
+              <td>{{ request.username }}</td>
+              {% if request.role == 'normal' %}
+                <td class="role_normal">Normal</td>
+              {% elif request.role == 'vip' %}
+                <td class="role_vip">VIP</td>
+              {% elif request.role == 'admin' %}
+                <td class="role_admin">Admin</td>
+              {% endif %}
+              {% if request.requested_role == 'normal' %}
+                <td class="role_normal">Normal</td>
+              {% elif request.requested_role == 'vip' %}
+                <td class="role_vip">VIP</td>
+              {% elif request.requested_role == 'admin' %}
+                <td class="role_admin">Admin</td>
+              {% endif %}
+              <td class="no_select">
+                <button class="table_button green tooltip_elem"><img src="{% static 'imgs/accept_icon.png' %}" alt="Accept" draggable="false"><div class="tooltip_text" >Akzeptieren</div></button>
+                <button class="table_button red tooltip_elem"><img src="{% static 'imgs/decline_icon.png' %}" alt="Decline" draggable="false"><div class="tooltip_text" >Ablehnen</div></button>
+              </td>
+            </tr>
+          {% endfor %}
+        </table>
+      </div>
+    </div>
+    <!-- USERS -->
+    <div class="card">
+      <h1>Nutzerübersicht</h1>
+    </div>
+    <!-- MODULES -->
+    <div class="card">
+      <h1>Modulübersicht</h1>
+    </div>
   </div>
 </body>
 </html>

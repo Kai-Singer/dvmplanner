@@ -9,11 +9,21 @@ body {
   --fg1: #f2f2f2;
   --fg2: #c5c5c5;
   --fg3: #adadad;
+  --fg4: #555555;
   --ac1: #ff0000;
+  --ac-green: #00ce18;
   --bg-font: #000;
   --fg1-font: #000;
+  --fg2-font: #000;
+  --fg3-font: #000;
+  --fg4-font: #fff;
   --ac1-font: #fff;
+  --ac-green-font: #fff;
   --font-ac1: #ff0000;
+  --font-ac-green: #00ce18;
+  --font-user-normal: #797979;
+  --font-user-vip: #c2ab25;
+  --font-user-admin: #700775;
 }
 
 ::-webkit-scrollbar {
@@ -67,6 +77,46 @@ body {
 
 .button:hover {
   transform: scale(1.05);
+}
+
+/* --- TEXT ROLES --- */
+
+.role_normal {
+  color: var(--font-user-normal);
+  font-weight: bold;
+}
+
+.role_vip {
+  color: var(--font-user-vip);
+  font-weight: bold;
+}
+
+.role_admin {
+  color: var(--font-user-admin);
+  font-weight: bold;
+}
+
+/* --- TOOLTIPS --- */
+
+.tooltip_elem .tooltip_text {
+  visibility: hidden;
+  background-color: var(--fg4);
+  color: var(--fg4-font);
+  text-align: center;
+  padding: 8px;
+  border-radius: 10px;
+  position: absolute;
+  bottom: 110%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.tooltip_elem:hover .tooltip_text {
+  visibility: visible;
+}
+
+.tooltip_elem .tooltip_text:hover {
+  visibility: hidden;
 }
 
 /* --- NAVBAR --- */
@@ -419,6 +469,10 @@ body {
   background-color: var(--ac1);
 }
 
+.table_button.green {
+  background-color: var(--ac-green);
+}
+
 .table_button:hover {
   transform: scale(1.2);
 }
@@ -504,4 +558,23 @@ body {
 
 .dropdown_content .dropdown_item:hover {
   background-color: var(--fg2);
+}
+
+/* --- TABLE FILTERS --- */
+
+.table_filter {
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.table_filter_text {
+  padding-right: 15px;
+  font-size: 20px;
+  text-align: center;
+}
+
+.table_filter_dropdown {
+  flex-grow: 1;
 }

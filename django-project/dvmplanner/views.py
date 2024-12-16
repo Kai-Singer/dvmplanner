@@ -24,6 +24,7 @@ def dashboard(request):
     'username': 'testuser',
     'first_name': 'Max',
     'last_name': 'Mustermann',
+    'role': 'admin'
   }
   return render(request, 'dvmplanner/dashboard.html', data)
 
@@ -482,7 +483,8 @@ def review(request):
     'uid': uid,
     'username': 'testuser',
     'first_name': 'Max',
-    'last_name': 'Mustermann'
+    'last_name': 'Mustermann',
+    'role': 'admin'
   }
   return render(request, 'dvmplanner/review.html', data)
 
@@ -490,6 +492,43 @@ def admin(request):
   data = {
     'uid': uid,
     'username': 'testuser',
+    'first_name': 'Max',
+    'last_name': 'Mustermann',
+    'role': 'admin',
+    'current_filter_role': '[Alle]',
+    'filter_roles': [
+      'VIP',
+      'Admin'
+    ],
+    'requests': [
+      {
+        'day': '15.12.2024',
+        'time': '10.12:43 Uhr',
+        'first_name': 'Julius',
+        'last_name': 'Cäsar',
+        'username': 'thedestroyer123',
+        'role': 'vip',
+        'requested_role': 'admin',
+      },
+      {
+        'day': '13.12.2024',
+        'time': '15.12:43 Uhr',
+        'first_name': 'Leonardo',
+        'last_name': 'da Vinci',
+        'username': 'the_real_vinci',
+        'role': 'normal',
+        'requested_role': 'vip',
+      },
+      {
+        'day': '12.12.2024',
+        'time': '13.12:43 Uhr',
+        'first_name': 'Marie',
+        'last_name': 'Curie',
+        'username': 'radium',
+        'role': 'vip',
+        'requested_role': 'admin',
+      },
+    ]
   }
   return render(request, 'dvmplanner/admin.html', data)
 
@@ -497,6 +536,9 @@ def profile(request):
   data = {
     'uid': uid,
     'username': 'testuser',
+    'first_name': 'Max',
+    'last_name': 'Mustermann',
+    'role': 'admin'
   }
   return render(request, 'dvmplanner/profile.html', data)
 
@@ -504,5 +546,8 @@ def addreport(request):
   data = {
     'uid': uid,
     'username': 'testuser',
+    'first_name': 'Max',
+    'last_name': 'Mustermann',
+    'role': 'admin'
   }
   return render(request, 'dvmplanner/addreport.html', data)
