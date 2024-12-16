@@ -124,6 +124,7 @@
     {% if role == 'vip' or role == 'admin' %}
       <div class="card">
         <h1>VIP Werkzeuge</h1>
+        <h2>Daten herunterladen</h2>
         <div class="wrapped_content">
           <a class="button card_button" href="">
             <img src="{% static 'imgs/download_file_icon.png' %}" alt="JSON Download" draggable="false">
@@ -137,11 +138,13 @@
             <img src="{% static 'imgs/download_file_icon.png' %}" alt="XML Download" draggable="false">
             <div><p>XML Download</p></div>
           </a>
-          <a class="button card_button" href="">
-            <img src="{% static 'imgs/upload_file_icon.png' %}" alt="Daten Upload" draggable="false">
-            <div><p>Daten Upload</p></div>
-          </a>
         </div>
+        <br><br>
+        <h2>Daten hochladen</h2>
+        <a class="button card_button" href="">
+          <img src="{% static 'imgs/upload_file_icon.png' %}" alt="Daten Upload" draggable="false">
+          <div><p>Daten Upload</p></div>
+        </a>
       </div>
     {% endif %}
   </div>

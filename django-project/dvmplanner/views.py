@@ -38,7 +38,7 @@ def reports(request):
     'username': 'testuser',
     'first_name': 'Max',
     'last_name': 'Mustermann',
-    'role': 'vip',
+    'role': 'admin',
     'current_module': '[Alle]',
     'modules': [
       {
@@ -481,6 +481,8 @@ def review(request):
   data = {
     'uid': uid,
     'username': 'testuser',
+    'first_name': 'Max',
+    'last_name': 'Mustermann'
   }
   return render(request, 'dvmplanner/review.html', data)
 

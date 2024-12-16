@@ -326,6 +326,12 @@ body {
   font-weight: bold;
 }
 
+.card h2 {
+  margin: 0;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
 .card .wrapped_content {
   display: flex;
   flex-wrap: wrap;

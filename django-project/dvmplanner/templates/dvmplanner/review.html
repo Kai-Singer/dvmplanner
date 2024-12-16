@@ -52,6 +52,23 @@
       </a>
     </div>
     <!-- REVIEW -->
+    <div class="card">
+      <h1>Ergebnisse von {{ first_name }} {{ last_name }}</h1>
+      <!-- Tabellen, Diagramme & Filter zur Darstellung der Ergebnisse -->
+    </div>
+    <div class="card">
+      <h1>Ergebnisbericht</h1>
+      <div class="wrapped_content">
+        <a class="button card_button" href="">
+          <img src="{% static 'imgs/download_file_icon.png' %}" alt="Herunterladen" draggable="false">
+          <div><p>PDF Download</p></div>
+        </a>
+        <a class="button card_button" href="">
+          <img src="{% static 'imgs/print_icon.png' %}" alt="Drucken" draggable="false">
+          <div><p>Drucken</p></div>
+        </a>
+      </div>
+    </div>
   </div>
 </body>
 </html>
