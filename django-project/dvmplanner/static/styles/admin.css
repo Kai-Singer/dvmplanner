@@ -1,3 +1,63 @@
 .table_filter_dropdown.requests_table {
   max-width: 150px;
 }
+
+.table_filter_dropdown.users_table_1 {
+  max-width: 150px;
+}
+
+.table_filter_dropdown.users_table_2 {
+  max-width: 200px;
+}
+
+.modules_overview {
+  background-color: var(--bg);
+  font-size: 16px;
+  padding: 5px;
+  width: fit-content;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.module_element {
+  padding: 8px;
+  height: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.module_element.indent_1 {
+  margin-left: 30px;
+}
+
+.module_element.indent_2 {
+  margin-left: 60px;
+}
+
+.module_text {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 5px;
+}
+
+.module_text .index {
+  font-weight: bold;
+}
+
+.module_text .semester {
+  padding: 5px 8px 5px 8px;
+  background-color: var(--fg4);
+  color: var(--fg4-font);
+  border-radius: 20px;
+  font-size: 12px;
+  margin-left: 5px;
+  white-space: nowrap;
+}
+
+.module_buttons {
+  white-space: nowrap;
+  user-select: none;
+  margin-left: 20px;
+}

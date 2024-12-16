@@ -79,7 +79,7 @@ body {
   transform: scale(1.05);
 }
 
-/* --- TEXT ROLES --- */
+/* --- TEXT DECORATIONS --- */
 
 .role_normal {
   color: var(--font-user-normal);
@@ -94,6 +94,25 @@ body {
 .role_admin {
   color: var(--font-user-admin);
   font-weight: bold;
+}
+
+.status_active {
+  color: var(--font-ac-green);
+  font-weight: bold;
+}
+
+.status_inactive {
+  color: var(--font-user-normal);
+  font-weight: bold;
+}
+
+.status_blocked {
+  color: var(--font-ac1);
+  font-weight: bold;
+}
+
+.status_deleted {
+  text-decoration: line-through;
 }
 
 /* --- TOOLTIPS --- */
@@ -393,6 +412,10 @@ body {
   border-width: 5px;
   border-color: var(--bg-font);
   border-radius: 15px;
+  max-height: 500px;
+}
+
+.border_item.overflow {
   overflow: auto;
 }
 
@@ -573,6 +596,10 @@ body {
   padding-right: 15px;
   font-size: 20px;
   text-align: center;
+}
+
+.table_filter_text.spacing_left {
+  margin-left: 30px;
 }
 
 .table_filter_dropdown {
