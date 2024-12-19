@@ -11,7 +11,7 @@ body {
   --fg3: #adadad;
   --fg4: #555555;
   --ac1: #ff0000;
-  --ac-green: #00ce18;
+  --ac-green: #00a914;
   --bg-font: #000;
   --fg1-font: #000;
   --fg2-font: #000;
@@ -20,7 +20,7 @@ body {
   --ac1-font: #fff;
   --ac-green-font: #fff;
   --font-ac1: #ff0000;
-  --font-ac-green: #00ce18;
+  --font-ac-green: #00a914;
   --font-user-normal: #797979;
   --font-user-vip: #c2ab25;
   --font-user-admin: #700775;
@@ -455,6 +455,11 @@ body {
 
 .card td {
   background-color: var(--bg);
+  transition: all .2s;
+}
+
+.card tr.hoverable_tr:hover td {
+  background-color: var(--fg1);
 }
 
 .card .nowrap {

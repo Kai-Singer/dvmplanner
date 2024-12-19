@@ -82,7 +82,7 @@
             <th>Aktionen</th>
           </tr>
           {% for request in requests %}
-            <tr>
+            <tr class="hoverable_tr">
               <td class="nowrap">{{ request.day }}<br>{{ request.time }}</td>
               <td class="nowrap">{{ request.first_name }}</td>
               <td class="nowrap">{{ request.last_name }}</td>
@@ -154,7 +154,7 @@
             <th>Aktionen</th>
           </tr>
           {% for user in users %}
-            <tr>
+            <tr class="hoverable_tr">
               <td class="nowrap">{{ user.day }}<br>{{ user.time }}</td>
               <td class="nowrap {% if user.status == 'deleted' %} status_deleted {% endif %}">{{ user.first_name }}</td>
               <td class="nowrap {% if user.status == 'deleted' %} status_deleted {% endif %}">{{ user.last_name }}</td>
@@ -178,9 +178,9 @@
               <td class="no_select">
                 <button class="table_button tooltip_elem"><img src="{% static 'imgs/edit_icon.png' %}" alt="Edit Status" draggable="false"><div class="tooltip_text" >Status ändern</div></button>
                 {% if user.status == 'blocked' %}
-                  <button class="table_button green tooltip_elem"><img src="{% static 'imgs/accept_icon.png' %}" alt="Unblock" draggable="false"><div class="tooltip_text" >Entsperren</div></button>
+                  <button class="table_button green tooltip_elem"><img src="{% static 'imgs/unblock_icon.png' %}" alt="Unblock" draggable="false"><div class="tooltip_text" >Entsperren</div></button>
                 {% else %}
-                  <button class="table_button red tooltip_elem"><img src="{% static 'imgs/decline_icon.png' %}" alt="Block" draggable="false"><div class="tooltip_text" >Sperren</div></button>
+                  <button class="table_button red tooltip_elem"><img src="{% static 'imgs/block_icon.png' %}" alt="Block" draggable="false"><div class="tooltip_text" >Sperren</div></button>
                 {% endif %}
               </td>
             </tr>

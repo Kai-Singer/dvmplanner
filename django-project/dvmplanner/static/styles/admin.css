@@ -13,7 +13,6 @@
 .modules_overview {
   background-color: var(--bg);
   font-size: 16px;
-  padding: 5px;
   width: fit-content;
   overflow-y: auto;
   overflow-x: hidden;
@@ -21,10 +20,16 @@
 
 .module_element {
   padding: 8px;
-  height: 25px;
+  padding-left: 15px;
+  min-height: 25px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: all .2s;
+}
+
+.module_element:hover {
+  background-color: var(--fg1);
 }
 
 .module_element.indent_1 {
