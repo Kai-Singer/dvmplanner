@@ -101,11 +101,6 @@ body {
   font-weight: bold;
 }
 
-.status_inactive {
-  color: var(--font-user-normal);
-  font-weight: bold;
-}
-
 .status_blocked {
   color: var(--font-ac1);
   font-weight: bold;

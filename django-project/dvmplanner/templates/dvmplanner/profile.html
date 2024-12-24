@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="{% static 'imgs/logo_favicon.png' %}">
   <link rel="stylesheet" href="{% static 'styles/main.css' %}">
+  <link rel="stylesheet" href="{% static 'styles/profile.css' %}">
   <script>
     const staticMenuIcon = "{% static 'imgs/menu_icon.png' %}";
     const staticCloseIcon = "{% static 'imgs/close_icon.png' %}";
@@ -53,7 +54,39 @@
         <div><p>Ausloggen</p></div>
       </a>
     </div>
-  <!-- PROFILE -->
+    <!-- PROFILE -->
+    <div class="card">
+      <h1>Profildaten</h1>
+      <div class="border_item profile_data">
+        <div class="profile_image">
+          <img src="{% static 'profiles/' %}{{uid}}.png" alt="Profile Picture of {{uid}}" draggable="false">
+        </div>
+        <div class="profile_content">
+          <div class="profile_item">
+            <div class="item_name">Benutzername</div>
+            <div class="item_text">{{ username }}</div>
+          </div>
+          <div class="profile_content_split">
+            <div class="profile_item">
+              <div class="item_name">Vorname</div>
+              <div class="item_text">{{ first_name }}</div>
+            </div>
+            <div class="profile_item">
+              <div class="item_name">Nachname</div>
+              <div class="item_text">{{ last_name }}</div>
+            </div>
+          </div>
+          <div class="profile_item">
+            <div class="item_name">E-Mail</div>
+            <div class="item_text">{{ email }}</div>
+          </div>
+          <div class="profile_item">
+            <div class="item_name">Rolle</div>
+            <div class="item_text">{{ role }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </body>
 </html>

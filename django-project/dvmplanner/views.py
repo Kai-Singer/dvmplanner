@@ -544,7 +544,7 @@ def admin(request):
         'last_name': 'da Vinci',
         'username': 'the_real_vinci',
         'role': 'normal',
-        'status': 'inactive',
+        'status': 'deleted',
       },
       {
         'day': '12.12.2024',
@@ -554,16 +554,7 @@ def admin(request):
         'username': 'radium',
         'role': 'vip',
         'status': 'blocked',
-      },
-      {
-        'day': '10.12.2024',
-        'time': '12.12:43 Uhr',
-        'first_name': 'Bernd',
-        'last_name': 'Brot',
-        'username': 'bernddasbrot',
-        'role': 'admin',
-        'status': 'deleted',
-      },
+      }
     ],
     'modules': [
       {
@@ -1025,7 +1016,9 @@ def profile(request):
     'username': 'testuser',
     'first_name': 'Max',
     'last_name': 'Mustermann',
-    'role': 'admin'
+    'role': 'admin',
+    'email': 'Mustermann_Max@teams.hs-ludwigsburg.de',
+    'pwd': '123'
   }
   return render(request, 'dvmplanner/profile.html', data)
 

@@ -136,7 +136,6 @@
           <div class="dropdown_content">
             <a class="dropdown_item" href="">[Alle]</a>
             <a class="dropdown_item" href="">Aktiv</a>
-            <a class="dropdown_item" href="">Inaktiv</a>
             <a class="dropdown_item" href="">Gesperrt</a>
             <a class="dropdown_item" href="">Gelöscht</a>
           </div>
@@ -155,28 +154,26 @@
           </tr>
           {% for user in users %}
             <tr class="hoverable_tr">
-              <td class="nowrap">{{ user.day }}<br>{{ user.time }}</td>
+              <td class="nowrap {% if user.status == 'deleted' %} status_deleted {% endif %}">{{ user.day }}<br>{{ user.time }}</td>
               <td class="nowrap {% if user.status == 'deleted' %} status_deleted {% endif %}">{{ user.first_name }}</td>
               <td class="nowrap {% if user.status == 'deleted' %} status_deleted {% endif %}">{{ user.last_name }}</td>
               <td class="{% if user.status == 'deleted' %} status_deleted {% endif %}">{{ user.username }}</td>
               {% if user.role == 'normal' %}
-                <td class="role_normal">Normal</td>
+                <td class="role_normal {% if user.status == 'deleted' %} status_deleted {% endif %}">Normal</td>
               {% elif user.role == 'vip' %}
-                <td class="role_vip">VIP</td>
+                <td class="role_vip {% if user.status == 'deleted' %} status_deleted {% endif %}">VIP</td>
               {% elif user.role == 'admin' %}
-                <td class="role_admin">Admin</td>
+                <td class="role_admin {% if user.status == 'deleted' %} status_deleted {% endif %}">Admin</td>
               {% endif %}
               {% if user.status == 'active' %}
                 <td class="status_active">Aktiv</td>
-              {% elif user.status == 'inactive' %}
-                <td class="status_inactive">Inaktiv</td>
               {% elif user.status == 'blocked' %}
                 <td class="status_blocked">Gesperrt</td>
               {% elif user.status == 'deleted' %}
                 <td>Gelöscht</td>
               {% endif %}
               <td class="no_select">
-                <button class="table_button tooltip_elem"><img src="{% static 'imgs/edit_icon.png' %}" alt="Edit Status" draggable="false"><div class="tooltip_text" >Status ändern</div></button>
+                <button class="table_button tooltip_elem"><img src="{% static 'imgs/edit_icon.png' %}" alt="Edit Role" draggable="false"><div class="tooltip_text" >Rolle ändern</div></button>
                 {% if user.status == 'blocked' %}
                   <button class="table_button green tooltip_elem"><img src="{% static 'imgs/unblock_icon.png' %}" alt="Unblock" draggable="false"><div class="tooltip_text" >Entsperren</div></button>
                 {% else %}

@@ -6,5 +6,5 @@
   "email": "Mustermann_Max@teams.hs-ludwigsburg.de",
   "pwd": "123",
   "role": "normal",
-  "blocked": false
+  "status": "active"
 }
