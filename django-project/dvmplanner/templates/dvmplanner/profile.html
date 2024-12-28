@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html lang="de">
 {% load static %}
 <head>
   <meta charset="UTF-8">
@@ -30,9 +31,9 @@
       {% endif %}
       <li><a class="navbar_item highlighted"><div>Profil</div></a></li>
     </ul>
-    <a class="button navbar_add_button" href="/addreport/">
-      <img src="{% static 'imgs/add_icon_red.png' %}" alt="Add Report" draggable="false">
-      <div><p>Hinzufügen</p></div>
+    <a class="button navbar_add_button small_text" href="/addreport/">
+      <img src="{% static 'imgs/add_icon_round_red.png' %}" alt="Add Report" draggable="false">
+      <div><p>Bericht hinzufügen</p></div>
     </a>
   </div>    
   <!-- CONTENT -->
@@ -40,52 +41,137 @@
     <div class="topbar">
       <div class="topbar_text">Profil</div>
       <div class="button profile_button" onclick="toggleUserMenu()">
-        <img src="{% static 'profiles/' %}{{uid}}.png" alt="Profile Picture of {{uid}}" draggable="false">
+        {% if img == True %}
+          <img src="{% static 'profiles/' %}{{uid}}.png" alt="Profile Picture of {{uid}}" draggable="false">
+        {% else %}
+          <img src="{% static 'profiles/' %}_default.png" alt="Default Profile Picture" draggable="false">
+        {% endif %}
         <div><p>{{ username }}</p></div>
       </div>
     </div>
     <div class="usermenu hidden_usermenu" id="usermenu">
       <a class="button usermenu_button" href="">
-        <img src="{% static 'imgs/change_user_icon.png' %}" alt="Change User" draggable="false">
+        <img src="{% static 'imgs/change_user_icon_round.png' %}" alt="Change User" draggable="false">
         <div><p>Profil wechseln</p></div>
       </a>
       <a class="button usermenu_button" href="">
-        <img src="{% static 'imgs/logout_icon.png' %}" alt="Logout" draggable="false">
+        <img src="{% static 'imgs/logout_icon_round.png' %}" alt="Logout" draggable="false">
         <div><p>Ausloggen</p></div>
       </a>
     </div>
     <!-- PROFILE -->
     <div class="card">
       <h1>Profildaten</h1>
-      <div class="border_item profile_data">
+      <div class="border_item profile_data overflow">
         <div class="profile_image">
-          <img src="{% static 'profiles/' %}{{uid}}.png" alt="Profile Picture of {{uid}}" draggable="false">
+          {% if img == True %}
+            <img src="{% static 'profiles/' %}{{uid}}.png" alt="Profile Picture of {{uid}}" draggable="false">
+          {% else %}
+            <img src="{% static 'profiles/' %}_default.png" alt="Default Profile Picture" draggable="false">
+          {% endif %}
         </div>
         <div class="profile_content">
           <div class="profile_item">
             <div class="item_name">Benutzername</div>
-            <div class="item_text">{{ username }}</div>
+            <div class="item_text nowrap">{{ username }}</div>
           </div>
           <div class="profile_content_split">
             <div class="profile_item">
               <div class="item_name">Vorname</div>
-              <div class="item_text">{{ first_name }}</div>
+              <div class="item_text nowrap">{{ first_name }}</div>
             </div>
             <div class="profile_item">
               <div class="item_name">Nachname</div>
-              <div class="item_text">{{ last_name }}</div>
+              <div class="item_text nowrap">{{ last_name }}</div>
             </div>
           </div>
           <div class="profile_item">
             <div class="item_name">E-Mail</div>
-            <div class="item_text">{{ email }}</div>
+            <div class="item_text nowrap">{{ email }}</div>
+          </div>
+          <div class="profile_item">
+            <div class="item_name">Erstellt</div>
+            <div class="item_text nowrap">{{ creation_date }}</div>
           </div>
           <div class="profile_item">
             <div class="item_name">Rolle</div>
-            <div class="item_text">{{ role }}</div>
+            {% if role == 'normal' %}
+              <div class="role_normal item_text">Normal</div>
+            {% elif role == 'vip' %}
+              <div class="role_vip item_text">VIP</div>
+            {% elif role == 'admin' %}
+              <div class="role_admin item_text">Admin</div>
+            {% endif %}
           </div>
         </div>
       </div>
+      <br><br>
+      <h2>Profil bearbeiten</h2>
+      <div class="wrapped_content">
+        <a class="button card_button small_text" href="">
+          <img src="{% static 'imgs/edit_icon_round.png' %}" alt="Edit profile data" draggable="false">
+          <div><p>Daten bearbeiten</p></div>
+        </a>
+        <a class="button card_button small_text" href="">
+          <img src="{% static 'imgs/edit_icon_round.png' %}" alt="Edit password" draggable="false">
+          <div><p>Passwort ändern</p></div>
+        </a>
+        {% if img == True %}
+          <a class="button card_button small_text" href="">
+            <img src="{% static 'imgs/img_icon_round.png' %}" alt="Edit profile picture" draggable="false">
+            <div><p>Profilbild ändern</p></div>
+          </a>
+          <a class="button card_button small_text" href="">
+            <img src="{% static 'imgs/delete_icon_round.png' %}" alt="Remove profile picture" draggable="false">
+            <div><p>Profilbild entfernen</p></div>
+          </a>
+        {% else %}
+          <a class="button card_button small_text" href="">
+            <img src="{% static 'imgs/add_icon_round.png' %}" alt="Add profile picture" draggable="false">
+            <div><p>Profilbild hinzufügen</p></div>
+          </a>
+        {% endif %}
+      </div>
+    </div>
+    {% if role != 'admin' %}
+      <div class="card">
+        <h1>Bewerbungen</h1>
+        <h2>
+          {% if requested_role == '' %}
+            Aktuell keine ausstehende Bewerbung
+          {% else %}
+            Aktuell ausstehende Bewerbung auf die Rolle
+            {% if requested_role == 'vip' %}
+              <span class="role_vip">VIP</span>
+            {% elif requested_role == 'admin' %}
+              <span class="role_admin">Admin</span>
+            {% endif %}
+          {% endif %}
+        </h2>
+        {% if requested_role != '' %}
+          <a class="button card_button small_text" href="">
+            <img src="{% static 'imgs/withdraw_icon_round.png' %}" alt="Withdraw application" draggable="false">
+            <div><p>Bewerbung zurückziehen</p></div>
+          </a>
+        {% elif role == 'normal' %}
+          <a class="button card_button small_text" href="">
+            <img src="{% static 'imgs/apply_icon_round.png' %}" alt="Apply as VIP" draggable="false">
+            <div><p>Als <span class="role_vip">VIP</span> bewerben</p></div>
+          </a>
+        {% else %}
+          <a class="button card_button small_text" href="">
+            <img src="{% static 'imgs/apply_icon_round.png' %}" alt="Apply as Admin" draggable="false">
+            <div><p>Als <span class="role_admin">Admin</span> bewerben</p></div>
+          </a>
+        {% endif %}
+      </div>
+    {% endif %}
+    <div class="card">
+      <h1>Profil löschen</h1>
+      <a class="button card_button red" href="">
+        <img src="{% static 'imgs/delete_icon_round_red.png' %}" alt="Delete profile" draggable="false">
+        <div><p>Löschen</p></div>
+      </a>
     </div>
   </div>
 </body>

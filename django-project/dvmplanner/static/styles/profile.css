@@ -1,5 +1,31 @@
 .profile_data {
   display: flex;
-  justify-content: flex-start;
-  gap: 10px;  
+  gap: 50px;
+  padding: 20px;
+  padding-right: 50px;
+  background-color: var(--bg);
+  max-width: fit-content;
+}
+
+.profile_image img {
+  height: 200px;
+  width: 200px;
+  border-radius: 100px;
+}
+
+.profile_content {
+  font-size: 20px;
+}
+
+.profile_content_split {
+  display: flex;
+  gap: 30px; 
+}
+
+.profile_item {
+  margin-bottom: 10px;
+}
+
+.item_name {
+  font-weight: bold;
 }

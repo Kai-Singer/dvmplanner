@@ -24,7 +24,8 @@ def dashboard(request):
     'username': 'testuser',
     'first_name': 'Max',
     'last_name': 'Mustermann',
-    'role': 'admin'
+    'role': 'admin',
+    'img': True
   }
   return render(request, 'dvmplanner/dashboard.html', data)
 
@@ -40,6 +41,7 @@ def reports(request):
     'first_name': 'Max',
     'last_name': 'Mustermann',
     'role': 'admin',
+    'img': True,
     'current_module': '[Alle]',
     'modules': [
       {
@@ -484,7 +486,8 @@ def review(request):
     'username': 'testuser',
     'first_name': 'Max',
     'last_name': 'Mustermann',
-    'role': 'admin'
+    'role': 'admin',
+    'img': True
   }
   return render(request, 'dvmplanner/review.html', data)
 
@@ -495,6 +498,7 @@ def admin(request):
     'first_name': 'Max',
     'last_name': 'Mustermann',
     'role': 'admin',
+    'img': True,
     'current_requests_filter_role': '[Alle]',
     'requests': [
       {
@@ -1016,9 +1020,12 @@ def profile(request):
     'username': 'testuser',
     'first_name': 'Max',
     'last_name': 'Mustermann',
-    'role': 'admin',
+    'role': 'vip',
+    'img': True,
     'email': 'Mustermann_Max@teams.hs-ludwigsburg.de',
-    'pwd': '123'
+    'pwd': '123',
+    'creation_date': '28.12.2024, 13.48:11 Uhr',
+    'requested_role': ''
   }
   return render(request, 'dvmplanner/profile.html', data)
 
@@ -1028,6 +1035,7 @@ def addreport(request):
     'username': 'testuser',
     'first_name': 'Max',
     'last_name': 'Mustermann',
-    'role': 'admin'
+    'role': 'admin',
+    'img': True
   }
   return render(request, 'dvmplanner/addreport.html', data)

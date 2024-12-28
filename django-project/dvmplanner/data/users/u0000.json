@@ -5,6 +5,9 @@
   "last_name": "Mustermann",
   "email": "Mustermann_Max@teams.hs-ludwigsburg.de",
   "pwd": "123",
+  "creation_date": "2024-12-28 13:48:11",
+  "img": true,
   "role": "normal",
+  "requested_role": "",
   "status": "active"
 }

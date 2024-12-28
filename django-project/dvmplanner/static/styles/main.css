@@ -70,6 +70,11 @@ body {
   margin-right: 25px;
 }
 
+.button.small_text p {
+  font-size: 24px;
+  margin: auto;
+}
+
 .button p {
   font-size: 30px;
   margin: auto;
@@ -335,7 +340,7 @@ body {
   position: absolute;
   right: 0;
   margin-right: 20px;
-  background-color: var(--fg1);
+  background-color: var(--fg2);
   padding: 15px;
   border-radius: 20px;
   display: flex;
@@ -424,6 +429,14 @@ body {
 
 .card_button div {
   color: var(--bg-font);
+}
+
+.card_button.red {
+  border-color: var(--ac1);
+}
+
+.card_button.red div {
+  color: var(--ac1);
 }
 
 .card .no_select {

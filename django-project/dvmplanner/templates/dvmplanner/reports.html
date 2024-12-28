@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html lang="de">
 {% load static %}
 <head>
   <meta charset="UTF-8">
@@ -32,9 +33,9 @@
       {% endif %}
       <li><a class="navbar_item" href="/profile/"><div>Profil</div></a></li>
     </ul>
-    <a class="button navbar_add_button" href="/addreport/">
-      <img src="{% static 'imgs/add_icon_red.png' %}" alt="Add Report" draggable="false">
-      <div><p>Hinzufügen</p></div>
+    <a class="button navbar_add_button small_text" href="/addreport/">
+      <img src="{% static 'imgs/add_icon_round_red.png' %}" alt="Add Report" draggable="false">
+      <div><p>Bericht hinzufügen</p></div>
     </a>
   </div>    
   <!-- CONTENT -->
@@ -42,17 +43,21 @@
     <div class="topbar">
       <div class="topbar_text">Arbeitsberichte</div>
       <div class="button profile_button" onclick="toggleUserMenu()">
-        <img src="{% static 'profiles/' %}{{uid}}.png" alt="Profile Picture of {{uid}}" draggable="false">
+        {% if img == True %}
+          <img src="{% static 'profiles/' %}{{uid}}.png" alt="Profile Picture of {{uid}}" draggable="false">
+        {% else %}
+          <img src="{% static 'profiles/' %}_default.png" alt="Default Profile Picture" draggable="false">
+        {% endif %}
         <div><p>{{ username }}</p></div>
       </div>
     </div>
     <div class="usermenu hidden_usermenu" id="usermenu">
       <a class="button usermenu_button" href="">
-        <img src="{% static 'imgs/change_user_icon.png' %}" alt="Change User" draggable="false">
+        <img src="{% static 'imgs/change_user_icon_round.png' %}" alt="Change User" draggable="false">
         <div><p>Profil wechseln</p></div>
       </a>
       <a class="button usermenu_button" href="">
-        <img src="{% static 'imgs/logout_icon.png' %}" alt="Logout" draggable="false">
+        <img src="{% static 'imgs/logout_icon_round.png' %}" alt="Logout" draggable="false">
         <div><p>Ausloggen</p></div>
       </a>
     </div>
@@ -129,22 +134,22 @@
         <h2>Daten herunterladen</h2>
         <div class="wrapped_content">
           <a class="button card_button" href="">
-            <img src="{% static 'imgs/download_file_icon.png' %}" alt="JSON Download" draggable="false">
+            <img src="{% static 'imgs/download_file_icon_round.png' %}" alt="JSON Download" draggable="false">
             <div><p>JSON Download</p></div>
           </a>
           <a class="button card_button" href="">
-            <img src="{% static 'imgs/download_file_icon.png' %}" alt="CSV Download" draggable="false">
+            <img src="{% static 'imgs/download_file_icon_round.png' %}" alt="CSV Download" draggable="false">
             <div><p>CSV Download</p></div>
           </a>
           <a class="button card_button" href="">
-            <img src="{% static 'imgs/download_file_icon.png' %}" alt="XML Download" draggable="false">
+            <img src="{% static 'imgs/download_file_icon_round.png' %}" alt="XML Download" draggable="false">
             <div><p>XML Download</p></div>
           </a>
         </div>
         <br><br>
         <h2>Daten hochladen</h2>
         <a class="button card_button" href="">
-          <img src="{% static 'imgs/upload_file_icon.png' %}" alt="Daten Upload" draggable="false">
+          <img src="{% static 'imgs/upload_file_icon_round.png' %}" alt="Daten Upload" draggable="false">
           <div><p>Daten Upload</p></div>
         </a>
       </div>

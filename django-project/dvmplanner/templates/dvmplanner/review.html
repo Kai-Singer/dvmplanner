@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html lang="de">
 {% load static %}
 <head>
   <meta charset="UTF-8">
@@ -29,9 +30,9 @@
       {% endif %}
       <li><a class="navbar_item" href="/profile/"><div>Profil</div></a></li>
     </ul>
-    <a class="button navbar_add_button" href="/addreport/">
-      <img src="{% static 'imgs/add_icon_red.png' %}" alt="Add Report" draggable="false">
-      <div><p>Hinzufügen</p></div>
+    <a class="button navbar_add_button small_text" href="/addreport/">
+      <img src="{% static 'imgs/add_icon_round_red.png' %}" alt="Add Report" draggable="false">
+      <div><p>Bericht hinzufügen</p></div>
     </a>
   </div>    
   <!-- CONTENT -->
@@ -39,17 +40,21 @@
     <div class="topbar">
       <div class="topbar_text">Ergebnisse</div>
       <div class="button profile_button" onclick="toggleUserMenu()">
-        <img src="{% static 'profiles/' %}{{uid}}.png" alt="Profile Picture of {{uid}}" draggable="false">
+        {% if img == True %}
+          <img src="{% static 'profiles/' %}{{uid}}.png" alt="Profile Picture of {{uid}}" draggable="false">
+        {% else %}
+          <img src="{% static 'profiles/' %}_default.png" alt="Default Profile Picture" draggable="false">
+        {% endif %}
         <div><p>{{ username }}</p></div>
       </div>
     </div>
     <div class="usermenu hidden_usermenu" id="usermenu">
       <a class="button usermenu_button" href="">
-        <img src="{% static 'imgs/change_user_icon.png' %}" alt="Change User" draggable="false">
+        <img src="{% static 'imgs/change_user_icon_round.png' %}" alt="Change User" draggable="false">
         <div><p>Profil wechseln</p></div>
       </a>
       <a class="button usermenu_button" href="">
-        <img src="{% static 'imgs/logout_icon.png' %}" alt="Logout" draggable="false">
+        <img src="{% static 'imgs/logout_icon_round.png' %}" alt="Logout" draggable="false">
         <div><p>Ausloggen</p></div>
       </a>
     </div>
@@ -63,11 +68,11 @@
       <h1>Ergebnisbericht</h1>
       <div class="wrapped_content">
         <a class="button card_button" href="">
-          <img src="{% static 'imgs/download_file_icon.png' %}" alt="Herunterladen" draggable="false">
+          <img src="{% static 'imgs/download_file_icon_round.png' %}" alt="Herunterladen" draggable="false">
           <div><p>PDF Download</p></div>
         </a>
         <a class="button card_button" href="">
-          <img src="{% static 'imgs/print_icon.png' %}" alt="Drucken" draggable="false">
+          <img src="{% static 'imgs/print_icon_round.png' %}" alt="Drucken" draggable="false">
           <div><p>Drucken</p></div>
         </a>
       </div>
