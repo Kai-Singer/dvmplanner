@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="de">
+{% load static %}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="{% static 'imgs/logo_favicon.png' %}">
+  <link rel="stylesheet" href="{% static 'styles/main.css' %}">
+  <link rel="stylesheet" href="{% static 'styles/login.css' %}">
+  <script src="{% static 'scripts/main.js' %}" defer></script>
+  <title>Registrieren - DVM Planner</title>
+</head>
+<body>
+  <div class="login_container">
+    <div class="login_box">
+      <div class="login_header">
+        <img src="{% static 'imgs/logo.png' %}" alt="DVM Planner Logo" draggable="false">
+        <p>DVM Planner</p>
+        <a href="/login/">Anmelden</a>
+      </div>
+      <div class="login_form">
+        <h1 class="login_title">Registrieren</h1>
+        <form action="" method="post">
+          {% csrf_token %}
+          <div class="login_form_content">
+            <div class="form_item">
+              <div class="form_name">Benutzername</div>
+              <input class="login_input" type="text" id="username" name="username" required>
+            </div>
+            <div class="login_content_split">
+              <div class="form_item">
+                <div class="form_name">Vorname</div>
+                <input class="login_input" type="text" id="first_name" name="first_name" required>
+              </div>
+              <div class="form_item">
+                <div class="form_name">Nachname</div>
+                <input class="login_input" type="text" id="last_name" name="last_name" required>
+              </div>
+            </div>
+            <div class="form_item">
+              <div class="form_name">E-Mail</div>
+              <input class="login_input" type="text" id="email" name="email" required>
+            </div>
+            <div class="login_content_split">
+              <div class="form_item">
+                <div class="form_name">Passwort</div>
+                <input class="login_input" type="password" id="pwd" name="pwd" required>
+              </div>
+              <div class="form_item">
+                <div class="form_name">Passwort wiederholen</div>
+                <input class="login_input" type="password" id="pwd_repeat" name="pwd_repeat" required>
+              </div>
+            </div>
+          </div>
+          <button class="button card_button" type="submit">
+            <img src="{% static 'imgs/apply_icon_round.png' %}" alt="Signup" draggable="false">
+            <div><p>Registrieren</p></div>
+          </button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -54,7 +54,7 @@
         <img src="{% static 'imgs/change_user_icon_round.png' %}" alt="Change User" draggable="false">
         <div><p>Profil wechseln</p></div>
       </a>
-      <a class="button usermenu_button" href="/signin/">
+      <a class="button usermenu_button" href="/signup/">
         <img src="{% static 'imgs/logout_icon_round.png' %}" alt="Logout" draggable="false">
         <div><p>Ausloggen</p></div>
       </a>
@@ -66,17 +66,17 @@
         {% csrf_token %}
         <div class="report_data">
           <div class="report_content_split">
-            <div class="report_item">
-              <div class="report_name">Beginn</div>
+            <div class="form_item">
+              <div class="form_name">Beginn</div>
               <input type="datetime-local" id="time_beginn" name="time_beginn" required>
             </div>
-            <div class="report_item">
-              <div class="report_name">Ende</div>
+            <div class="form_item">
+              <div class="form_name">Ende</div>
               <input type="datetime-local" id="time_end" name="time_end" required>
             </div>
           </div>
-          <div class="report_item">
-            <div class="report_name">Modul</div>
+          <div class="form_item">
+            <div class="form_name">Modul</div>
             <div class="dropdown form_dropdown addreport_dropdown">
               <div class="dropdown_button">
                 <div>{{ placeholder_module.index }} {{ placeholder_module.name }}</div>
@@ -96,8 +96,8 @@
               </div>
             </div>
           </div>
-          <div class="report_item">
-            <div class="report_name">Notizen</div>
+          <div class="form_item">
+            <div class="form_name">Notizen</div>
             <textarea id="notes" name="notes" rows="4" cols="50"></textarea>
           </div>
         </div>

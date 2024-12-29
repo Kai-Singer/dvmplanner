@@ -8,10 +8,36 @@
   <link rel="stylesheet" href="{% static 'styles/main.css' %}">
   <link rel="stylesheet" href="{% static 'styles/login.css' %}">
   <script src="{% static 'scripts/main.js' %}" defer></script>
-  <title>Abmelden - DVM Planner</title>
+  <title>Anmelden - DVM Planner</title>
 </head>
 <body>
-  <h1>Login</h1>
-  <!-- CONTENT -->
+  <div class="login_container">
+    <div class="login_box">
+      <div class="login_header">
+        <img src="{% static 'imgs/logo.png' %}" alt="DVM Planner Logo" draggable="false">
+        <p>DVM Planner</p>
+        <a href="/signup/">Registrieren</a>
+      </div>
+      <div class="login_form">
+        <h1 class="login_title">Anmelden</h1>
+        <form action="" method="post">
+          {% csrf_token %}
+          <div class="login_form_content">
+            <div class="form_item">
+              <div class="form_name">Benutzername</div>
+              <input class="login_input" type="text" id="username" name="username" required>
+            </div>
+            <div class="form_item">
+              <div class="form_name">Passwort</div>
+              <input class="login_input" type="password" id="pwd" name="pwd" required>
+            </div>
+          </div>
+          <button class="button card_button" type="submit">
+            <img src="{% static 'imgs/login_icon_round.png' %}" alt="Login" draggable="false">
+            <div><p>Anmelden</p></div>
+          </button>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

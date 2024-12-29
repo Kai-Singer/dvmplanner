@@ -16,20 +16,3 @@
   max-width: 600px;
   flex-grow: 1;
 }
-
-.report_name {
-  font-weight: bold;
-  font-size: 20px;
-  margin-bottom: 5px;
-}
-
-.report_item input, .report_item textarea {
-  padding: 10px;
-  font-size: 16px;
-  font-family: inherit;
-  border-radius: 15px;
-  border-style: solid;
-  border-width: 5px;
-  border-color: var(--bg-font);
-  background-color: var(--bg);
-}

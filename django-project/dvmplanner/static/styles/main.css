@@ -44,6 +44,8 @@ body {
   background: var(--fg3);
 }
 
+/* --- BUTTONS --- */
+
 .button {
   all: unset;
   border-radius: 100px;
@@ -624,4 +626,24 @@ body {
 
 .table_filter_dropdown {
   flex-grow: 1;
+}
+
+/* --- FORMS --- */
+
+.form_name {
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 5px;
+  white-space: nowrap;
+}
+
+.form_item input, .form_item textarea {
+  padding: 10px;
+  font-size: 16px;
+  font-family: inherit;
+  border-radius: 15px;
+  border-style: solid;
+  border-width: 5px;
+  border-color: var(--bg-font);
+  background-color: var(--bg);
 }

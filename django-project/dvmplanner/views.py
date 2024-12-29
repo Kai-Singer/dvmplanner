@@ -1450,6 +1450,6 @@ def login(request):
   data = {}
   return render(request, 'dvmplanner/login.html', data)
 
-def signin(request):
+def signup(request):
   data = {}
-  return render(request, 'dvmplanner/signin.html', data)
+  return render(request, 'dvmplanner/signup.html', data)
