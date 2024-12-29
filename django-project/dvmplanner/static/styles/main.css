@@ -533,6 +533,7 @@ body {
   transition: all .2s;
   padding: 10px;
   display: flex;
+  box-sizing: border-box;
 }
 
 .dropdown_button div {
@@ -570,6 +571,7 @@ body {
   width: 100%;
   overflow: auto;
   max-height: 500px;
+  box-sizing: border-box;
 }
 
 .dropdown.dropdown_expanded .dropdown_content {
@@ -595,6 +597,10 @@ body {
 
 .dropdown_content .dropdown_item:hover {
   background-color: var(--fg2);
+}
+
+.dropdown_content .dropdown_item.not_selectable:hover {
+  background-color: var(--fg1);
 }
 
 /* --- TABLE FILTERS --- */

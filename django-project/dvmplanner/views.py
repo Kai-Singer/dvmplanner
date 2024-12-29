@@ -1037,7 +1037,10 @@ def addreport(request):
     'last_name': 'Mustermann',
     'role': 'admin',
     'img': True,
-    'current_module': '1.1.1 Einführung in die Informatik',
+    'placeholder_module': {
+      'name': 'Einführung in die Informatik',
+      'index': '1.1.1'
+    },
     'modules': [
       {
         "index": "1",
@@ -1442,3 +1445,11 @@ def addreport(request):
     ]
   }
   return render(request, 'dvmplanner/addreport.html', data)
+
+def login(request):
+  data = {}
+  return render(request, 'dvmplanner/login.html', data)
+
+def signin(request):
+  data = {}
+  return render(request, 'dvmplanner/signin.html', data)

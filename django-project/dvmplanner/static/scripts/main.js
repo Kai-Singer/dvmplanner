@@ -1,3 +1,16 @@
+const profile_button = document.getElementById('profile_button');
+const usermenu = document.getElementById('usermenu');
+
+profile_button.addEventListener('click', () => {
+  usermenu.classList.toggle('hidden_usermenu');
+});
+
+document.addEventListener('click', element => {
+  if (!(usermenu.contains(element.target) || profile_button == element.target || profile_button.contains(element.target))) {
+    usermenu.classList.add('hidden_usermenu');
+  }
+});
+
 function toggleNavbar() {
   const navbar = document.getElementById('navbar');
   const content = document.getElementById('content');
@@ -14,15 +27,6 @@ function toggleNavbar() {
     content.classList.add('hidden_content');
     img.src = staticCloseIcon;
     img.alt = 'Close Menu';
-  }
-}
-
-function toggleUserMenu() {
-  const usermenu = document.getElementById('usermenu');
-  if (usermenu.classList.contains('hidden_usermenu')) {
-    usermenu.classList.remove('hidden_usermenu');
-  } else {
-    usermenu.classList.add('hidden_usermenu');
   }
 }
 
@@ -66,3 +70,13 @@ document.querySelectorAll('.dropdown').forEach(dropdown => {
     }
   });
 });
+
+function formDropdownSelect(item, index) {
+  const dropdown = item.parentElement.parentElement;
+  const parent = dropdown.parentElement;
+  const button = dropdown.querySelector('.dropdown_button > div');
+  const input = parent.querySelector('.dropdown_input');
+  button.innerText = item.innerText;
+  dropdown.classList.remove('dropdown_expanded');
+  input.value = index;
+}

@@ -42,7 +42,7 @@
   <div class="content" id="content">
     <div class="topbar">
       <div class="topbar_text">Arbeitsberichte</div>
-      <div class="button profile_button" onclick="toggleUserMenu()">
+      <div class="button profile_button" id="profile_button">
         {% if img == True %}
           <img src="{% static 'profiles/' %}{{uid}}.png" alt="Profile Picture of {{uid}}" draggable="false">
         {% else %}
@@ -67,10 +67,10 @@
       <div class="table_filter">
         <div class="table_filter_text">Modul:</div>
         <div class="dropdown table_filter_dropdown reports_table">
-          <button class="dropdown_button">
+          <div class="dropdown_button">
             <div>{{ current_module }}</div>
             <img src="{% static 'imgs/expand_dropdown.png' %}" alt="" draggable="false">
-          </button>
+          </div>
           <div class="dropdown_content">
             <a class="dropdown_item" href="">[Alle]</a>
             {% for modulegroup in modules %}

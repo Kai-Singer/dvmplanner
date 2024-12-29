@@ -40,7 +40,7 @@
   <div class="content" id="content">
     <div class="topbar">
       <div class="topbar_text">Arbeitsbericht hinzufügen</div>
-      <div class="button profile_button" onclick="toggleUserMenu()">
+      <div class="button profile_button" id="profile_button">
         {% if img == True %}
           <img src="{% static 'profiles/' %}{{uid}}.png" alt="Profile Picture of {{uid}}" draggable="false">
         {% else %}
@@ -64,31 +64,32 @@
       <h1>Manueller Eintrag</h1>
       <form action="" method="post">
         {% csrf_token %}
-        <div class="border_item report_data overflow">
-          <div class="profile_content_split">
+        <div class="report_data">
+          <div class="report_content_split">
             <div class="report_item">
               <div class="report_name">Beginn</div>
-              <input type="datetime-local" id="time_beginn" name="time_beginn">
+              <input type="datetime-local" id="time_beginn" name="time_beginn" required>
             </div>
             <div class="report_item">
               <div class="report_name">Ende</div>
-              <input type="datetime-local" id="time_end" name="time_end">
+              <input type="datetime-local" id="time_end" name="time_end" required>
             </div>
           </div>
           <div class="report_item">
             <div class="report_name">Modul</div>
-            <div class="dropdown">
+            <div class="dropdown form_dropdown addreport_dropdown">
               <div class="dropdown_button">
-                <div>{{ current_module }}</div>
+                <div>{{ placeholder_module.index }} {{ placeholder_module.name }}</div>
                 <img src="{% static 'imgs/expand_dropdown.png' %}" alt="" draggable="false">
               </div>
+              <input class="dropdown_input" type="hidden" id="module" name="module" value="{{ placeholder_module.index }}">
               <div class="dropdown_content">
                 {% for modulegroup in modules %}
-                  <div class="dropdown_item" href="">{{ modulegroup.index }} {{ modulegroup.name }}</div>
+                  <div class="dropdown_item not_selectable">{{ modulegroup.index }} {{ modulegroup.name }}</div>
                   {% for module in modulegroup.modules %}
-                    <div class="dropdown_item indent_1" href="">{{ module.index }} {{ module.name }}</div>
+                    <div class="dropdown_item indent_1  not_selectable">{{ module.index }} {{ module.name }}</div>
                     {% for submodule in module.submodules %}
-                      <a class="dropdown_item indent_2" href="">{{ submodule.index }} {{ submodule.name }}</a>
+                      <div class="dropdown_item indent_2" onclick="formDropdownSelect(this, '{{ submodule.index }}')">{{ submodule.index }} {{ submodule.name }}</div>
                     {% endfor %}
                   {% endfor %}
                 {% endfor %}
@@ -97,10 +98,10 @@
           </div>
           <div class="report_item">
             <div class="report_name">Notizen</div>
-            <input type="text" id="notes" name="notes">
+            <textarea id="notes" name="notes" rows="4" cols="50"></textarea>
           </div>
         </div>
-        <br><br>
+        <br>
         <div class="wrapped_content">
           <button class="button card_button" type="submit">
             <img src="{% static 'imgs/add_icon_round.png' %}" alt="Save report" draggable="false">

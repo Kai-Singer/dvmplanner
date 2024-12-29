@@ -38,7 +38,7 @@
   <div class="content" id="content">
     <div class="topbar">
       <div class="topbar_text">Admin Dashboard</div>
-      <div class="button profile_button" onclick="toggleUserMenu()">
+      <div class="button profile_button" id="profile_button">
         {% if img == True %}
           <img src="{% static 'profiles/' %}{{uid}}.png" alt="Profile Picture of {{uid}}" draggable="false">
         {% else %}
@@ -64,10 +64,10 @@
       <div class="table_filter">
         <div class="table_filter_text">Angefragte Rolle:</div>
         <div class="dropdown table_filter_dropdown requests_table">
-          <button class="dropdown_button">
+          <div class="dropdown_button">
             <div>{{ current_requests_filter_role }}</div>
             <img src="{% static 'imgs/expand_dropdown.png' %}" alt="" draggable="false">
-          </button>
+          </div>
           <div class="dropdown_content">
             <a class="dropdown_item" href="">[Alle]</a>
             <a class="dropdown_item" href="">VIP</a>
@@ -121,10 +121,10 @@
       <div class="table_filter">
         <div class="table_filter_text">Rolle:</div>
         <div class="dropdown table_filter_dropdown users_table_1">
-          <button class="dropdown_button">
+          <div class="dropdown_button">
             <div>{{ current_users_filter_role }}</div>
             <img src="{% static 'imgs/expand_dropdown.png' %}" alt="" draggable="false">
-          </button>
+          </div>
           <div class="dropdown_content">
             <a class="dropdown_item" href="">[Alle]</a>
             <a class="dropdown_item" href="">Normal</a>
@@ -134,10 +134,10 @@
         </div>
         <div class="table_filter_text spacing_left">Status:</div>
         <div class="dropdown table_filter_dropdown users_table_2">
-          <button class="dropdown_button">
+          <div class="dropdown_button">
             <div>{{ current_users_filter_status }}</div>
             <img src="{% static 'imgs/expand_dropdown.png' %}" alt="" draggable="false">
-          </button>
+          </div>
           <div class="dropdown_content">
             <a class="dropdown_item" href="">[Alle]</a>
             <a class="dropdown_item" href="">Aktiv</a>

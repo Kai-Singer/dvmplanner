@@ -39,7 +39,7 @@
   <div class="content" id="content">
     <div class="topbar">
       <div class="topbar_text">Hallo {{ first_name }} {{ last_name }}</div>
-      <div class="button profile_button" onclick="toggleUserMenu()">
+      <div class="button profile_button" id="profile_button">
         {% if img == True %}
           <img src="{% static 'profiles/' %}{{uid}}.png" alt="Profile Picture of {{uid}}" draggable="false">
         {% else %}
