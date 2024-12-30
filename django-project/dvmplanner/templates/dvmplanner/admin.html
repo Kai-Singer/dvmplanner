@@ -12,11 +12,45 @@
     const staticCloseIcon = "{% static 'imgs/close_icon.png' %}";
   </script>
   <script src="{% static 'scripts/main.js' %}" defer></script>
+  <script src="{% static 'scripts/admin.js' %}" defer></script>
   <title>Admin Dashboard - DVM Planner</title>
 </head>
 <body>
   <!-- FLOATING WINDOW -->
-  <div class="floating_container"></div>
+  <div class="floating_background" id="floating_background" onclick="closeFloatingWindows()"></div>
+  <!-- DELETE REPORT -->
+  <div class="floating_container" id="floating_window_change_role">
+    <div class="floating_window">
+      <div class="floating_header">
+        <h1>Rolle ändern</h1>
+        <div class="floating_close_button" onclick="closeFloatingWindows()">
+          <img src="{% static 'imgs/close_icon.png' %}" alt="Close window" draggable="false">
+        </div>
+      </div>
+      <form action="" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="context" value="change_role">
+        <input type="hidden" id="floating_window_change_role_id" name="id" value="Placeholder">
+        <div class="floating_content">
+          <div class="form_item">
+            <div class="form_name">Rolle von <span id="floating_window_change_role_username">Placeholder</span> ändern</div>
+            <div class="form_radio_buttons">
+              <input type="radio" id="floating_window_change_role_normal" name="role" value="normal">
+              <label for="floating_window_change_role_normal" class="radio_role_normal">Normal</label>
+              <input type="radio" id="floating_window_change_role_vip" name="role" value="vip">
+              <label for="floating_window_change_role_vip" class="radio_role_vip">VIP</label>
+              <input type="radio" id="floating_window_change_role_admin" name="role" value="admin">
+              <label for="floating_window_change_role_admin" class="radio_role_admin">Admin</label>
+            </div>
+          </div>
+        </div>
+        <button class="button card_button" type="submit">
+          <img src="{% static 'imgs/save_icon_round.png' %}" alt="Save changes" draggable="false">
+          <div><p>Speichern</p></div>
+        </button>
+      </form>
+    </div>
+  </div>
   <!-- NAVBAR -->
   <div class="navbar_hide_button" onclick="toggleNavbar()">
     <img id="navbar_hide_button_img" src="{% static 'imgs/menu_icon.png' %}" alt="Open menu" draggable="false">
@@ -182,7 +216,7 @@
                 <td>Gelöscht</td>
               {% endif %}
               <td class="no_select">
-                <button class="table_button tooltip_elem"><img src="{% static 'imgs/edit_icon.png' %}" alt="Edit Role" draggable="false"><div class="tooltip_text" >Rolle ändern</div></button>
+                <button class="table_button tooltip_elem" onclick="changeRole('{{ user.id }}', '{{ user.username }}', '{{ user.role }}')"><img src="{% static 'imgs/edit_icon.png' %}" alt="Change Role" draggable="false"><div class="tooltip_text" >Rolle ändern</div></button>
                 {% if user.status == 'blocked' %}
                   <button class="table_button green tooltip_elem"><img src="{% static 'imgs/unblock_icon.png' %}" alt="Unblock" draggable="false"><div class="tooltip_text" >Entsperren</div></button>
                 {% else %}

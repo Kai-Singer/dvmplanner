@@ -546,6 +546,7 @@ def admin(request):
         'username': 'thedestroyer123',
         'role': 'vip',
         'status': 'active',
+        'id': 'u0001'
       },
       {
         'day': '13.12.2024',
@@ -555,6 +556,7 @@ def admin(request):
         'username': 'the_real_vinci',
         'role': 'normal',
         'status': 'deleted',
+        'id': 'u0002'
       },
       {
         'day': '12.12.2024',
@@ -562,8 +564,9 @@ def admin(request):
         'first_name': 'Marie',
         'last_name': 'Curie',
         'username': 'radium',
-        'role': 'vip',
+        'role': 'admin',
         'status': 'blocked',
+        'id': 'u0003'
       }
     ],
     'modules': [

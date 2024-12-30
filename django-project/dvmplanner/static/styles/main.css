@@ -738,3 +738,65 @@ body {
   border-color: var(--bg-font);
   background-color: var(--bg);
 }
+
+.form_radio_buttons {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  height: 40px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.form_radio_buttons input[type="radio"] {
+  display: none;
+}
+
+.form_radio_buttons label {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 15px;
+  border: none;
+  background-color: var(--fg2);
+  color: var(--fg2-font);
+  cursor: pointer;
+  user-select: none;
+  border-style: solid;
+  border-width: 5px;
+  border-color: transparent;
+  transition: all .2s;
+  box-sizing: border-box;
+  font-weight: bold;
+}
+
+.form_radio_buttons label.radio_role_normal {
+  background-color: var(--font-user-normal);
+  color: var(--ac1-font);
+  width: 110px;
+  display: flex;
+  justify-content: center;
+}
+
+.form_radio_buttons label.radio_role_vip {
+  background-color: var(--font-user-vip);
+  color: var(--ac1-font);
+  width: 110px;
+  display: flex;
+  justify-content: center;
+}
+
+.form_radio_buttons label.radio_role_admin {
+  background-color: var(--font-user-admin);
+  color: var(--ac1-font);
+  width: 110px;
+  display: flex;
+  justify-content: center;
+}
+
+.form_radio_buttons label:hover {
+  transform: scale(1.1);
+}
+
+.form_radio_buttons input[type="radio"]:checked + label {
+  border-color: var(--bg-font);
+}
