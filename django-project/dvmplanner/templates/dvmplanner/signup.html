@@ -22,33 +22,34 @@
         <h1 class="login_title">Registrieren</h1>
         <form action="" method="post">
           {% csrf_token %}
+          <input type="hidden" name="context" value="signup">
           <div class="login_form_content">
             <div class="form_item">
               <div class="form_name">Benutzername</div>
-              <input class="login_input" type="text" id="username" name="username" required>
+              <input class="login_input" type="text" name="username" required>
             </div>
             <div class="login_content_split">
               <div class="form_item">
                 <div class="form_name">Vorname</div>
-                <input class="login_input" type="text" id="first_name" name="first_name" required>
+                <input class="login_input" type="text" name="first_name" required>
               </div>
               <div class="form_item">
                 <div class="form_name">Nachname</div>
-                <input class="login_input" type="text" id="last_name" name="last_name" required>
+                <input class="login_input" type="text" name="last_name" required>
               </div>
             </div>
             <div class="form_item">
               <div class="form_name">E-Mail</div>
-              <input class="login_input" type="text" id="email" name="email" required>
+              <input class="login_input" type="text" name="email" required>
             </div>
             <div class="login_content_split">
               <div class="form_item">
                 <div class="form_name">Passwort</div>
-                <input class="login_input" type="password" id="pwd" name="pwd" required>
+                <input class="login_input" type="password" name="pwd" required>
               </div>
               <div class="form_item">
                 <div class="form_name">Passwort wiederholen</div>
-                <input class="login_input" type="password" id="pwd_repeat" name="pwd_repeat" required>
+                <input class="login_input" type="password" name="pwd_repeat" required>
               </div>
             </div>
           </div>

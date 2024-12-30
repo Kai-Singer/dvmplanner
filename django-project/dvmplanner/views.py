@@ -447,32 +447,38 @@ def reports(request):
     ],
     'reports': [
       {
+        'id': 'r0001',
         'day': '21.11.2024',
         'start': '10.12:43 Uhr',
         'end': '12.58:26 Uhr',
         'end_day': '',
         'time': '2:45:43',
-        'module': '1.3.1 Betriebs- und Kommunikationssysteme',
+        'module_index': '1.3.1',
+        'module_name': 'Betriebs- und Kommunikationssysteme',
         'notes': 'Weitergearbeitet am Proj...',
         'long_notes': 'Weitergearbeitet am Projekt. Viel Fortschritt!'
       },
       {
+        'id': 'r0002',
         'day': '21.11.2024',
         'start': '10.12:43 Uhr',
         'end': '12.58:26 Uhr',
         'end_day': '22.11.2024',
         'time': '2:45:43',
-        'module': '1.3.1 Betriebs- und Kommunikationssysteme',
+        'module_index': '1.3.1',
+        'module_name': 'Betriebs- und Kommunikationssysteme',
         'notes': 'Weitergearbeitet am Projekt',
         'long_notes': ''
       },
       {
+        'id': 'r0003',
         'day': '21.11.2024',
         'start': '10.12:43 Uhr',
         'end': '12.58:26 Uhr',
         'end_day': '',
         'time': '2:45:43',
-        'module': '1.3.1 Betriebs- und Kommunikationssysteme',
+        'module_index': '1.3.1',
+        'module_name': 'Betriebs- und Kommunikationssysteme',
         'notes': 'Weitergearbeitet am Proj...',
         'long_notes': 'Weitergearbeitet am Projekt. Viel Fortschritt!'
       },

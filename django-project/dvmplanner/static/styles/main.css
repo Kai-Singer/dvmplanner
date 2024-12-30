@@ -382,7 +382,12 @@ body {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
+}
+
+.floating_text {
+  font-weight: bold;
+  font-size: 20px;
 }
 
 .floating_content_split {

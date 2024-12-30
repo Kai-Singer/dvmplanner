@@ -22,14 +22,15 @@
         <h1 class="login_title">Anmelden</h1>
         <form action="" method="post">
           {% csrf_token %}
+          <input type="hidden" name="context" value="login">
           <div class="login_form_content">
             <div class="form_item">
               <div class="form_name">Benutzername</div>
-              <input class="login_input" type="text" id="username" name="username" required>
+              <input class="login_input" type="text" name="username" required>
             </div>
             <div class="form_item">
               <div class="form_name">Passwort</div>
-              <input class="login_input" type="password" id="pwd" name="pwd" required>
+              <input class="login_input" type="password" name="pwd" required>
             </div>
           </div>
           <button class="button card_button" type="submit">

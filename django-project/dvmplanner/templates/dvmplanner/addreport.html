@@ -68,15 +68,16 @@
       <h1>Manueller Eintrag</h1>
       <form action="" method="post">
         {% csrf_token %}
+        <input type="hidden" name="context" value="add_report">
         <div class="report_data">
           <div class="report_content_split">
             <div class="form_item">
               <div class="form_name">Beginn</div>
-              <input type="datetime-local" id="time_beginn" name="time_beginn" required>
+              <input type="datetime-local" name="time_beginn" required>
             </div>
             <div class="form_item">
               <div class="form_name">Ende</div>
-              <input type="datetime-local" id="time_end" name="time_end" required>
+              <input type="datetime-local" name="time_end" required>
             </div>
           </div>
           <div class="form_item">
@@ -86,7 +87,7 @@
                 <div>{{ placeholder_module.index }} {{ placeholder_module.name }}</div>
                 <img src="{% static 'imgs/expand_dropdown.png' %}" alt="" draggable="false">
               </div>
-              <input class="dropdown_input" type="hidden" id="module" name="module" value="{{ placeholder_module.index }}">
+              <input class="dropdown_input" type="hidden" name="module" value="{{ placeholder_module.index }}">
               <div class="dropdown_content">
                 {% for modulegroup in modules %}
                   <div class="dropdown_item not_selectable">{{ modulegroup.index }} {{ modulegroup.name }}</div>
@@ -102,7 +103,7 @@
           </div>
           <div class="form_item">
             <div class="form_name">Notizen</div>
-            <textarea id="notes" name="notes" rows="4" cols="50"></textarea>
+            <textarea name="notes" rows="4" cols="50"></textarea>
           </div>
         </div>
         <div class="wrapped_content space_top_1">

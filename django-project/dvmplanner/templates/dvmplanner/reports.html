@@ -29,17 +29,19 @@
           <img src="{% static 'imgs/close_icon.png' %}" alt="Close window" draggable="false">
         </div>
       </div>
-      <form action="" method="get"> <!-- post -->
-        <!-- {% csrf_token %} -->
+      <form action="" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="context" value="edit_report">
+        <input type="hidden" id="floating_window_edit_report_id" name="id" value="Placeholder">
         <div class="floating_content">
           <div class="floating_content_split">
-            <div class="form_item" id="floating_window_edit_report_beginn">
+            <div class="form_item">
               <div class="form_name">Beginn</div>
-              <input type="datetime-local" id="time_beginn" name="time_beginn">
+              <input type="datetime-local" id="floating_window_edit_report_beginn" name="time_beginn">
             </div>
-            <div class="form_item" id="floating_window_edit_report_end">
+            <div class="form_item">
               <div class="form_name">Ende</div>
-              <input type="datetime-local" id="time_end" name="time_end">
+              <input type="datetime-local" id="floating_window_edit_report_end" name="time_end">
             </div>
           </div>
           <div class="form_item">
@@ -49,7 +51,7 @@
                 <div id="floating_window_edit_report_module">Placeholder</div>
                 <img src="{% static 'imgs/expand_dropdown.png' %}" alt="" draggable="false">
               </div>
-              <input class="dropdown_input" type="hidden" id="module" name="module" value="Placeholder">
+              <input class="dropdown_input" type="hidden" id="floating_window_edit_report_module_hidden" name="module" value="Placeholder">
               <div class="dropdown_content">
                 {% for modulegroup in modules %}
                   <div class="dropdown_item not_selectable">{{ modulegroup.index }} {{ modulegroup.name }}</div>
@@ -63,14 +65,37 @@
               </div>
             </div>
           </div>
-          <div class="form_item" id="floating_window_edit_report_notes">
+          <div class="form_item">
             <div class="form_name">Notizen</div>
-            <textarea id="notes" name="notes" rows="4" cols="50">Placeholder</textarea>
+            <textarea id="floating_window_edit_report_notes" name="notes" rows="4" cols="50">Placeholder</textarea>
           </div>
         </div>
         <button class="button card_button" type="submit">
           <img src="{% static 'imgs/save_icon_round.png' %}" alt="Save changes" draggable="false">
           <div><p>Speichern</p></div>
+        </button>
+      </form>
+    </div>
+  </div>
+  <!-- DELETE REPORT -->
+  <div class="floating_container" id="floating_window_delete_report">
+    <div class="floating_window">
+      <div class="floating_header">
+        <h1>Arbeitsbericht löschen</h1>
+        <div class="floating_close_button" onclick="closeFloatingWindows()">
+          <img src="{% static 'imgs/close_icon.png' %}" alt="Close window" draggable="false">
+        </div>
+      </div>
+      <form action="" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="context" value="delete_report">
+        <input type="hidden" id="floating_window_delete_report_id" name="id" value="Placeholder">
+        <div class="floating_content">
+          <div class="floating_text">Willst du den Arbeitsbericht wirklich löschen?</div>
+        </div>
+        <button class="button card_button red" type="submit">
+          <img src="{% static 'imgs/delete_icon_round_red.png' %}" alt="Delete" draggable="false">
+          <div><p>Löschen</p></div>
         </button>
       </form>
     </div>
@@ -167,7 +192,7 @@
                 {{ report.end }}
               </td>
               <td>{{ report.time }}</td>
-              <td>{{ report.module }}</td>
+              <td>{{ report.module_index }} {{ report.module_name }}</td>
               {% if report.long_notes != '' %}
                 <td class="flex_td">
                   <div>{{ report.notes }}</div>
@@ -179,8 +204,8 @@
                 </td>
               {% endif %}
               <td class="no_select">
-                <button class="table_button tooltip_elem"><img src="{% static 'imgs/edit_icon.png' %}" alt="Edit" draggable="false"><div class="tooltip_text" >Bearbeiten</div></button>
-                <button class="table_button red tooltip_elem"><img src="{% static 'imgs/delete_icon.png' %}" alt="Delete" draggable="false"><div class="tooltip_text" >Löschen</div></button>
+                <button class="table_button tooltip_elem" onclick="editReport('{{ report.id }}', '{{ report.day }}', '{{ report.start }}', '{{ report.end_day }}', '{{ report.end }}', '{{ report.module_index }}', '{{ report.module_name }}', '{{ report.notes }}', '{{ report.long_notes }}')"><img src="{% static 'imgs/edit_icon.png' %}" alt="Edit" draggable="false"><div class="tooltip_text" >Bearbeiten</div></button>
+                <button class="table_button red tooltip_elem" onclick="deleteReport('{{ report.id }}')"><img src="{% static 'imgs/delete_icon.png' %}" alt="Delete" draggable="false"><div class="tooltip_text" >Löschen</div></button>
               </td>
             </tr>
           {% endfor %}
