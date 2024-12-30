@@ -10,6 +10,7 @@ body {
   --fg2: #c5c5c5;
   --fg3: #adadad;
   --fg4: #555555;
+  --fg-transparent: rgba(0, 0, 0, 0.5);
   --ac1: #ff0000;
   --ac-green: #00a914;
   --bg-font: #000;
@@ -42,6 +43,14 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--fg3);
+}
+
+.space_top_1 {
+  margin-top: 20px;
+}
+
+.space_top_2 {
+  margin-top: 40px;
 }
 
 /* --- BUTTONS --- */
@@ -301,6 +310,86 @@ body {
   }
 }
 
+/* --- FLOATING WINDOW --- */
+
+.floating_background {
+  background-color: var(--fg-transparent);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 25;
+  display: none;
+}
+
+.floating_container {
+  display: none;
+}
+
+.floating_background.shown_floating_window, .floating_container.shown_floating_window {
+  display: block;
+}
+
+.floating_window {
+  background-color: var(--fg1);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 15px;
+  padding: 20px;
+  z-index: 30;
+  max-height: 80vh;
+  max-width: 80%;
+  overflow: auto;
+}
+
+.floating_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 20px;
+}
+
+.floating_header h1 {
+  margin: 0;
+  font-weight: bold;
+}
+
+.floating_close_button {
+  padding: 10px;
+  height: 35px;
+  background-color: var(--ac1);
+  border-radius: 10px;
+  cursor: pointer;
+  user-select: none;
+  transition: all .2s;
+}
+
+.floating_close_button:hover {
+  transform: scale(1.1);
+}
+
+.floating_close_button img {
+  width: 35px;
+  height: 35px;
+}
+
+.floating_content {
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.floating_content_split {
+  display: flex;
+  gap: 30px; 
+}
+
 /* --- CONTENT --- */
 
 .content {
@@ -482,9 +571,6 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-}
-
-.card .left_td {
   text-align: left;
 }
 

@@ -14,11 +14,71 @@
     const staticArrowLeftIcon = "{% static 'imgs/arrow_left_icon.png' %}";
   </script>
   <script src="{% static 'scripts/main.js' %}" defer></script>
+  <script src="{% static 'scripts/reports.js' %}" defer></script>
   <title>Arbeitsberichte - DVM Planner</title>
 </head>
 <body>
+  <!-- FLOATING WINDOWS -->
+  <div class="floating_background" id="floating_background" onclick="closeFloatingWindows()"></div>
+  <!-- EDIT REPORT -->
+  <div class="floating_container" id="floating_window_edit_report">
+    <div class="floating_window">
+      <div class="floating_header">
+        <h1>Arbeitsbericht bearbeiten</h1>
+        <div class="floating_close_button" onclick="closeFloatingWindows()">
+          <img src="{% static 'imgs/close_icon.png' %}" alt="Close window" draggable="false">
+        </div>
+      </div>
+      <form action="" method="get"> <!-- post -->
+        <!-- {% csrf_token %} -->
+        <div class="floating_content">
+          <div class="floating_content_split">
+            <div class="form_item" id="floating_window_edit_report_beginn">
+              <div class="form_name">Beginn</div>
+              <input type="datetime-local" id="time_beginn" name="time_beginn">
+            </div>
+            <div class="form_item" id="floating_window_edit_report_end">
+              <div class="form_name">Ende</div>
+              <input type="datetime-local" id="time_end" name="time_end">
+            </div>
+          </div>
+          <div class="form_item">
+            <div class="form_name">Modul</div>
+            <div class="dropdown form_dropdown edit_report_dropdown">
+              <div class="dropdown_button">
+                <div id="floating_window_edit_report_module">Placeholder</div>
+                <img src="{% static 'imgs/expand_dropdown.png' %}" alt="" draggable="false">
+              </div>
+              <input class="dropdown_input" type="hidden" id="module" name="module" value="Placeholder">
+              <div class="dropdown_content">
+                {% for modulegroup in modules %}
+                  <div class="dropdown_item not_selectable">{{ modulegroup.index }} {{ modulegroup.name }}</div>
+                  {% for module in modulegroup.modules %}
+                    <div class="dropdown_item indent_1  not_selectable">{{ module.index }} {{ module.name }}</div>
+                    {% for submodule in module.submodules %}
+                      <div class="dropdown_item indent_2" onclick="formDropdownSelect(this, '{{ submodule.index }}')">{{ submodule.index }} {{ submodule.name }}</div>
+                    {% endfor %}
+                  {% endfor %}
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+          <div class="form_item" id="floating_window_edit_report_notes">
+            <div class="form_name">Notizen</div>
+            <textarea id="notes" name="notes" rows="4" cols="50">Placeholder</textarea>
+          </div>
+        </div>
+        <button class="button card_button" type="submit">
+          <img src="{% static 'imgs/save_icon_round.png' %}" alt="Save changes" draggable="false">
+          <div><p>Speichern</p></div>
+        </button>
+      </form>
+    </div>
+  </div>
   <!-- NAVBAR -->
-  <div class="navbar_hide_button" onclick="toggleNavbar()"><img id="navbar_hide_button_img" src="{% static 'imgs/menu_icon.png' %}" alt="Open Menu" draggable="false"></div>
+  <div class="navbar_hide_button" onclick="toggleNavbar()">
+    <img id="navbar_hide_button_img" src="{% static 'imgs/menu_icon.png' %}" alt="Open menu" draggable="false">
+  </div>
   <div class="navbar" id="navbar">
     <div class="navbar_header">
       <img src="{% static 'imgs/logo.png' %}" alt="DVM Planner Logo" draggable="false">
@@ -89,7 +149,7 @@
         <table>
           <tr>
             <th>Tag</th>
-            <th>Start</th>
+            <th>Beginn</th>
             <th>Ende</th>
             <th>Dauer</th>
             <th>Modul</th>
@@ -146,12 +206,13 @@
             <div><p>XML Download</p></div>
           </a>
         </div>
-        <br><br>
-        <h2>Daten hochladen</h2>
-        <a class="button card_button" href="">
-          <img src="{% static 'imgs/upload_file_icon_round.png' %}" alt="Daten Upload" draggable="false">
-          <div><p>Daten Upload</p></div>
-        </a>
+        <div class="space_top_1">
+          <h2>Daten hochladen</h2>
+          <a class="button card_button" href="">
+            <img src="{% static 'imgs/upload_file_icon_round.png' %}" alt="Daten Upload" draggable="false">
+            <div><p>Daten Upload</p></div>
+          </a>
+        </div>
       </div>
     {% endif %}
   </div>

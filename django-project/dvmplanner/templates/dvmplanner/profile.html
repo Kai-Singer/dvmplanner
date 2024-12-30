@@ -15,8 +15,12 @@
   <title>Profil - DVM Planner</title>
 </head>
 <body>
+  <!-- FLOATING WINDOW -->
+  <div class="floating_container"></div>
   <!-- NAVBAR -->
-  <div class="navbar_hide_button" onclick="toggleNavbar()"><img id="navbar_hide_button_img" src="{% static 'imgs/menu_icon.png' %}" alt="Open Menu" draggable="false"></div>
+  <div class="navbar_hide_button" onclick="toggleNavbar()">
+    <img id="navbar_hide_button_img" src="{% static 'imgs/menu_icon.png' %}" alt="Open menu" draggable="false">
+  </div>
   <div class="navbar" id="navbar">
     <div class="navbar_header">
       <img src="{% static 'imgs/logo.png' %}" alt="DVM Planner Logo" draggable="false">
@@ -105,32 +109,33 @@
           </div>
         </div>
       </div>
-      <br><br>
-      <h2>Profil bearbeiten</h2>
-      <div class="wrapped_content">
-        <a class="button card_button small_text" href="">
-          <img src="{% static 'imgs/edit_icon_round.png' %}" alt="Edit profile data" draggable="false">
-          <div><p>Daten bearbeiten</p></div>
-        </a>
-        <a class="button card_button small_text" href="">
-          <img src="{% static 'imgs/edit_icon_round.png' %}" alt="Edit password" draggable="false">
-          <div><p>Passwort ändern</p></div>
-        </a>
-        {% if img == True %}
+      <div class="space_top_2">
+        <h2>Profil bearbeiten</h2>
+        <div class="wrapped_content">
           <a class="button card_button small_text" href="">
-            <img src="{% static 'imgs/img_icon_round.png' %}" alt="Edit profile picture" draggable="false">
-            <div><p>Profilbild ändern</p></div>
+            <img src="{% static 'imgs/edit_icon_round.png' %}" alt="Edit profile data" draggable="false">
+            <div><p>Daten bearbeiten</p></div>
           </a>
           <a class="button card_button small_text" href="">
-            <img src="{% static 'imgs/delete_icon_round.png' %}" alt="Remove profile picture" draggable="false">
-            <div><p>Profilbild entfernen</p></div>
+            <img src="{% static 'imgs/edit_icon_round.png' %}" alt="Edit password" draggable="false">
+            <div><p>Passwort ändern</p></div>
           </a>
-        {% else %}
-          <a class="button card_button small_text" href="">
-            <img src="{% static 'imgs/add_icon_round.png' %}" alt="Add profile picture" draggable="false">
-            <div><p>Profilbild hinzufügen</p></div>
-          </a>
-        {% endif %}
+          {% if img == True %}
+            <a class="button card_button small_text" href="">
+              <img src="{% static 'imgs/img_icon_round.png' %}" alt="Edit profile picture" draggable="false">
+              <div><p>Profilbild ändern</p></div>
+            </a>
+            <a class="button card_button small_text" href="">
+              <img src="{% static 'imgs/delete_icon_round.png' %}" alt="Remove profile picture" draggable="false">
+              <div><p>Profilbild entfernen</p></div>
+            </a>
+          {% else %}
+            <a class="button card_button small_text" href="">
+              <img src="{% static 'imgs/add_icon_round.png' %}" alt="Add profile picture" draggable="false">
+              <div><p>Profilbild hinzufügen</p></div>
+            </a>
+          {% endif %}
+        </div>
       </div>
     </div>
     {% if role != 'admin' %}

@@ -20,14 +20,23 @@ function toggleNavbar() {
     navbar.classList.remove('shown_navbar');
     content.classList.remove('hidden_content');
     img.src = staticMenuIcon;
-    img.alt = 'Open Menu';
+    img.alt = 'Open menu';
 
   } else {
     navbar.classList.add('shown_navbar');
     content.classList.add('hidden_content');
     img.src = staticCloseIcon;
-    img.alt = 'Close Menu';
+    img.alt = 'Close menu';
   }
+}
+
+function closeFloatingWindows() {
+  const bg = document.getElementById('floating_background')
+  bg.classList.remove('shown_floating_window');
+  
+  document.querySelectorAll('.floating_container').forEach(floatingWindow => {
+    floatingWindow.classList.remove('shown_floating_window');
+  });
 }
 
 function toggleLongNote(button, notes, longNotes) {

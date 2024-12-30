@@ -15,8 +15,12 @@
   <title>Arbeitsbericht hinzufügen - DVM Planner</title>
 </head>
 <body>
+  <!-- FLOATING WINDOW -->
+  <div class="floating_container"></div>
   <!-- NAVBAR -->
-  <div class="navbar_hide_button" onclick="toggleNavbar()"><img id="navbar_hide_button_img" src="{% static 'imgs/menu_icon.png' %}" alt="Open Menu" draggable="false"></div>
+  <div class="navbar_hide_button" onclick="toggleNavbar()">
+    <img id="navbar_hide_button_img" src="{% static 'imgs/menu_icon.png' %}" alt="Open menu" draggable="false">
+  </div>
   <div class="navbar" id="navbar">
     <div class="navbar_header">
       <img src="{% static 'imgs/logo.png' %}" alt="DVM Planner Logo" draggable="false">
@@ -101,8 +105,7 @@
             <textarea id="notes" name="notes" rows="4" cols="50"></textarea>
           </div>
         </div>
-        <br>
-        <div class="wrapped_content">
+        <div class="wrapped_content space_top_1">
           <button class="button card_button" type="submit">
             <img src="{% static 'imgs/add_icon_round.png' %}" alt="Save report" draggable="false">
             <div><p>Speichern</p></div>

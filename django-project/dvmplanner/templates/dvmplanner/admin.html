@@ -15,8 +15,12 @@
   <title>Admin Dashboard - DVM Planner</title>
 </head>
 <body>
+  <!-- FLOATING WINDOW -->
+  <div class="floating_container"></div>
   <!-- NAVBAR -->
-  <div class="navbar_hide_button" onclick="toggleNavbar()"><img id="navbar_hide_button_img" src="{% static 'imgs/menu_icon.png' %}" alt="Open Menu" draggable="false"></div>
+  <div class="navbar_hide_button" onclick="toggleNavbar()">
+    <img id="navbar_hide_button_img" src="{% static 'imgs/menu_icon.png' %}" alt="Open menu" draggable="false">
+  </div>
   <div class="navbar" id="navbar">
     <div class="navbar_header">
       <img src="{% static 'imgs/logo.png' %}" alt="DVM Planner Logo" draggable="false">
@@ -232,13 +236,14 @@
           {% endfor %}
         {% endfor %}
       </div>
-      <br><br>
-      <h2>Modul hinzufügen</h2>
-      <div class="wrapped_content">
-        <a class="button card_button" href="">
-          <img src="{% static 'imgs/add_icon_round.png' %}" alt="Add module" draggable="false">
-          <div><p>Hinzufügen</p></div>
-        </a>
+      <div class="space_top_2">
+        <h2>Modul hinzufügen</h2>
+        <div class="wrapped_content">
+          <a class="button card_button" href="">
+            <img src="{% static 'imgs/add_icon_round.png' %}" alt="Add module" draggable="false">
+            <div><p>Hinzufügen</p></div>
+          </a>
+        </div>
       </div>
     </div>
   </div>
