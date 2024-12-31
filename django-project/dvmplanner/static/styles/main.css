@@ -739,6 +739,10 @@ body {
   background-color: var(--bg);
 }
 
+.form_item.hidden_form_item {
+  display: none;
+}
+
 .form_radio_buttons {
   display: flex;
   gap: 20px;

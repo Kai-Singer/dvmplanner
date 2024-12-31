@@ -5,7 +5,7 @@
       <Submodule index="2" name="Vertiefung Informatik" semester="3" />
     </Module>
     <Module index="2" name="E-Government mit Exkursionen">
-      <Submodule index="0" name="E-Government mit Exkursionen" semester="1" />
+      <Submodule index="1" name="E-Government mit Exkursionen" semester="1" />
     </Module>
     <Module index="3" name="Betriebs- und Kommunikationssysteme/ verteilte Systeme">
       <Submodule index="1" name="Betriebs- und Kommunikationssysteme" semester="3" />
@@ -26,21 +26,21 @@
       <Submodule index="2" name="ITIL" semester="6" />
     </Module>
     <Module index="7" name="IT-Management">
-      <Submodule index="0" name="IT-Management" semester="5" />
+      <Submodule index="1" name="IT-Management" semester="5" />
     </Module>
     <Module index="8" name="IT-Systeme und Informationssysteme">
-      <Submodule index="0" name="IT-Systeme und Informationssysteme" semester="5" />
+      <Submodule index="1" name="IT-Systeme und Informationssysteme" semester="5" />
     </Module>
   </ModuleGroup>
   <ModuleGroup index="2" name="Verwaltungsmanagement">
     <Module index="1" name="Steuerung, Public Management und Projektmanagement">
-      <Submodule index="0" name="Steuerung, Public Management und Projektmanagement" semester="1" />
+      <Submodule index="1" name="Steuerung, Public Management und Projektmanagement" semester="1" />
     </Module>
     <Module index="2" name="Organisations- und Prozessmanagement">
-      <Submodule index="0" name="Organisations- und Prozessmanagement" semester="3" />
+      <Submodule index="1" name="Organisations- und Prozessmanagement" semester="3" />
     </Module>
     <Module index="3" name="Öffentliche Betriebswirtschaftslehre">
-      <Submodule index="0" name="Öffentliche Betriebswirtschaftslehre" semester="5" />
+      <Submodule index="1" name="Öffentliche Betriebswirtschaftslehre" semester="5" />
     </Module>
   </ModuleGroup>
   <ModuleGroup index="3" name="Rechtliche Grundlagen der öffentlichen Verwaltung">
@@ -88,32 +88,32 @@
   </ModuleGroup>
   <ModuleGroup index="5" name="Praxisphasen Praktika 1 und 7">
     <Module index="1" name="Praktikum 1">
-      <Submodule index="0" name="Praktikum 1" semester="1" />
+      <Submodule index="1" name="Praktikum 1" semester="1" />
     </Module>
     <Module index="2" name="Praktikum 7">
-      <Submodule index="0" name="Praktikum 7" semester="6" />
+      <Submodule index="1" name="Praktikum 7" semester="6" />
     </Module>
   </ModuleGroup>
   <ModuleGroup index="6" name="Fallstudien">
     <Module index="1" name="Fallstudie 1">
-      <Submodule index="0" name="Fallstudie 1" semester="2" />
+      <Submodule index="1" name="Fallstudie 1" semester="2" />
     </Module>
     <Module index="2" name="Fallstudie 2">
-      <Submodule index="0" name="Fallstudie 2" semester="3" />
+      <Submodule index="1" name="Fallstudie 2" semester="3" />
     </Module>
     <Module index="3" name="Fallstudie 3">
-      <Submodule index="0" name="Fallstudie 3" semester="4" />
+      <Submodule index="1" name="Fallstudie 3" semester="4" />
     </Module>
     <Module index="4" name="Fallstudie 4">
-      <Submodule index="0" name="Fallstudie 4" semester="5" />
+      <Submodule index="1" name="Fallstudie 4" semester="5" />
     </Module>
     <Module index="5" name="Fallstudie 5">
-      <Submodule index="0" name="Fallstudie 5" semester="6" />
+      <Submodule index="1" name="Fallstudie 5" semester="6" />
     </Module>
   </ModuleGroup>
   <ModuleGroup index="7" name="Bachelorarbeit">
-    <Module index="0" name="Bachelorarbeit">
-      <Submodule index="0" name="Bachelorarbeit" semester="6" />
+    <Module index="1" name="Bachelorarbeit">
+      <Submodule index="1" name="Bachelorarbeit" semester="6" />
     </Module>
   </ModuleGroup>
 </Modules>

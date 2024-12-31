@@ -80,12 +80,12 @@ document.querySelectorAll('.dropdown').forEach(dropdown => {
   });
 });
 
-function formDropdownSelect(item, index) {
+function formDropdownSelect(item, key) {
   const dropdown = item.parentElement.parentElement;
   const parent = dropdown.parentElement;
   const button = dropdown.querySelector('.dropdown_button > div');
   const input = parent.querySelector('.dropdown_input');
   button.innerText = item.innerText;
   dropdown.classList.remove('dropdown_expanded');
-  input.value = index;
+  input.value = key;
 }

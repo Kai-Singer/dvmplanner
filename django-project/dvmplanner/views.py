@@ -67,7 +67,7 @@ def reports(request):
             "name": "E-Government mit Exkursionen",
             "submodules": [
               {
-                "index": "1.2.0",
+                "index": "1.2.1",
                 "name": "E-Government mit Exkursionen"
               }
             ]
@@ -141,7 +141,7 @@ def reports(request):
             "name": "IT-Management",
             "submodules": [
               {
-                "index": "1.7.0",
+                "index": "1.7.1",
                 "name": "IT-Management"
               }
             ]
@@ -151,7 +151,7 @@ def reports(request):
             "name": "IT-Systeme und Informationssysteme",
             "submodules": [
               {
-                "index": "1.8.0",
+                "index": "1.8.1",
                 "name": "IT-Systeme und Informationssysteme"
               }
             ]
@@ -167,7 +167,7 @@ def reports(request):
             "name": "Steuerung, Public Management und Projektmanagement",
             "submodules": [
               {
-                "index": "2.1.0",
+                "index": "2.1.1",
                 "name": "Steuerung, Public Management und Projektmanagement"
               }
             ]
@@ -177,7 +177,7 @@ def reports(request):
             "name": "Organisations- und Prozessmanagement",
             "submodules": [
               {
-                "index": "2.2.0",
+                "index": "2.2.1",
                 "name": "Organisations- und Prozessmanagement"
               }
             ]
@@ -187,7 +187,7 @@ def reports(request):
             "name": "Öffentliche Betriebswirtschaftslehre",
             "submodules": [
               {
-                "index": "2.3.0",
+                "index": "2.3.1",
                 "name": "Öffentliche Betriebswirtschaftslehre"
               }
             ]
@@ -355,7 +355,7 @@ def reports(request):
             "name": "Praktikum 1",
             "submodules": [
               {
-                "index": "5.1.0",
+                "index": "5.1.1",
                 "name": "Praktikum 1"
               }
             ]
@@ -365,7 +365,7 @@ def reports(request):
             "name": "Praktikum 7",
             "submodules": [
               {
-                "index": "5.2.0",
+                "index": "5.2.1",
                 "name": "Praktikum 7"
               }
             ]
@@ -381,7 +381,7 @@ def reports(request):
             "name": "Fallstudie 1",
             "submodules": [
               {
-                "index": "6.1.0",
+                "index": "6.1.1",
                 "name": "Fallstudie 1"
               }
             ]
@@ -391,7 +391,7 @@ def reports(request):
             "name": "Fallstudie 2",
             "submodules": [
               {
-                "index": "6.2.0",
+                "index": "6.2.1",
                 "name": "Fallstudie 2"
               }
             ]
@@ -401,7 +401,7 @@ def reports(request):
             "name": "Fallstudie 3",
             "submodules": [
               {
-                "index": "6.3.0",
+                "index": "6.3.1",
                 "name": "Fallstudie 3"
               }
             ]
@@ -411,7 +411,7 @@ def reports(request):
             "name": "Fallstudie 4",
             "submodules": [
               {
-                "index": "6.4.0",
+                "index": "6.4.1",
                 "name": "Fallstudie 4"
               }
             ]
@@ -421,7 +421,7 @@ def reports(request):
             "name": "Fallstudie 5",
             "submodules": [
               {
-                "index": "6.5.0",
+                "index": "6.5.1",
                 "name": "Fallstudie 5"
               }
             ]
@@ -433,11 +433,11 @@ def reports(request):
         "name": "Bachelorarbeit",
         "modules": [
           {
-            "index": "7.0",
+            "index": "7.1",
             "name": "Bachelorarbeit",
             "submodules": [
               {
-                "index": "7.0.0",
+                "index": "7.1.1",
                 "name": "Bachelorarbeit"
               }
             ]
@@ -595,7 +595,7 @@ def admin(request):
             "name": "E-Government mit Exkursionen",
             "submodules": [
               {
-                "index": "1.2.0",
+                "index": "1.2.1",
                 "name": "E-Government mit Exkursionen",
                 "semester": "1"
               }
@@ -680,7 +680,7 @@ def admin(request):
             "name": "IT-Management",
             "submodules": [
               {
-                "index": "1.7.0",
+                "index": "1.7.1",
                 "name": "IT-Management",
                 "semester": "5"
               }
@@ -691,7 +691,7 @@ def admin(request):
             "name": "IT-Systeme und Informationssysteme",
             "submodules": [
               {
-                "index": "1.8.0",
+                "index": "1.8.1",
                 "name": "IT-Systeme und Informationssysteme",
                 "semester": "5"
               }
@@ -708,7 +708,7 @@ def admin(request):
             "name": "Steuerung, Public Management und Projektmanagement",
             "submodules": [
               {
-                "index": "2.1.0",
+                "index": "2.1.1",
                 "name": "Steuerung, Public Management und Projektmanagement",
                 "semester": "1"
               }
@@ -719,7 +719,7 @@ def admin(request):
             "name": "Organisations- und Prozessmanagement",
             "submodules": [
               {
-                "index": "2.2.0",
+                "index": "2.2.1",
                 "name": "Organisations- und Prozessmanagement",
                 "semester": "3"
               }
@@ -730,7 +730,7 @@ def admin(request):
             "name": "Öffentliche Betriebswirtschaftslehre",
             "submodules": [
               {
-                "index": "2.3.0",
+                "index": "2.3.1",
                 "name": "Öffentliche Betriebswirtschaftslehre",
                 "semester": "5"
               }
@@ -922,7 +922,7 @@ def admin(request):
             "name": "Praktikum 1",
             "submodules": [
               {
-                "index": "5.1.0",
+                "index": "5.1.1",
                 "name": "Praktikum 1",
                 "semester": "1"
               }
@@ -933,7 +933,7 @@ def admin(request):
             "name": "Praktikum 7",
             "submodules": [
               {
-                "index": "5.2.0",
+                "index": "5.2.1",
                 "name": "Praktikum 7",
                 "semester": "6"
               }
@@ -950,7 +950,7 @@ def admin(request):
             "name": "Fallstudie 1",
             "submodules": [
               {
-                "index": "6.1.0",
+                "index": "6.1.1",
                 "name": "Fallstudie 1",
                 "semester": "2"
               }
@@ -961,7 +961,7 @@ def admin(request):
             "name": "Fallstudie 2",
             "submodules": [
               {
-                "index": "6.2.0",
+                "index": "6.2.1",
                 "name": "Fallstudie 2",
                 "semester": "3"
               }
@@ -972,7 +972,7 @@ def admin(request):
             "name": "Fallstudie 3",
             "submodules": [
               {
-                "index": "6.3.0",
+                "index": "6.3.1",
                 "name": "Fallstudie 3",
                 "semester": "4"
               }
@@ -983,7 +983,7 @@ def admin(request):
             "name": "Fallstudie 4",
             "submodules": [
               {
-                "index": "6.4.0",
+                "index": "6.4.1",
                 "name": "Fallstudie 4",
                 "semester": "5"
               }
@@ -994,7 +994,7 @@ def admin(request):
             "name": "Fallstudie 5",
             "submodules": [
               {
-                "index": "6.5.0",
+                "index": "6.5.1",
                 "name": "Fallstudie 5",
                 "semester": "6"
               }
@@ -1007,11 +1007,11 @@ def admin(request):
         "name": "Bachelorarbeit",
         "modules": [
           {
-            "index": "7.0",
+            "index": "7.1",
             "name": "Bachelorarbeit",
             "submodules": [
               {
-                "index": "7.0.0",
+                "index": "7.1.1",
                 "name": "Bachelorarbeit",
                 "semester": "6"
               }
@@ -1074,7 +1074,7 @@ def addreport(request):
             "name": "E-Government mit Exkursionen",
             "submodules": [
               {
-                "index": "1.2.0",
+                "index": "1.2.1",
                 "name": "E-Government mit Exkursionen"
               }
             ]
@@ -1148,7 +1148,7 @@ def addreport(request):
             "name": "IT-Management",
             "submodules": [
               {
-                "index": "1.7.0",
+                "index": "1.7.1",
                 "name": "IT-Management"
               }
             ]
@@ -1158,7 +1158,7 @@ def addreport(request):
             "name": "IT-Systeme und Informationssysteme",
             "submodules": [
               {
-                "index": "1.8.0",
+                "index": "1.8.1",
                 "name": "IT-Systeme und Informationssysteme"
               }
             ]
@@ -1174,7 +1174,7 @@ def addreport(request):
             "name": "Steuerung, Public Management und Projektmanagement",
             "submodules": [
               {
-                "index": "2.1.0",
+                "index": "2.1.1",
                 "name": "Steuerung, Public Management und Projektmanagement"
               }
             ]
@@ -1184,7 +1184,7 @@ def addreport(request):
             "name": "Organisations- und Prozessmanagement",
             "submodules": [
               {
-                "index": "2.2.0",
+                "index": "2.2.1",
                 "name": "Organisations- und Prozessmanagement"
               }
             ]
@@ -1194,7 +1194,7 @@ def addreport(request):
             "name": "Öffentliche Betriebswirtschaftslehre",
             "submodules": [
               {
-                "index": "2.3.0",
+                "index": "2.3.1",
                 "name": "Öffentliche Betriebswirtschaftslehre"
               }
             ]
@@ -1362,7 +1362,7 @@ def addreport(request):
             "name": "Praktikum 1",
             "submodules": [
               {
-                "index": "5.1.0",
+                "index": "5.1.1",
                 "name": "Praktikum 1"
               }
             ]
@@ -1372,7 +1372,7 @@ def addreport(request):
             "name": "Praktikum 7",
             "submodules": [
               {
-                "index": "5.2.0",
+                "index": "5.2.1",
                 "name": "Praktikum 7"
               }
             ]
@@ -1388,7 +1388,7 @@ def addreport(request):
             "name": "Fallstudie 1",
             "submodules": [
               {
-                "index": "6.1.0",
+                "index": "6.1.1",
                 "name": "Fallstudie 1"
               }
             ]
@@ -1398,7 +1398,7 @@ def addreport(request):
             "name": "Fallstudie 2",
             "submodules": [
               {
-                "index": "6.2.0",
+                "index": "6.2.1",
                 "name": "Fallstudie 2"
               }
             ]
@@ -1408,7 +1408,7 @@ def addreport(request):
             "name": "Fallstudie 3",
             "submodules": [
               {
-                "index": "6.3.0",
+                "index": "6.3.1",
                 "name": "Fallstudie 3"
               }
             ]
@@ -1418,7 +1418,7 @@ def addreport(request):
             "name": "Fallstudie 4",
             "submodules": [
               {
-                "index": "6.4.0",
+                "index": "6.4.1",
                 "name": "Fallstudie 4"
               }
             ]
@@ -1428,7 +1428,7 @@ def addreport(request):
             "name": "Fallstudie 5",
             "submodules": [
               {
-                "index": "6.5.0",
+                "index": "6.5.1",
                 "name": "Fallstudie 5"
               }
             ]
@@ -1440,11 +1440,11 @@ def addreport(request):
         "name": "Bachelorarbeit",
         "modules": [
           {
-            "index": "7.0",
+            "index": "7.1",
             "name": "Bachelorarbeit",
             "submodules": [
               {
-                "index": "7.0.0",
+                "index": "7.1.1",
                 "name": "Bachelorarbeit"
               }
             ]

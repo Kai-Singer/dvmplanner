@@ -24,3 +24,38 @@ function changeRole(id, username, role) {
     textUsername.classList.add('role_normal');
   }
 }
+
+function editModule(index, name, semester) {
+  const floatingBackground = document.getElementById('floating_background');
+  floatingBackground.classList.add('shown_floating_window');
+  const floatingWindow = document.getElementById('floating_window_edit_module');
+  floatingWindow.classList.add('shown_floating_window');
+  const inputIndex = document.getElementById('floating_window_edit_module_index');
+  inputIndex.value = index;
+  const containerSemester = document.getElementById('floating_window_edit_module_semester_container');
+  const inputSemester = document.getElementById('floating_window_edit_module_semester');
+  const inputSemesterHidden = document.getElementById('floating_window_edit_module_semester_hidden');
+  if (semester == null) {
+    containerSemester.classList.add('hidden_form_item');
+    inputSemesterHidden.value = '';
+  } else {
+    containerSemester.classList.remove('hidden_form_item');
+    inputSemester.innerText = semester + '. Semester';
+    inputSemesterHidden.value = semester;
+  }
+  const textIndex = document.getElementById('floating_window_edit_module_index_text');
+  textIndex.innerText = index;
+  const inputName = document.getElementById('floating_window_edit_module_name');
+  inputName.value = name;
+}
+
+function deleteModule(index, name) {
+  const floatingBackground = document.getElementById('floating_background');
+  floatingBackground.classList.add('shown_floating_window');
+  const floatingWindow = document.getElementById('floating_window_delete_module');
+  floatingWindow.classList.add('shown_floating_window');
+  const inputIndex = document.getElementById('floating_window_delete_module_index');
+  inputIndex.value = index;
+  const textName = document.getElementById('floating_window_delete_module_name_text');
+  textName.innerText = index + ' ' + name;
+}
