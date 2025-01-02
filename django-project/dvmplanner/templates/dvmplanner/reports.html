@@ -151,22 +151,107 @@
       <h1>Alle Arbeitsberichte von {{ first_name }} {{ last_name }}</h1>
       <div class="table_filter">
         <div class="table_filter_text">Modul:</div>
-        <div class="dropdown table_filter_dropdown reports_table">
+        <div class="dropdown table_filter_dropdown reports_table_module">
           <div class="dropdown_button">
             <div>{{ current_module }}</div>
             <img src="{% static 'imgs/expand_dropdown.png' %}" alt="" draggable="false">
           </div>
           <div class="dropdown_content">
-            <a class="dropdown_item" href="">[Alle]</a>
+            <form action="" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="context" value="reports_dropdown_select_module">
+              <input type="hidden" name="index" value="all">
+              <div class="dropdown_item_container">
+                <button class="dropdown_item" type="submit">[Alle]</button>
+              </div>
+            </form>
             {% for modulegroup in modules %}
-              <a class="dropdown_item" href="">{{ modulegroup.index }} {{ modulegroup.name }}</a>
+              <form action="" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="context" value="reports_dropdown_select_module">
+                <input type="hidden" name="index" value="{{ modulegroup.index }}">
+                <div class="dropdown_item_container">
+                  <button class="dropdown_item" type="submit">{{ modulegroup.index }} {{ modulegroup.name }}</button>
+                </div>
+              </form>
               {% for module in modulegroup.modules %}
-                <a class="dropdown_item indent_1" href="">{{ module.index }} {{ module.name }}</a>
+                <form action="" method="post">
+                  {% csrf_token %}
+                  <input type="hidden" name="context" value="reports_dropdown_select_module">
+                  <input type="hidden" name="index" value="{{ modulegroup.index }}">
+                  <div class="dropdown_item_container">
+                    <button class="dropdown_item indent_1" type="submit">{{ module.index }} {{ module.name }}</button>
+                  </div>
+                </form>
                 {% for submodule in module.submodules %}
-                  <a class="dropdown_item indent_2" href="">{{ submodule.index }} {{ submodule.name }}</a>
+                  <form action="" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="context" value="reports_dropdown_select_module">
+                    <input type="hidden" name="index" value="{{ modulegroup.index }}">
+                    <div class="dropdown_item_container">
+                      <button class="dropdown_item indent_2" type="submit">{{ submodule.index }} {{ submodule.name }}</button>
+                    </div>
+                  </form>
                 {% endfor %}
               {% endfor %}
             {% endfor %}
+          </div>
+        </div>
+        <div class="table_filter_text spacing_left">Semester:</div>
+        <div class="dropdown table_filter_dropdown reports_table_semester">
+          <div class="dropdown_button">
+            <div>{{ current_semester }}</div>
+            <img src="{% static 'imgs/expand_dropdown.png' %}" alt="" draggable="false">
+          </div>
+          <div class="dropdown_content">
+            <form action="" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="context" value="reports_dropdown_select_semester">
+              <input type="hidden" name="semester" value="1">
+              <div class="dropdown_item_container">
+                <button class="dropdown_item" type="submit">1. Semester</button>
+              </div>
+            </form>
+            <form action="" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="context" value="reports_dropdown_select_semester">
+              <input type="hidden" name="semester" value="2">
+              <div class="dropdown_item_container">
+                <button class="dropdown_item" type="submit">2. Semester</button>
+              </div>
+            </form>
+            <form action="" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="context" value="reports_dropdown_select_semester">
+              <input type="hidden" name="semester" value="3">
+              <div class="dropdown_item_container">
+                <button class="dropdown_item" type="submit">3. Semester</button>
+              </div>
+            </form>
+            <form action="" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="context" value="reports_dropdown_select_semester">
+              <input type="hidden" name="semester" value="4">
+              <div class="dropdown_item_container">
+                <button class="dropdown_item" type="submit">4. Semester</button>
+              </div>
+            </form>
+            <form action="" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="context" value="reports_dropdown_select_semester">
+              <input type="hidden" name="semester" value="5">
+              <div class="dropdown_item_container">
+                <button class="dropdown_item" type="submit">5. Semester</button>
+              </div>
+            </form>
+            <form action="" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="context" value="reports_dropdown_select_semester">
+              <input type="hidden" name="semester" value="6">
+              <div class="dropdown_item_container">
+                <button class="dropdown_item" type="submit">6. Semester</button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
@@ -218,25 +303,40 @@
         <h1>VIP Werkzeuge</h1>
         <h2>Daten herunterladen</h2>
         <div class="wrapped_content">
-          <a class="button card_button" href="">
-            <img src="{% static 'imgs/download_file_icon_round.png' %}" alt="Download JSON" draggable="false">
-            <div><p>JSON Download</p></div>
-          </a>
-          <a class="button card_button" href="">
-            <img src="{% static 'imgs/download_file_icon_round.png' %}" alt="Download CSV" draggable="false">
-            <div><p>CSV Download</p></div>
-          </a>
-          <a class="button card_button" href="">
-            <img src="{% static 'imgs/download_file_icon_round.png' %}" alt="Download XML" draggable="false">
-            <div><p>XML Download</p></div>
-          </a>
+          <form action="" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="context" value="download_reports">
+            <input type="hidden" name="type" value="json">
+            <button class="button card_button" type="submit">
+              <img src="{% static 'imgs/download_file_icon_round.png' %}" alt="Download JSON" draggable="false">
+              <div><p>JSON Download</p></div>
+            </button>
+          </form>
+          <form action="" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="context" value="download_reports">
+            <input type="hidden" name="type" value="csv">
+            <button class="button card_button" type="submit">
+              <img src="{% static 'imgs/download_file_icon_round.png' %}" alt="Download CSV" draggable="false">
+              <div><p>CSV Download</p></div>
+            </button>
+          </form>
+          <form action="" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="context" value="download_reports">
+            <input type="hidden" name="type" value="xml">
+            <button class="button card_button" type="submit">
+              <img src="{% static 'imgs/download_file_icon_round.png' %}" alt="Download XML" draggable="false">
+              <div><p>XML Download</p></div>
+            </button>
+          </form>
         </div>
         <div class="space_top_1">
           <h2>Daten hochladen</h2>
-          <a class="button card_button" href="">
+          <button class="button card_button" onclick="uploadData()">
             <img src="{% static 'imgs/upload_file_icon_round.png' %}" alt="Upload data" draggable="false">
             <div><p>Daten Upload</p></div>
-          </a>
+          </button>
         </div>
       </div>
     {% endif %}

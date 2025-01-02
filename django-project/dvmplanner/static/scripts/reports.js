@@ -41,3 +41,7 @@ function deleteReport(id) {
   const inputId = document.getElementById('floating_window_delete_report_id');
   inputId.value = id;
 }
+
+function uploadData() {
+  
+}

@@ -240,19 +240,19 @@
             <div><p>Passwort ändern</p></div>
           </button>
           {% if img == True %}
-            <a class="button card_button small_text" href="">
+            <button class="button card_button small_text" onclick="editPicture(false)">
               <img src="{% static 'imgs/img_icon_round.png' %}" alt="Edit profile picture" draggable="false">
               <div><p>Profilbild ändern</p></div>
-            </a>
+            </button>
             <button class="button card_button small_text" onclick="removePicture()">
               <img src="{% static 'imgs/delete_icon_round.png' %}" alt="Remove profile picture" draggable="false">
               <div><p>Profilbild entfernen</p></div>
             </button>
           {% else %}
-            <a class="button card_button small_text" href="">
+            <button class="button card_button small_text" onclick="editPicture(true)">
               <img src="{% static 'imgs/add_icon_round.png' %}" alt="Add profile picture" draggable="false">
               <div><p>Profilbild hinzufügen</p></div>
-            </a>
+            </button>
           {% endif %}
         </div>
       </div>
@@ -273,20 +273,35 @@
           {% endif %}
         </h2>
         {% if requested_role != '' %}
-          <a class="button card_button small_text" href="">
-            <img src="{% static 'imgs/withdraw_icon_round.png' %}" alt="Withdraw application" draggable="false">
-            <div><p>Bewerbung zurückziehen</p></div>
-          </a>
+          <form action="" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="context" value="application">
+            <input type="hidden" name="type" value="withdrawal">
+            <button class="button card_button small_text" type="submit">
+              <img src="{% static 'imgs/withdraw_icon_round.png' %}" alt="Withdraw application" draggable="false">
+              <div><p>Bewerbung zurückziehen</p></div>
+            </button>
+          </form>
         {% elif role == 'normal' %}
-          <a class="button card_button small_text" href="">
-            <img src="{% static 'imgs/apply_icon_round.png' %}" alt="Apply as VIP" draggable="false">
-            <div><p>Als <span class="role_vip">VIP</span> bewerben</p></div>
-          </a>
+          <form action="" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="context" value="application">
+            <input type="hidden" name="type" value="vip">
+            <button class="button card_button small_text" type="submit">
+              <img src="{% static 'imgs/apply_icon_round.png' %}" alt="Apply as VIP" draggable="false">
+              <div><p>Als <span class="role_vip">VIP</span> bewerben</p></div>
+            </button>
+          </form>
         {% else %}
-          <a class="button card_button small_text" href="">
-            <img src="{% static 'imgs/apply_icon_round.png' %}" alt="Apply as Admin" draggable="false">
-            <div><p>Als <span class="role_admin">Admin</span> bewerben</p></div>
-          </a>
+          <form action="" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="context" value="application">
+            <input type="hidden" name="type" value="admin">
+            <button class="button card_button small_text" type="submit">
+              <img src="{% static 'imgs/apply_icon_round.png' %}" alt="Apply as Admin" draggable="false">
+              <div><p>Als <span class="role_admin">Admin</span> bewerben</p></div>
+            </button>
+          </form>
         {% endif %}
       </div>
     {% endif %}

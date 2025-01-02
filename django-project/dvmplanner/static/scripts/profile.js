@@ -33,3 +33,7 @@ function deleteProfile() {
   const floatingWindow = document.getElementById('floating_window_delete_profile');
   floatingWindow.classList.add('shown_floating_window');
 }
+
+function editPicture(addingPicture) {
+  
+}

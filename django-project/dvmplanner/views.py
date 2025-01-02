@@ -30,6 +30,27 @@ def dashboard(request):
       'name': 'Einführung in die Informatik',
       'index': '1.1.1'
     },
+    'current_activity': {
+      'status': 'active', # active, paused, finished, none
+      'day': '02.01.2025',
+      'start': '14.34:23 Uhr',
+      'entries': [
+        {
+          'day': '02.01.2025',
+          'start': '14.34:23 Uhr',
+          'end_day': '02.01.2025',
+          'end': '15.53:40 Uhr',
+          'time': '2:19:17'
+        },
+        {
+          'day': '02.01.2025',
+          'start': '14.34:23 Uhr',
+          'end_day': '02.01.2025',
+          'end': '15.53:40 Uhr',
+          'time': '2:19:17'
+        }
+      ]
+    },
     'modules': [
       {
         "index": "1",
@@ -449,6 +470,7 @@ def reports(request):
     'role': 'admin',
     'img': True,
     'current_module': '[Alle]',
+    'current_semester': '1. Semester',
     'modules': [
       {
         "index": "1",

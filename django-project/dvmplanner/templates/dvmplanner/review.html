@@ -69,14 +69,22 @@
     <div class="card">
       <h1>Ergebnisbericht</h1>
       <div class="wrapped_content">
-        <a class="button card_button" href="">
-          <img src="{% static 'imgs/download_file_icon_round.png' %}" alt="Download" draggable="false">
-          <div><p>PDF Download</p></div>
-        </a>
-        <a class="button card_button" href="">
-          <img src="{% static 'imgs/print_icon_round.png' %}" alt="Print" draggable="false">
-          <div><p>Drucken</p></div>
-        </a>
+        <form action="" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="context" value="download_review">
+          <button class="button card_button" type="submit">
+            <img src="{% static 'imgs/download_file_icon_round.png' %}" alt="Download" draggable="false">
+            <div><p>PDF Download</p></div>
+          </button>
+        </form>
+        <form action="" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="context" value="print_review">
+          <button class="button card_button" type="submit">
+            <img src="{% static 'imgs/print_icon_round.png' %}" alt="Print" draggable="false">
+            <div><p>Drucken</p></div>
+          </button>
+        </form>
       </div>
     </div>
   </div>

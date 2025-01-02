@@ -1,5 +1,9 @@
-.table_filter_dropdown.reports_table {
+.table_filter_dropdown.reports_table_module {
   max-width: 600px;
+}
+
+.table_filter_dropdown.reports_table_semester {
+  max-width: 160px;
 }
 
 .edit_report_dropdown {
