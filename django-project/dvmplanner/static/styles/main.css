@@ -804,3 +804,9 @@ body {
 .form_radio_buttons input[type="radio"]:checked + label {
   border-color: var(--bg-font);
 }
+
+.form_hint {
+  font-size: 14px;
+  margin-top: 10px;
+  max-width: 400px;
+}

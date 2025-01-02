@@ -29,3 +29,13 @@
 .item_name {
   font-weight: bold;
 }
+
+.edit_profile_content_split {
+  display: flex;
+  gap: 30px; 
+}
+
+.form_item.edit_profile_email_field input {
+  width: 100%;
+  box-sizing: border-box;
+}

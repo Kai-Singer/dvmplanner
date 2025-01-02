@@ -71,3 +71,13 @@
   width: 100%;
   box-sizing: border-box;
 }
+
+.form_item.add_module_name_field input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form_item.add_module_index_field input {
+  width: 100px;
+  box-sizing: border-box;
+}

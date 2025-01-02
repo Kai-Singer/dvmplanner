@@ -33,7 +33,7 @@
         <input type="hidden" id="floating_window_change_role_id" name="id" value="Placeholder">
         <div class="floating_content">
           <div class="form_item">
-            <div class="form_name">Rolle von <span id="floating_window_change_role_username">Placeholder</span> ändern</div>
+            <div class="form_name">Rolle von <span id="floating_window_change_role_username">Placeholder</span> ändern:</div>
             <div class="form_radio_buttons">
               <input type="radio" id="floating_window_change_role_normal" name="role" value="normal">
               <label for="floating_window_change_role_normal" class="radio_role_normal">Normal</label>
@@ -60,7 +60,7 @@
           <img src="{% static 'imgs/close_icon.png' %}" alt="Close window" draggable="false">
         </div>
       </div>
-      <form action="" method="get">
+      <form action="" method="post">
         {% csrf_token %}
         <input type="hidden" name="context" value="edit_module">
         <input type="hidden" id="floating_window_edit_module_index" name="index" value="Placeholder">
@@ -89,7 +89,7 @@
           </div>
           <div class="form_item edit_module_name_field">
             <div class="form_name">Name</div>
-            <input type="text" id="floating_window_edit_module_name" name="name" value="Placeholder">
+            <input type="text" id="floating_window_edit_module_name" name="name" value="Placeholder" required>
           </div>
         </div>
         <button class="button card_button" type="submit">
@@ -108,12 +108,83 @@
           <img src="{% static 'imgs/close_icon.png' %}" alt="Close window" draggable="false">
         </div>
       </div>
-      <form action="" method="get"> <!-- post -->
-        <!-- {% csrf_token %} -->
+      <form action="" method="post">
+        {% csrf_token %}
         <input type="hidden" name="context" value="delete_module">
         <input type="hidden" id="floating_window_delete_module_index" name="index" value="Placeholder">
         <div class="floating_content">
           <div class="floating_text">Willst du das Modul "<span id="floating_window_delete_module_name_text">Placeholder</span>" und alle Untermodule des Moduls wirklich löschen?</div>
+        </div>
+        <button class="button card_button red" type="submit">
+          <img src="{% static 'imgs/delete_icon_round_red.png' %}" alt="Delete" draggable="false">
+          <div><p>Löschen</p></div>
+        </button>
+      </form>
+    </div>
+  </div>
+  <!-- ADD MODULE -->
+  <div class="floating_container" id="floating_window_add_module">
+    <div class="floating_window">
+      <div class="floating_header">
+        <h1>Modul hinzufügen</h1>
+        <div class="floating_close_button" onclick="closeFloatingWindows()">
+          <img src="{% static 'imgs/close_icon.png' %}" alt="Close window" draggable="false">
+        </div>
+      </div>
+      <form action="" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="context" value="add_module">
+        <div class="floating_content">
+          <div class="form_item">
+            <div class="form_name">Semester</div>
+            <div class="dropdown form_dropdown">
+              <div class="dropdown_button">
+                <div>1. Semester</div>
+                <img src="{% static 'imgs/expand_dropdown.png' %}" alt="" draggable="false">
+              </div>
+              <input class="dropdown_input" type="hidden" name="semester" value="1">
+              <div class="dropdown_content">
+                <div class="dropdown_item" onclick="formDropdownSelect(this, '1')">1. Semester</div>
+                <div class="dropdown_item" onclick="formDropdownSelect(this, '2')">2. Semester</div>
+                <div class="dropdown_item" onclick="formDropdownSelect(this, '3')">3. Semester</div>
+                <div class="dropdown_item" onclick="formDropdownSelect(this, '4')">4. Semester</div>
+                <div class="dropdown_item" onclick="formDropdownSelect(this, '5')">5. Semester</div>
+                <div class="dropdown_item" onclick="formDropdownSelect(this, '6')">6. Semester</div>
+              </div>
+            </div>
+            <div class="form_hint">Bitte beachte: Wenn es sich bei dem hinzuzufügenden Modul nicht um ein Untermodul (dreistellige Indexnummer) handelt, ist die Angabe eines Semesters irrelevant!</div>
+          </div>
+          <div class="form_item add_module_index_field">
+            <div class="form_name">Index</div>
+            <input type="text" name="index" placeholder="1" required>
+            <div class="form_hint">Bitte beachte: Die Indexnummer darf nicht vergeben und muss valide sein!</div>
+          </div>
+          <div class="form_item add_module_name_field">
+            <div class="form_name">Name</div>
+            <input type="text" name="name" placeholder="Modulname" required>
+          </div>
+        </div>
+        <button class="button card_button" type="submit">
+          <img src="{% static 'imgs/save_icon_round.png' %}" alt="Save changes" draggable="false">
+          <div><p>Speichern</p></div>
+        </button>
+      </form>
+    </div>
+  </div>
+  <!-- RESTORE DEFAULT -->
+  <div class="floating_container" id="floating_window_restore_default">
+    <div class="floating_window">
+      <div class="floating_header">
+        <h1>Modul-Standardkonfiguarion laden</h1>
+        <div class="floating_close_button" onclick="closeFloatingWindows()">
+          <img src="{% static 'imgs/close_icon.png' %}" alt="Close window" draggable="false">
+        </div>
+      </div>
+      <form action="" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="context" value="restore_default">
+        <div class="floating_content">
+          <div class="floating_text">Willst du alle Änderungen des Modulplans löschen und die Standardkonfiguration wiederherstellen?</div>
         </div>
         <button class="button card_button red" type="submit">
           <img src="{% static 'imgs/delete_icon_round_red.png' %}" alt="Delete" draggable="false">
@@ -344,14 +415,14 @@
       <div class="space_top_2">
         <h2>Aktionen</h2>
         <div class="wrapped_content">
-          <a class="button card_button small_text" href="">
+          <button class="button card_button small_text" onclick="addModule()">
             <img src="{% static 'imgs/add_icon_round.png' %}" alt="Add module" draggable="false">
             <div><p>Modul hinzufügen</p></div>
-          </a>
-          <a class="button card_button" href="">
+          </button>
+          <button class="button card_button" onclick="restoreDefault()">
             <img src="{% static 'imgs/restore_icon_round.png' %}" alt="Restore default" draggable="false">
             <div><p>Standard laden</p></div>
-          </a>
+          </button>
         </div>
       </div>
     </div>

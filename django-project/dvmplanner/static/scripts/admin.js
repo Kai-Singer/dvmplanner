@@ -59,3 +59,17 @@ function deleteModule(index, name) {
   const textName = document.getElementById('floating_window_delete_module_name_text');
   textName.innerText = index + ' ' + name;
 }
+
+function addModule() {
+  const floatingBackground = document.getElementById('floating_background');
+  floatingBackground.classList.add('shown_floating_window');
+  const floatingWindow = document.getElementById('floating_window_add_module');
+  floatingWindow.classList.add('shown_floating_window');
+}
+
+function restoreDefault() {
+  const floatingBackground = document.getElementById('floating_background');
+  floatingBackground.classList.add('shown_floating_window');
+  const floatingWindow = document.getElementById('floating_window_restore_default');
+  floatingWindow.classList.add('shown_floating_window');
+}
