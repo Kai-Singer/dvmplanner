@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="{% static 'imgs/logo_favicon.png' %}">
   <link rel="stylesheet" href="{% static 'styles/main.css' %}">
+  <link rel="stylesheet" href="{% static 'styles/dashboard.css' %}">
   <script>
     const staticMenuIcon = "{% static 'imgs/menu_icon.png' %}";
     const staticCloseIcon = "{% static 'imgs/close_icon.png' %}";
@@ -14,8 +15,6 @@
   <title>Dashboard - DVM Planner</title>
 </head>
 <body>
-  <!-- FLOATING WINDOW -->
-  <div class="floating_container"></div>
   <!-- NAVBAR -->
   <div class="navbar_hide_button" onclick="toggleNavbar()">
     <img id="navbar_hide_button_img" src="{% static 'imgs/menu_icon.png' %}" alt="Open menu" draggable="false">
@@ -35,7 +34,7 @@
       <li><a class="navbar_item" href="/profile/"><div>Profil</div></a></li>
     </ul>
     <a class="button navbar_add_button small_text" href="/addreport/">
-      <img src="{% static 'imgs/add_icon_round_red.png' %}" alt="Add Report" draggable="false">
+      <img src="{% static 'imgs/add_icon_round_red.png' %}" alt="Add report" draggable="false">
       <div><p>Bericht hinzufügen</p></div>
     </a>
   </div>
@@ -45,16 +44,16 @@
       <div class="topbar_text">Hallo {{ first_name }} {{ last_name }}</div>
       <div class="button profile_button" id="profile_button">
         {% if img == True %}
-          <img src="{% static 'profiles/' %}{{uid}}.png" alt="Profile Picture of {{uid}}" draggable="false">
+          <img src="{% static 'profiles/' %}{{uid}}.png" alt="Profile picture of {{uid}}" draggable="false">
         {% else %}
-          <img src="{% static 'profiles/' %}_default.png" alt="Default Profile Picture" draggable="false">
+          <img src="{% static 'profiles/' %}_default.png" alt="Default profile picture" draggable="false">
         {% endif %}
         <div><p>{{ username }}</p></div>
       </div>
     </div>
     <div class="usermenu hidden_usermenu" id="usermenu">
       <a class="button usermenu_button" href="/login/">
-        <img src="{% static 'imgs/change_user_icon_round.png' %}" alt="Change User" draggable="false">
+        <img src="{% static 'imgs/change_user_icon_round.png' %}" alt="Change user" draggable="false">
         <div><p>Profil wechseln</p></div>
       </a>
       <a class="button usermenu_button" href="/signup/">
@@ -63,6 +62,99 @@
       </a>
     </div>
     <!-- DASHBOARD -->
+    <!-- CHECK-IN REPORT -->
+    <div class="card">
+      <h1>Neuer Arbeitsbericht</h1>
+      <div class="wrapped_content">
+        <!-- <a class="button card_button green" href="">
+          <img src="{% static 'imgs/start_icon_round_green.png' %}" alt="Start" draggable="false">
+          <div><p>Starten</p></div>
+        </a>
+        <a class="button card_button blue" href="">
+          <img src="{% static 'imgs/pause_icon_round_blue.png' %}" alt="Pause" draggable="false">
+          <div><p>Pause</p></div>
+        </a> -->
+        <a class="button card_button blue" href="">
+          <img src="{% static 'imgs/start_icon_round_blue.png' %}" alt="Resume" draggable="false">
+          <div><p>Fortfahren</p></div>
+        </a>
+        <a class="button card_button red" href="">
+          <img src="{% static 'imgs/finish_icon_round_red.png' %}" alt="Finish" draggable="false">
+          <div><p>Beenden</p></div>
+        </a>
+      </div>
+      <div class="space_top_1">
+        <h2>Gespeicherte Zeiten des aktuellen Arbeitsberichts:</h2>
+        <div class="border_item overflow">
+          <table>
+            <tr>
+              <th>Tag</th>
+              <th>Beginn</th>
+              <th>Tag</th>
+              <th>Ende</th>
+              <th>Dauer</th>
+              <th>Aktionen</th>
+            </tr>
+            <tr class="hoverable_tr">
+              <td>02.01.2025</td>
+              <td class="nowrap">14.34:23 Uhr</td>
+              <td>02.01.2025</td>
+              <td class="nowrap">15.53:40 Uhr</td>
+              <td>2:19:17</td>
+              <td class="no_select">
+                <button class="table_button red tooltip_elem" onclick="deleteReport('{{ report.id }}')"><img src="{% static 'imgs/delete_icon.png' %}" alt="Delete" draggable="false"><div class="tooltip_text" >Löschen</div></button>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <p>Bitte beachte: Alle aufgeführten Zeiten werden als einzelne Arbeitsberichte mit den jeweils gleichen Details (Modul und Notizen) abgespeichert!</p>
+      </div>
+      <div class="space_top_1">
+        <h2>Details des aktuellen Arbeitsberichts festlegen:</h2>
+        <form action="" method="get"> <!-- POST -->
+          <!-- {% csrf_token %} -->
+          <input type="hidden" name="context" value="checkin_report">
+          <input type="hidden" name="times" id="checkin_report_times" value="Placeholder">
+          <div class="checkin_data">
+            <div class="form_item">
+              <div class="form_name">Modul</div>
+              <div class="dropdown form_dropdown checkin_dropdown">
+                <div class="dropdown_button">
+                  <div>{{ placeholder_module.index }} {{ placeholder_module.name }}</div>
+                  <img src="{% static 'imgs/expand_dropdown.png' %}" alt="" draggable="false">
+                </div>
+                <input class="dropdown_input" type="hidden" name="module" value="{{ placeholder_module.index }}">
+                <div class="dropdown_content">
+                  {% for modulegroup in modules %}
+                    <div class="dropdown_item not_selectable">{{ modulegroup.index }} {{ modulegroup.name }}</div>
+                    {% for module in modulegroup.modules %}
+                      <div class="dropdown_item indent_1  not_selectable">{{ module.index }} {{ module.name }}</div>
+                      {% for submodule in module.submodules %}
+                        <div class="dropdown_item indent_2" onclick="formDropdownSelect(this, '{{ submodule.index }}')">{{ submodule.index }} {{ submodule.name }}</div>
+                      {% endfor %}
+                    {% endfor %}
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+            <div class="form_item">
+              <div class="form_name">Notizen</div>
+              <textarea name="notes" rows="4" cols="50" required></textarea>
+            </div>
+          </div>
+          <div class="wrapped_content space_top_1">
+            <button class="button card_button" type="submit">
+              <img src="{% static 'imgs/save_icon_round.png' %}" alt="Save report" draggable="false">
+              <div><p>Speichern</p></div>
+            </button>
+            <button class="button card_button" type="reset">
+              <img src="{% static 'imgs/delete_icon_round.png' %}" alt="Delete entries" draggable="false">
+              <div><p>Daten löschen</p></div>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 </body>
 </html>

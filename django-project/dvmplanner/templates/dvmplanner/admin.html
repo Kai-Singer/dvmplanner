@@ -210,7 +210,7 @@
       <li><a class="navbar_item" href="/profile/"><div>Profil</div></a></li>
     </ul>
     <a class="button navbar_add_button small_text" href="/addreport/">
-      <img src="{% static 'imgs/add_icon_round_red.png' %}" alt="Add Report" draggable="false">
+      <img src="{% static 'imgs/add_icon_round_red.png' %}" alt="Add report" draggable="false">
       <div><p>Bericht hinzufügen</p></div>
     </a>
   </div>    
@@ -220,16 +220,16 @@
       <div class="topbar_text">Admin Dashboard</div>
       <div class="button profile_button" id="profile_button">
         {% if img == True %}
-          <img src="{% static 'profiles/' %}{{uid}}.png" alt="Profile Picture of {{uid}}" draggable="false">
+          <img src="{% static 'profiles/' %}{{uid}}.png" alt="Profile picture of {{uid}}" draggable="false">
         {% else %}
-          <img src="{% static 'profiles/' %}_default.png" alt="Default Profile Picture" draggable="false">
+          <img src="{% static 'profiles/' %}_default.png" alt="Default profile picture" draggable="false">
         {% endif %}
         <div><p>{{ username }}</p></div>
       </div>
     </div>
     <div class="usermenu hidden_usermenu" id="usermenu">
       <a class="button usermenu_button" href="/login/">
-        <img src="{% static 'imgs/change_user_icon_round.png' %}" alt="Change User" draggable="false">
+        <img src="{% static 'imgs/change_user_icon_round.png' %}" alt="Change user" draggable="false">
         <div><p>Profil wechseln</p></div>
       </a>
       <a class="button usermenu_button" href="/signup/">
@@ -358,7 +358,7 @@
                 <td>Gelöscht</td>
               {% endif %}
               <td class="no_select">
-                <button class="table_button tooltip_elem" onclick="changeRole('{{ user.id }}', '{{ user.username }}', '{{ user.role }}')"><img src="{% static 'imgs/edit_icon.png' %}" alt="Change Role" draggable="false"><div class="tooltip_text" >Rolle ändern</div></button>
+                <button class="table_button tooltip_elem" onclick="changeRole('{{ user.id }}', '{{ user.username }}', '{{ user.role }}')"><img src="{% static 'imgs/edit_icon.png' %}" alt="Change role" draggable="false"><div class="tooltip_text" >Rolle ändern</div></button>
                 {% if user.status == 'blocked' %}
                   <button class="table_button green tooltip_elem"><img src="{% static 'imgs/unblock_icon.png' %}" alt="Unblock" draggable="false"><div class="tooltip_text" >Entsperren</div></button>
                 {% else %}

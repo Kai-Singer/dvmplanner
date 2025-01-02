@@ -13,6 +13,7 @@ body {
   --fg-transparent: rgba(0, 0, 0, 0.5);
   --ac1: #ff0000;
   --ac-green: #00a914;
+  --ac-blue: #009dff;
   --bg-font: #000;
   --fg1-font: #000;
   --fg2-font: #000;
@@ -20,8 +21,10 @@ body {
   --fg4-font: #fff;
   --ac1-font: #fff;
   --ac-green-font: #fff;
+  --ac-blue-font: #fff;
   --font-ac1: #ff0000;
   --font-ac-green: #00a914;
+  --font-ac-blue: #009dff;
   --font-user-normal: #797979;
   --font-user-vip: #c2ab25;
   --font-user-admin: #700775;
@@ -533,7 +536,23 @@ body {
 }
 
 .card_button.red div {
-  color: var(--ac1);
+  color: var(--font-ac1);
+}
+
+.card_button.green {
+  border-color: var(--ac-green);
+}
+
+.card_button.green div {
+  color: var(--font-ac-green);
+}
+
+.card_button.blue {
+  border-color: var(--ac-blue);
+}
+
+.card_button.blue div {
+  color: var(--font-ac-blue);
 }
 
 .card .no_select {

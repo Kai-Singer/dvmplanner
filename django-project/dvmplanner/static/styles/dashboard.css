@@ -1,0 +1,17 @@
+.checkin_times {
+  font-weight: bold;
+}
+
+.checkin_dropdown {
+  width: 100%;
+  max-width: 600px;
+  flex-grow: 1;
+}
+
+.checkin_data {
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 10px;
+}
