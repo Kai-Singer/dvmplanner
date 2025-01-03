@@ -2,11 +2,17 @@
 {% load static %}
 
 {% block extra_stylesheets %}
-  <!-- STYLESHEET -->
+  <!-- <link rel="stylesheet" href="{% static 'styles/review.css' %}"> -->
 {% endblock %}
 
 {% block extra_scripts %}
-  <!-- SCRIPT -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+  <script>
+    const review_data = JSON.parse('{{ review_data|safe }}');
+    const modules = review_data.modules;
+    const reports = review_data.reports;
+  </script>
+  <script src="{% static 'scripts/review.js' %}" defer></script> -->
 {% endblock %}
 
 {% block page_title %}Ergebnisse{% endblock %}
@@ -19,10 +25,48 @@
 
 {% block content %}
   <!-- REVIEW -->
-  <div class="card">
-    <h1>Ergebnisse von {{ first_name }} {{ last_name }}</h1>
-    <!-- Tabellen, Diagramme & Filter zur Darstellung der Ergebnisse -->
-  </div>
+  <!-- <div class="card">
+    <h1>Lernzeitverteilung nach Tageszeit</h1>
+    <div class="table_filter">
+      <div class="table_filter_text">Modul:</div>
+      <div class="dropdown table_filter_dropdown">
+        <div class="dropdown_button">
+          <div>{{ placeholder_module.index }} {{ placeholder_module.name }}</div>
+          <img src="{% static 'imgs/expand_dropdown.png' %}" alt="" draggable="false">
+        </div>
+        <div class="dropdown_content">
+            <div class="dropdown_item" onclick="">[Alle]</div>
+          {% for modulegroup in modules %}
+            <div class="dropdown_item" onclick="">{{ modulegroup.index }} {{ modulegroup.name }}</div>
+            {% for module in modulegroup.modules %}
+              <div class="dropdown_item indent_1" onclick="">{{ module.index }} {{ module.name }}</div>
+              {% for submodule in module.submodules %}
+                <div class="dropdown_item indent_2" onclick="">{{ submodule.index }} {{ submodule.name }}</div>
+              {% endfor %}
+            {% endfor %}
+          {% endfor %}
+        </div>
+      </div>
+      <div class="table_filter_text spacing_left">Semester:</div>
+      <div class="dropdown table_filter_dropdown">
+        <div class="dropdown_button">
+          <div>1. Semester</div>
+          <img src="{% static 'imgs/expand_dropdown.png' %}" alt="" draggable="false">
+        </div>
+        <div class="dropdown_content">
+          <div class="dropdown_item" onclick="">1. Semester</div>
+          <div class="dropdown_item" onclick="">2. Semester</div>
+          <div class="dropdown_item" onclick="">3. Semester</div>
+          <div class="dropdown_item" onclick="">4. Semester</div>
+          <div class="dropdown_item" onclick="">5. Semester</div>
+          <div class="dropdown_item" onclick="">6. Semester</div>
+        </div>
+      </div>
+    </div>
+    <div class="border_item chart_item">
+      <canvas id="chart_test"></canvas>
+    </div>
+  </div> -->
   <!-- DOWNLOAD & PRINT -->
   <div class="card">
     <h1>Ergebnisbericht</h1>

@@ -6,6 +6,10 @@
 {% endblock %}
 
 {% block extra_scripts %}
+  <script>
+    const staticArrowRightIcon = "{% static 'imgs/arrow_right_icon.png' %}";
+    const staticArrowLeftIcon = "{% static 'imgs/arrow_left_icon.png' %}";
+  </script>
   <script src="{% static 'scripts/reports.js' %}" defer></script>
 {% endblock %}
 
