@@ -20,6 +20,7 @@ def dashboard(request):
   #   'usernames': usernames
   # }
   data = {
+    'active_page': 'dashboard',
     'uid': uid,
     'username': 'testuser',
     'first_name': 'Max',
@@ -463,6 +464,7 @@ def reports(request):
   - Wenn Notizen länger als Anzahl Buchstaben -> verkürzte version in 'notes' und lange in 'long_notes', ansonsten 'long_notes' leer lassen
   '''
   data = {
+    'active_page': 'reports',
     'uid': uid,
     'username': 'testuser',
     'first_name': 'Max',
@@ -916,6 +918,7 @@ def reports(request):
 
 def review(request):
   data = {
+    'active_page': 'review',
     'uid': uid,
     'username': 'testuser',
     'first_name': 'Max',
@@ -927,6 +930,7 @@ def review(request):
 
 def admin(request):
   data = {
+    'active_page': 'admin',
     'uid': uid,
     'username': 'testuser',
     'first_name': 'Max',
@@ -1453,6 +1457,7 @@ def admin(request):
 
 def profile(request):
   data = {
+    'active_page': 'profile',
     'uid': uid,
     'username': 'testuser',
     'first_name': 'Max',
@@ -1468,6 +1473,7 @@ def profile(request):
 
 def addreport(request):
   data = {
+    'active_page': 'addreport',
     'uid': uid,
     'username': 'testuser',
     'first_name': 'Max',

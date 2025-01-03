@@ -1,23 +1,17 @@
-<!DOCTYPE html>
-<html lang="de">
+{% extends "dvmplanner/base.html" %}
 {% load static %}
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/png" href="{% static 'imgs/logo_favicon.png' %}">
-  <link rel="stylesheet" href="{% static 'styles/main.css' %}">
+
+{% block extra_stylesheets %}
   <link rel="stylesheet" href="{% static 'styles/admin.css' %}">
-  <script>
-    const staticMenuIcon = "{% static 'imgs/menu_icon.png' %}";
-    const staticCloseIcon = "{% static 'imgs/close_icon.png' %}";
-  </script>
-  <script src="{% static 'scripts/main.js' %}" defer></script>
+{% endblock %}
+
+{% block extra_scripts %}
   <script src="{% static 'scripts/admin.js' %}" defer></script>
-  <title>Admin Dashboard - DVM Planner</title>
-</head>
-<body>
-  <!-- FLOATING WINDOW -->
-  <div class="floating_background" id="floating_background" onclick="closeFloatingWindows()"></div>
+{% endblock %}
+
+{% block page_title %}Admin Dashboard{% endblock %}
+
+{% block floating_windows %}
   <!-- CHANGE ROLE -->
   <div class="floating_container" id="floating_window_change_role">
     <div class="floating_window">
@@ -27,7 +21,7 @@
           <img src="{% static 'imgs/close_icon.png' %}" alt="Close window" draggable="false">
         </div>
       </div>
-      <form action="" method="post">
+      <form method="post">
         {% csrf_token %}
         <input type="hidden" name="context" value="change_role">
         <input type="hidden" id="floating_window_change_role_id" name="id" value="Placeholder">
@@ -60,7 +54,7 @@
           <img src="{% static 'imgs/close_icon.png' %}" alt="Close window" draggable="false">
         </div>
       </div>
-      <form action="" method="post">
+      <form method="post">
         {% csrf_token %}
         <input type="hidden" name="context" value="edit_module">
         <input type="hidden" id="floating_window_edit_module_index" name="index" value="Placeholder">
@@ -108,7 +102,7 @@
           <img src="{% static 'imgs/close_icon.png' %}" alt="Close window" draggable="false">
         </div>
       </div>
-      <form action="" method="post">
+      <form method="post">
         {% csrf_token %}
         <input type="hidden" name="context" value="delete_module">
         <input type="hidden" id="floating_window_delete_module_index" name="index" value="Placeholder">
@@ -131,7 +125,7 @@
           <img src="{% static 'imgs/close_icon.png' %}" alt="Close window" draggable="false">
         </div>
       </div>
-      <form action="" method="post">
+      <form method="post">
         {% csrf_token %}
         <input type="hidden" name="context" value="add_module">
         <div class="floating_content">
@@ -180,7 +174,7 @@
           <img src="{% static 'imgs/close_icon.png' %}" alt="Close window" draggable="false">
         </div>
       </div>
-      <form action="" method="post">
+      <form method="post">
         {% csrf_token %}
         <input type="hidden" name="context" value="restore_default">
         <div class="floating_content">
@@ -193,316 +187,275 @@
       </form>
     </div>
   </div>
-  <!-- NAVBAR -->
-  <div class="navbar_hide_button" onclick="toggleNavbar()">
-    <img id="navbar_hide_button_img" src="{% static 'imgs/menu_icon.png' %}" alt="Open menu" draggable="false">
+{% endblock %}
+
+{% block header_title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+  <!-- ADMIN -->
+  <!-- REQUESTS -->
+  <div class="card">
+    <h1>Anfragen</h1>
+    <div class="table_filter">
+      <div class="table_filter_text">Angefragte Rolle:</div>
+      <div class="dropdown table_filter_dropdown requests_table">
+        <div class="dropdown_button">
+          <div>{{ current_requests_filter_role }}</div>
+          <img src="{% static 'imgs/expand_dropdown.png' %}" alt="" draggable="false">
+        </div>
+        <div class="dropdown_content">
+          <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="context" value="requests_dropdown_select_role">
+            <input type="hidden" name="role" value="all">
+            <div class="dropdown_item_container">
+              <button class="dropdown_item" type="submit">[Alle]</button>
+            </div>
+          </form>
+          <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="context" value="requests_dropdown_select_role">
+            <input type="hidden" name="role" value="vip">
+            <div class="dropdown_item_container">
+              <button class="dropdown_item" type="submit">VIP</button>
+            </div>
+          </form>
+          <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="context" value="requests_dropdown_select_role">
+            <input type="hidden" name="role" value="admin">
+            <div class="dropdown_item_container">
+              <button class="dropdown_item" type="submit">Admin</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="border_item overflow">
+      <table>
+        <tr>
+          <th>Datum</th>
+          <th>Vorname</th>
+          <th>Nachname</th>
+          <th>Nutzername</th>
+          <th>Aktuelle Rolle</th>
+          <th>Anfrage auf</th>
+          <th>Aktionen</th>
+        </tr>
+        {% for request in requests %}
+          <tr class="hoverable_tr">
+            <td class="nowrap">{{ request.day }}<br>{{ request.time }}</td>
+            <td class="nowrap">{{ request.first_name }}</td>
+            <td class="nowrap">{{ request.last_name }}</td>
+            <td>{{ request.username }}</td>
+            {% if request.role == 'normal' %}
+              <td class="role_normal">Normal</td>
+            {% elif request.role == 'vip' %}
+              <td class="role_vip">VIP</td>
+            {% elif request.role == 'admin' %}
+              <td class="role_admin">Admin</td>
+            {% endif %}
+            {% if request.requested_role == 'normal' %}
+              <td class="role_normal">Normal</td>
+            {% elif request.requested_role == 'vip' %}
+              <td class="role_vip">VIP</td>
+            {% elif request.requested_role == 'admin' %}
+              <td class="role_admin">Admin</td>
+            {% endif %}
+            <td class="no_select">
+              <button class="table_button green tooltip_elem"><img src="{% static 'imgs/accept_icon.png' %}" alt="Accept" draggable="false"><div class="tooltip_text" >Akzeptieren</div></button>
+              <button class="table_button red tooltip_elem"><img src="{% static 'imgs/decline_icon.png' %}" alt="Decline" draggable="false"><div class="tooltip_text" >Ablehnen</div></button>
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
   </div>
-  <div class="navbar" id="navbar">
-    <div class="navbar_header">
-      <img src="{% static 'imgs/logo.png' %}" alt="DVM Planner Logo" draggable="false">
-      <p>DVM Planner</p>
-    </div>
-    <ul>
-      <li><a class="navbar_item" href="/dashboard/"><div>Dashboard</div></a></li>
-      <li><a class="navbar_item" href="/reports/"><div>Arbeitsberichte</div></a></li>
-      <li><a class="navbar_item" href="/review/"><div>Ergebnisse</div></a></li>
-      <li><a class="navbar_item highlighted"><div>Admin Dashboard</div></a></li>
-      <li><a class="navbar_item" href="/profile/"><div>Profil</div></a></li>
-    </ul>
-    <a class="button navbar_add_button small_text" href="/addreport/">
-      <img src="{% static 'imgs/add_icon_round_red.png' %}" alt="Add report" draggable="false">
-      <div><p>Bericht hinzufügen</p></div>
-    </a>
-  </div>    
-  <!-- CONTENT -->
-  <div class="content" id="content">
-    <div class="topbar">
-      <div class="topbar_text">Admin Dashboard</div>
-      <div class="button profile_button" id="profile_button">
-        {% if img == True %}
-          <img src="{% static 'profiles/' %}{{uid}}.png" alt="Profile picture of {{uid}}" draggable="false">
-        {% else %}
-          <img src="{% static 'profiles/' %}_default.png" alt="Default profile picture" draggable="false">
-        {% endif %}
-        <div><p>{{ username }}</p></div>
-      </div>
-    </div>
-    <div class="usermenu hidden_usermenu" id="usermenu">
-      <a class="button usermenu_button" href="/login/">
-        <img src="{% static 'imgs/change_user_icon_round.png' %}" alt="Change user" draggable="false">
-        <div><p>Profil wechseln</p></div>
-      </a>
-      <a class="button usermenu_button" href="/signup/">
-        <img src="{% static 'imgs/logout_icon_round.png' %}" alt="Logout" draggable="false">
-        <div><p>Ausloggen</p></div>
-      </a>
-    </div>
-    <!-- ADMIN -->
-    <!-- REQUESTS -->
-    <div class="card">
-      <h1>Anfragen</h1>
-      <div class="table_filter">
-        <div class="table_filter_text">Angefragte Rolle:</div>
-        <div class="dropdown table_filter_dropdown requests_table">
-          <div class="dropdown_button">
-            <div>{{ current_requests_filter_role }}</div>
-            <img src="{% static 'imgs/expand_dropdown.png' %}" alt="" draggable="false">
-          </div>
-          <div class="dropdown_content">
-            <form action="" method="post">
-              {% csrf_token %}
-              <input type="hidden" name="context" value="requests_dropdown_select_role">
-              <input type="hidden" name="role" value="all">
-              <div class="dropdown_item_container">
-                <button class="dropdown_item" type="submit">[Alle]</button>
-              </div>
-            </form>
-            <form action="" method="post">
-              {% csrf_token %}
-              <input type="hidden" name="context" value="requests_dropdown_select_role">
-              <input type="hidden" name="role" value="vip">
-              <div class="dropdown_item_container">
-                <button class="dropdown_item" type="submit">VIP</button>
-              </div>
-            </form>
-            <form action="" method="post">
-              {% csrf_token %}
-              <input type="hidden" name="context" value="requests_dropdown_select_role">
-              <input type="hidden" name="role" value="admin">
-              <div class="dropdown_item_container">
-                <button class="dropdown_item" type="submit">Admin</button>
-              </div>
-            </form>
-          </div>
+  <!-- USERS -->
+  <div class="card">
+    <h1>Nutzerübersicht</h1>
+    <div class="table_filter">
+      <div class="table_filter_text">Rolle:</div>
+      <div class="dropdown table_filter_dropdown users_table_1">
+        <div class="dropdown_button">
+          <div>{{ current_users_filter_role }}</div>
+          <img src="{% static 'imgs/expand_dropdown.png' %}" alt="" draggable="false">
+        </div>
+        <div class="dropdown_content">
+          <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="context" value="users_dropdown_select_role">
+            <input type="hidden" name="role" value="all">
+            <div class="dropdown_item_container">
+              <button class="dropdown_item" type="submit">[Alle]</button>
+            </div>
+          </form>
+          <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="context" value="users_dropdown_select_role">
+            <input type="hidden" name="role" value="normal">
+            <div class="dropdown_item_container">
+              <button class="dropdown_item" type="submit">Normal</button>
+            </div>
+          </form>
+          <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="context" value="users_dropdown_select_role">
+            <input type="hidden" name="role" value="vip">
+            <div class="dropdown_item_container">
+              <button class="dropdown_item" type="submit">VIP</button>
+            </div>
+          </form>
+          <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="context" value="users_dropdown_select_role">
+            <input type="hidden" name="role" value="admin">
+            <div class="dropdown_item_container">
+              <button class="dropdown_item" type="submit">Admin</button>
+            </div>
+          </form>
         </div>
       </div>
-      <div class="border_item overflow">
-        <table>
-          <tr>
-            <th>Datum</th>
-            <th>Vorname</th>
-            <th>Nachname</th>
-            <th>Nutzername</th>
-            <th>Aktuelle Rolle</th>
-            <th>Anfrage auf</th>
-            <th>Aktionen</th>
+      <div class="table_filter_text spacing_left">Status:</div>
+      <div class="dropdown table_filter_dropdown users_table_2">
+        <div class="dropdown_button">
+          <div>{{ current_users_filter_status }}</div>
+          <img src="{% static 'imgs/expand_dropdown.png' %}" alt="" draggable="false">
+        </div>
+        <div class="dropdown_content">
+          <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="context" value="users_dropdown_select_status">
+            <input type="hidden" name="role" value="all">
+            <div class="dropdown_item_container">
+              <button class="dropdown_item" type="submit">[Alle]</button>
+            </div>
+          </form>
+          <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="context" value="users_dropdown_select_status">
+            <input type="hidden" name="role" value="active">
+            <div class="dropdown_item_container">
+              <button class="dropdown_item" type="submit">Aktiv</button>
+            </div>
+          </form>
+          <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="context" value="users_dropdown_select_status">
+            <input type="hidden" name="role" value="blocked">
+            <div class="dropdown_item_container">
+              <button class="dropdown_item" type="submit">Gesperrt</button>
+            </div>
+          </form>
+          <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="context" value="users_dropdown_select_status">
+            <input type="hidden" name="role" value="deleted">
+            <div class="dropdown_item_container">
+              <button class="dropdown_item" type="submit">Gelöscht</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="border_item overflow">
+      <table>
+        <tr>
+          <th>Erstellt</th>
+          <th>Vorname</th>
+          <th>Nachname</th>
+          <th>Nutzername</th>
+          <th>Rolle</th>
+          <th>Status</th>
+          <th>Aktionen</th>
+        </tr>
+        {% for user in users %}
+          <tr class="hoverable_tr">
+            <td class="nowrap {% if user.status == 'deleted' %} status_deleted {% endif %}">{{ user.day }}<br>{{ user.time }}</td>
+            <td class="nowrap {% if user.status == 'deleted' %} status_deleted {% endif %}">{{ user.first_name }}</td>
+            <td class="nowrap {% if user.status == 'deleted' %} status_deleted {% endif %}">{{ user.last_name }}</td>
+            <td class="{% if user.status == 'deleted' %} status_deleted {% endif %}">{{ user.username }}</td>
+            {% if user.role == 'normal' %}
+              <td class="role_normal {% if user.status == 'deleted' %} status_deleted {% endif %}">Normal</td>
+            {% elif user.role == 'vip' %}
+              <td class="role_vip {% if user.status == 'deleted' %} status_deleted {% endif %}">VIP</td>
+            {% elif user.role == 'admin' %}
+              <td class="role_admin {% if user.status == 'deleted' %} status_deleted {% endif %}">Admin</td>
+            {% endif %}
+            {% if user.status == 'active' %}
+              <td class="status_active">Aktiv</td>
+            {% elif user.status == 'blocked' %}
+              <td class="status_blocked">Gesperrt</td>
+            {% elif user.status == 'deleted' %}
+              <td>Gelöscht</td>
+            {% endif %}
+            <td class="no_select">
+              <button class="table_button tooltip_elem" onclick="changeRole('{{ user.id }}', '{{ user.username }}', '{{ user.role }}')"><img src="{% static 'imgs/edit_icon.png' %}" alt="Change role" draggable="false"><div class="tooltip_text" >Rolle ändern</div></button>
+              {% if user.status == 'blocked' %}
+                <button class="table_button green tooltip_elem"><img src="{% static 'imgs/unblock_icon.png' %}" alt="Unblock" draggable="false"><div class="tooltip_text" >Entsperren</div></button>
+              {% else %}
+                <button class="table_button red tooltip_elem"><img src="{% static 'imgs/block_icon.png' %}" alt="Block" draggable="false"><div class="tooltip_text" >Sperren</div></button>
+              {% endif %}
+            </td>
           </tr>
-          {% for request in requests %}
-            <tr class="hoverable_tr">
-              <td class="nowrap">{{ request.day }}<br>{{ request.time }}</td>
-              <td class="nowrap">{{ request.first_name }}</td>
-              <td class="nowrap">{{ request.last_name }}</td>
-              <td>{{ request.username }}</td>
-              {% if request.role == 'normal' %}
-                <td class="role_normal">Normal</td>
-              {% elif request.role == 'vip' %}
-                <td class="role_vip">VIP</td>
-              {% elif request.role == 'admin' %}
-                <td class="role_admin">Admin</td>
-              {% endif %}
-              {% if request.requested_role == 'normal' %}
-                <td class="role_normal">Normal</td>
-              {% elif request.requested_role == 'vip' %}
-                <td class="role_vip">VIP</td>
-              {% elif request.requested_role == 'admin' %}
-                <td class="role_admin">Admin</td>
-              {% endif %}
-              <td class="no_select">
-                <button class="table_button green tooltip_elem"><img src="{% static 'imgs/accept_icon.png' %}" alt="Accept" draggable="false"><div class="tooltip_text" >Akzeptieren</div></button>
-                <button class="table_button red tooltip_elem"><img src="{% static 'imgs/decline_icon.png' %}" alt="Decline" draggable="false"><div class="tooltip_text" >Ablehnen</div></button>
-              </td>
-            </tr>
-          {% endfor %}
-        </table>
-      </div>
+        {% endfor %}
+      </table>
     </div>
-    <!-- USERS -->
-    <div class="card">
-      <h1>Nutzerübersicht</h1>
-      <div class="table_filter">
-        <div class="table_filter_text">Rolle:</div>
-        <div class="dropdown table_filter_dropdown users_table_1">
-          <div class="dropdown_button">
-            <div>{{ current_users_filter_role }}</div>
-            <img src="{% static 'imgs/expand_dropdown.png' %}" alt="" draggable="false">
+  </div>
+  <!-- MODULES -->
+  <div class="card">
+    <h1>Modulübersicht</h1>
+    <div class="border_item modules_overview">
+      {% for modulegroup in modules %}
+        <div class="module_element">
+          <div class="module_text">
+            <div class="index">{{ modulegroup.index }}</div>
+            <div>{{ modulegroup.name }}</div>
           </div>
-          <div class="dropdown_content">
-            <form action="" method="post">
-              {% csrf_token %}
-              <input type="hidden" name="context" value="users_dropdown_select_role">
-              <input type="hidden" name="role" value="all">
-              <div class="dropdown_item_container">
-                <button class="dropdown_item" type="submit">[Alle]</button>
-              </div>
-            </form>
-            <form action="" method="post">
-              {% csrf_token %}
-              <input type="hidden" name="context" value="users_dropdown_select_role">
-              <input type="hidden" name="role" value="normal">
-              <div class="dropdown_item_container">
-                <button class="dropdown_item" type="submit">Normal</button>
-              </div>
-            </form>
-            <form action="" method="post">
-              {% csrf_token %}
-              <input type="hidden" name="context" value="users_dropdown_select_role">
-              <input type="hidden" name="role" value="vip">
-              <div class="dropdown_item_container">
-                <button class="dropdown_item" type="submit">VIP</button>
-              </div>
-            </form>
-            <form action="" method="post">
-              {% csrf_token %}
-              <input type="hidden" name="context" value="users_dropdown_select_role">
-              <input type="hidden" name="role" value="admin">
-              <div class="dropdown_item_container">
-                <button class="dropdown_item" type="submit">Admin</button>
-              </div>
-            </form>
+          <div class="module_buttons">
+            <button class="table_button tooltip_elem" onclick="editModule('{{ modulegroup.index }}', '{{ modulegroup.name }}', null)"><img src="{% static 'imgs/edit_icon.png' %}" alt="Edit" draggable="false"><div class="tooltip_text" >Bearbeiten</div></button>
+            <button class="table_button red tooltip_elem" onclick="deleteModule('{{ modulegroup.index }}', '{{ modulegroup.name }}')"><img src="{% static 'imgs/delete_icon.png' %}" alt="Delete" draggable="false"><div class="tooltip_text" >Löschen</div></button>
           </div>
         </div>
-        <div class="table_filter_text spacing_left">Status:</div>
-        <div class="dropdown table_filter_dropdown users_table_2">
-          <div class="dropdown_button">
-            <div>{{ current_users_filter_status }}</div>
-            <img src="{% static 'imgs/expand_dropdown.png' %}" alt="" draggable="false">
-          </div>
-          <div class="dropdown_content">
-            <form action="" method="post">
-              {% csrf_token %}
-              <input type="hidden" name="context" value="users_dropdown_select_status">
-              <input type="hidden" name="role" value="all">
-              <div class="dropdown_item_container">
-                <button class="dropdown_item" type="submit">[Alle]</button>
-              </div>
-            </form>
-            <form action="" method="post">
-              {% csrf_token %}
-              <input type="hidden" name="context" value="users_dropdown_select_status">
-              <input type="hidden" name="role" value="active">
-              <div class="dropdown_item_container">
-                <button class="dropdown_item" type="submit">Aktiv</button>
-              </div>
-            </form>
-            <form action="" method="post">
-              {% csrf_token %}
-              <input type="hidden" name="context" value="users_dropdown_select_status">
-              <input type="hidden" name="role" value="blocked">
-              <div class="dropdown_item_container">
-                <button class="dropdown_item" type="submit">Gesperrt</button>
-              </div>
-            </form>
-            <form action="" method="post">
-              {% csrf_token %}
-              <input type="hidden" name="context" value="users_dropdown_select_status">
-              <input type="hidden" name="role" value="deleted">
-              <div class="dropdown_item_container">
-                <button class="dropdown_item" type="submit">Gelöscht</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-      <div class="border_item overflow">
-        <table>
-          <tr>
-            <th>Erstellt</th>
-            <th>Vorname</th>
-            <th>Nachname</th>
-            <th>Nutzername</th>
-            <th>Rolle</th>
-            <th>Status</th>
-            <th>Aktionen</th>
-          </tr>
-          {% for user in users %}
-            <tr class="hoverable_tr">
-              <td class="nowrap {% if user.status == 'deleted' %} status_deleted {% endif %}">{{ user.day }}<br>{{ user.time }}</td>
-              <td class="nowrap {% if user.status == 'deleted' %} status_deleted {% endif %}">{{ user.first_name }}</td>
-              <td class="nowrap {% if user.status == 'deleted' %} status_deleted {% endif %}">{{ user.last_name }}</td>
-              <td class="{% if user.status == 'deleted' %} status_deleted {% endif %}">{{ user.username }}</td>
-              {% if user.role == 'normal' %}
-                <td class="role_normal {% if user.status == 'deleted' %} status_deleted {% endif %}">Normal</td>
-              {% elif user.role == 'vip' %}
-                <td class="role_vip {% if user.status == 'deleted' %} status_deleted {% endif %}">VIP</td>
-              {% elif user.role == 'admin' %}
-                <td class="role_admin {% if user.status == 'deleted' %} status_deleted {% endif %}">Admin</td>
-              {% endif %}
-              {% if user.status == 'active' %}
-                <td class="status_active">Aktiv</td>
-              {% elif user.status == 'blocked' %}
-                <td class="status_blocked">Gesperrt</td>
-              {% elif user.status == 'deleted' %}
-                <td>Gelöscht</td>
-              {% endif %}
-              <td class="no_select">
-                <button class="table_button tooltip_elem" onclick="changeRole('{{ user.id }}', '{{ user.username }}', '{{ user.role }}')"><img src="{% static 'imgs/edit_icon.png' %}" alt="Change role" draggable="false"><div class="tooltip_text" >Rolle ändern</div></button>
-                {% if user.status == 'blocked' %}
-                  <button class="table_button green tooltip_elem"><img src="{% static 'imgs/unblock_icon.png' %}" alt="Unblock" draggable="false"><div class="tooltip_text" >Entsperren</div></button>
-                {% else %}
-                  <button class="table_button red tooltip_elem"><img src="{% static 'imgs/block_icon.png' %}" alt="Block" draggable="false"><div class="tooltip_text" >Sperren</div></button>
-                {% endif %}
-              </td>
-            </tr>
-          {% endfor %}
-        </table>
-      </div>
-    </div>
-    <!-- MODULES -->
-    <div class="card">
-      <h1>Modulübersicht</h1>
-      <div class="border_item modules_overview">
-        {% for modulegroup in modules %}
-          <div class="module_element">
+        {% for module in modulegroup.modules %}
+          <div class="module_element indent_1">
             <div class="module_text">
-              <div class="index">{{ modulegroup.index }}</div>
-              <div>{{ modulegroup.name }}</div>
+              <div class="index">{{ module.index }}</div>
+              <div>{{ module.name }}</div>
             </div>
             <div class="module_buttons">
-              <button class="table_button tooltip_elem" onclick="editModule('{{ modulegroup.index }}', '{{ modulegroup.name }}', null)"><img src="{% static 'imgs/edit_icon.png' %}" alt="Edit" draggable="false"><div class="tooltip_text" >Bearbeiten</div></button>
-              <button class="table_button red tooltip_elem" onclick="deleteModule('{{ modulegroup.index }}', '{{ modulegroup.name }}')"><img src="{% static 'imgs/delete_icon.png' %}" alt="Delete" draggable="false"><div class="tooltip_text" >Löschen</div></button>
+              <button class="table_button tooltip_elem" onclick="editModule('{{ module.index }}', '{{ module.name }}', null)"><img src="{% static 'imgs/edit_icon.png' %}" alt="Edit" draggable="false"><div class="tooltip_text" >Bearbeiten</div></button>
+              <button class="table_button red tooltip_elem" onclick="deleteModule('{{ module.index }}', '{{ module.name }}')"><img src="{% static 'imgs/delete_icon.png' %}" alt="Delete" draggable="false"><div class="tooltip_text" >Löschen</div></button>
             </div>
           </div>
-          {% for module in modulegroup.modules %}
-            <div class="module_element indent_1">
+          {% for submodule in module.submodules %}
+            <div class="module_element indent_2">
               <div class="module_text">
-                <div class="index">{{ module.index }}</div>
-                <div>{{ module.name }}</div>
+                <div class="index">{{ submodule.index }}</div>
+                <div>{{ submodule.name }}</div>
+                <div class="semester">{{ submodule.semester }}. Semester</div>
               </div>
               <div class="module_buttons">
-                <button class="table_button tooltip_elem" onclick="editModule('{{ module.index }}', '{{ module.name }}', null)"><img src="{% static 'imgs/edit_icon.png' %}" alt="Edit" draggable="false"><div class="tooltip_text" >Bearbeiten</div></button>
-                <button class="table_button red tooltip_elem" onclick="deleteModule('{{ module.index }}', '{{ module.name }}')"><img src="{% static 'imgs/delete_icon.png' %}" alt="Delete" draggable="false"><div class="tooltip_text" >Löschen</div></button>
+                <button class="table_button tooltip_elem" onclick="editModule('{{ submodule.index }}', '{{ submodule.name }}', '{{ submodule.semester }}')"><img src="{% static 'imgs/edit_icon.png' %}" alt="Edit" draggable="false"><div class="tooltip_text" >Bearbeiten</div></button>
+                <button class="table_button red tooltip_elem" onclick="deleteModule('{{ submodule.index }}', '{{ submodule.name }}')"><img src="{% static 'imgs/delete_icon.png' %}" alt="Delete" draggable="false"><div class="tooltip_text" >Löschen</div></button>
               </div>
             </div>
-            {% for submodule in module.submodules %}
-              <div class="module_element indent_2">
-                <div class="module_text">
-                  <div class="index">{{ submodule.index }}</div>
-                  <div>{{ submodule.name }}</div>
-                  <div class="semester">{{ submodule.semester }}. Semester</div>
-                </div>
-                <div class="module_buttons">
-                  <button class="table_button tooltip_elem" onclick="editModule('{{ submodule.index }}', '{{ submodule.name }}', '{{ submodule.semester }}')"><img src="{% static 'imgs/edit_icon.png' %}" alt="Edit" draggable="false"><div class="tooltip_text" >Bearbeiten</div></button>
-                  <button class="table_button red tooltip_elem" onclick="deleteModule('{{ submodule.index }}', '{{ submodule.name }}')"><img src="{% static 'imgs/delete_icon.png' %}" alt="Delete" draggable="false"><div class="tooltip_text" >Löschen</div></button>
-                </div>
-              </div>
-            {% endfor %}
           {% endfor %}
         {% endfor %}
-      </div>
-      <div class="space_top_2">
-        <h2>Aktionen</h2>
-        <div class="wrapped_content">
-          <button class="button card_button small_text" onclick="addModule()">
-            <img src="{% static 'imgs/add_icon_round.png' %}" alt="Add module" draggable="false">
-            <div><p>Modul hinzufügen</p></div>
-          </button>
-          <button class="button card_button" onclick="restoreDefault()">
-            <img src="{% static 'imgs/restore_icon_round.png' %}" alt="Restore default" draggable="false">
-            <div><p>Standard laden</p></div>
-          </button>
-        </div>
+      {% endfor %}
+    </div>
+    <div class="space_top_2">
+      <h2>Aktionen</h2>
+      <div class="wrapped_content">
+        <button class="button card_button small_text" onclick="addModule()">
+          <img src="{% static 'imgs/add_icon_round.png' %}" alt="Add module" draggable="false">
+          <div><p>Modul hinzufügen</p></div>
+        </button>
+        <button class="button card_button" onclick="restoreDefault()">
+          <img src="{% static 'imgs/restore_icon_round.png' %}" alt="Restore default" draggable="false">
+          <div><p>Standard laden</p></div>
+        </button>
       </div>
     </div>
   </div>
-</body>
-</html>
+{% endblock %}

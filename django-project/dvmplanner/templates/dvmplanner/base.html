@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="de">
+{% load static %}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="{% static 'imgs/logo_favicon.png' %}">
+  <link rel="stylesheet" href="{% static 'styles/main.css' %}">
+  {% block extra_stylesheets %}{% endblock %}
+  <script>
+    const staticMenuIcon = "{% static 'imgs/menu_icon.png' %}";
+    const staticCloseIcon = "{% static 'imgs/close_icon.png' %}";
+    const staticArrowRightIcon = "{% static 'imgs/arrow_right_icon.png' %}";
+    const staticArrowLeftIcon = "{% static 'imgs/arrow_left_icon.png' %}";
+  </script>
+  <script src="{% static 'scripts/main.js' %}" defer></script>
+  {% block extra_scripts %}{% endblock %}
+  <title>{% block page_title %}Placeholder{% endblock %} - DVM Planner</title>
+</head>
+<body>
+  <!-- FLOATING WINDOWS -->
+  <div class="floating_background" id="floating_background" onclick="closeFloatingWindows()"></div>
+  {% block floating_windows %}{% endblock %}
+  <!-- NAVBAR -->
+  <div class="navbar_hide_button" onclick="toggleNavbar()">
+    <img id="navbar_hide_button_img" src="{% static 'imgs/menu_icon.png' %}" alt="Open menu" draggable="false">
+  </div>
+  <div class="navbar" id="navbar">
+    <div class="navbar_header">
+      <img src="{% static 'imgs/logo.png' %}" alt="DVM Planner Logo" draggable="false">
+      <p>DVM Planner</p>
+    </div>
+    <ul>
+      <li><a class="navbar_item {% if active_page == 'dashboard' %}highlighted{% endif %}" {% if active_page != 'dashboard' %}href="{% url 'dashboard' %}"{% endif%}><div>Dashboard</div></a></li>
+      <li><a class="navbar_item {% if active_page == 'reports' %}highlighted{% endif %}" {% if active_page != 'reports' %}href="{% url 'reports' %}"{% endif%}><div>Arbeitsberichte</div></a></li>
+      <li><a class="navbar_item {% if active_page == 'review' %}highlighted{% endif %}" {% if active_page != 'review' %}href="{% url 'review' %}"{% endif%}><div>Ergebnisse</div></a></li>
+      {% if role == 'admin' %}
+        <li><a class="navbar_item {% if active_page == 'admin' %}highlighted{% endif %}" {% if active_page != 'admin' %}href="{% url 'admin' %}"{% endif%}><div>Admin Dashboard</div></a></li>
+      {% endif %}
+      <li><a class="navbar_item {% if active_page == 'profile' %}highlighted{% endif %}" {% if active_page != 'profile' %}href="{% url 'profile' %}"{% endif%}><div>Profil</div></a></li>
+    </ul>
+    <a class="button navbar_add_button small_text" href="{% url 'addreport' %}">
+      <img src="{% static 'imgs/add_icon_round_red.png' %}" alt="Add report" draggable="false">
+      <div><p>Bericht hinzufügen</p></div>
+    </a>
+  </div>
+  <!-- CONTENT -->
+  <div class="content" id="content">
+    <div class="topbar">
+      <div class="topbar_text">{% block header_title %}Placeholder{% endblock %}</div>
+      <div class="button profile_button" id="profile_button">
+        {% if img == True %}
+          <img src="{% static 'profiles/' %}{{uid}}.png" alt="Profile picture of {{uid}}" draggable="false">
+        {% else %}
+          <img src="{% static 'profiles/' %}_default.png" alt="Default profile picture" draggable="false">
+        {% endif %}
+        <div><p>{{ username }}</p></div>
+      </div>
+    </div>
+    <div class="usermenu hidden_usermenu" id="usermenu">
+      <a class="button usermenu_button" href="{% url 'login' %}">
+        <img src="{% static 'imgs/change_user_icon_round.png' %}" alt="Change user" draggable="false">
+        <div><p>Profil wechseln</p></div>
+      </a>
+      <a class="button usermenu_button" href="{% url 'signup' %}">
+        <img src="{% static 'imgs/logout_icon_round.png' %}" alt="Logout" draggable="false">
+        <div><p>Ausloggen</p></div>
+      </a>
+    </div>
+    {% block content %}{% endblock %}
+  </div>  
+</body>
+</html>

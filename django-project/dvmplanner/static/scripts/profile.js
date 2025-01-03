@@ -35,5 +35,14 @@ function deleteProfile() {
 }
 
 function editPicture(addingPicture) {
-  
+  const floatingBackground = document.getElementById('floating_background');
+  floatingBackground.classList.add('shown_floating_window');
+  const floatingWindow = document.getElementById('floating_window_edit_picture');
+  floatingWindow.classList.add('shown_floating_window');
+  const textContext = document.getElementById('floating_window_edit_picture_context');
+  if (addingPicture) {
+    textContext.innerText = 'Profilbild hinzufügen';
+  } else {
+    textContext.innerText = 'Profilbild ändern';
+  }
 }

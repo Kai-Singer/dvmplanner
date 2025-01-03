@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="de">
+{% load static %}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="{% static 'imgs/logo_favicon.png' %}">
+  <link rel="stylesheet" href="{% static 'styles/main.css' %}">
+  <link rel="stylesheet" href="{% static 'styles/profile.css' %}">
+  <script>
+    const staticMenuIcon = "{% static 'imgs/menu_icon.png' %}";
+    const staticCloseIcon = "{% static 'imgs/close_icon.png' %}";
+  </script>
+  <script src="{% static 'scripts/main.js' %}" defer></script>
+  <script src="{% static 'scripts/profile.js' %}" defer></script>
+  <title>Profil - DVM Planner</title>
+</head>
+<body>
+  <!-- FLOATING WINDOW -->
+  <div class="floating_background" id="floating_background" onclick="closeFloatingWindows()"></div>
+  <!-- EDIT PROFILE -->
+  <div class="floating_container" id="floating_window_edit_profile">
+    <div class="floating_window">
+      <div class="floating_header">
+        <h1>Profildaten bearbeiten</h1>
+        <div class="floating_close_button" onclick="closeFloatingWindows()">
+          <img src="{% static 'imgs/close_icon.png' %}" alt="Close window" draggable="false">
+        </div>
+      </div>
+      <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="context" value="edit_profile">
+        <div class="floating_content">
+          <div class="form_item">
+            <div class="form_name">Benutzername</div>
+            <input type="text" id="floating_window_edit_profile_username" name="username" value="Placeholder" required>
+          </div>
+          <div class="edit_profile_content_split">
+            <div class="form_item">
+              <div class="form_name">Vorname</div>
+              <input type="text" id="floating_window_edit_profile_first_name" name="first_name" value="Placeholder" required>
+            </div>
+            <div class="form_item">
+              <div class="form_name">Nachname</div>
+              <input type="text" id="floating_window_edit_profile_last_name" name="last_name" value="Placeholder" required>
+            </div>
+          </div>
+          <div class="form_item edit_profile_email_field">
+            <div class="form_name">E-Mail</div>
+            <input type="text" id="floating_window_edit_profile_email" name="email" value="Placeholder" required>
+          </div>
+        </div>
+        <button class="button card_button" type="submit">
+          <img src="{% static 'imgs/save_icon_round.png' %}" alt="Save changes" draggable="false">
+          <div><p>Speichern</p></div>
+        </button>
+      </form>
+    </div>
+  </div>
+  <!-- EDIT PASSWORD -->
+  <div class="floating_container" id="floating_window_edit_password">
+    <div class="floating_window">
+      <div class="floating_header">
+        <h1>Passwort ändern</h1>
+        <div class="floating_close_button" onclick="closeFloatingWindows()">
+          <img src="{% static 'imgs/close_icon.png' %}" alt="Close window" draggable="false">
+        </div>
+      </div>
+      <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="context" value="edit_password">
+        <div class="floating_content">
+          <div class="form_item">
+            <div class="form_name">Altes Passwort</div>
+            <input type="password" name="old_pwd" required>
+          </div>
+          <div class="edit_profile_content_split">
+            <div class="form_item">
+              <div class="form_name">Neues Passwort</div>
+              <input type="password" name="pwd" required>
+            </div>
+            <div class="form_item">
+              <div class="form_name">Neues Passwort wiederholen</div>
+              <input type="password" name="pwd_repeat" required>
+            </div>
+          </div>
+        </div>
+        <button class="button card_button" type="submit">
+          <img src="{% static 'imgs/save_icon_round.png' %}" alt="Save changes" draggable="false">
+          <div><p>Speichern</p></div>
+        </button>
+      </form>
+    </div>
+  </div>
+  <!-- EDIT PICTURE -->
+  <div class="floating_container" id="floating_window_edit_picture">
+    <div class="floating_window">
+      <div class="floating_header">
+        <h1 id="floating_window_edit_picture_context">Placeholder</h1>
+        <div class="floating_close_button" onclick="closeFloatingWindows()">
+          <img src="{% static 'imgs/close_icon.png' %}" alt="Close window" draggable="false">
+        </div>
+      </div>
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="context" value="edit_picture">
+        <div class="floating_content">
+          <input type="file" name="file" accept="image/png, image/jpeg, .png, .jpg, .jpeg" required>
+          <div class="form_hint no_top_margin">Erlaubte Dateitypen: .png, .jpg, .jpeg</div>
+        </div>
+        <button class="button card_button" type="submit">
+          <img src="{% static 'imgs/upload_file_icon_round.png' %}" alt="Upload" draggable="false">
+          <div><p>Hochladen</p></div>
+        </button>
+      </form>
+    </div>
+  </div>
+  <!-- REMOVE PICTURE -->
+  <div class="floating_container" id="floating_window_remove_picture">
+    <div class="floating_window">
+      <div class="floating_header">
+        <h1>Profilbild entfernen</h1>
+        <div class="floating_close_button" onclick="closeFloatingWindows()">
+          <img src="{% static 'imgs/close_icon.png' %}" alt="Close window" draggable="false">
+        </div>
+      </div>
+      <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="context" value="remove_picture">
+        <div class="floating_content">
+          <div class="floating_text">Willst du dein Profilbild wirklich entfernen?</div>
+        </div>
+        <button class="button card_button red" type="submit">
+          <img src="{% static 'imgs/delete_icon_round_red.png' %}" alt="Delete" draggable="false">
+          <div><p>Löschen</p></div>
+        </button>
+      </form>
+    </div>
+  </div>
+  <!-- DELETE PROFILE -->
+  <div class="floating_container" id="floating_window_delete_profile">
+    <div class="floating_window">
+      <div class="floating_header">
+        <h1>Profil löschen</h1>
+        <div class="floating_close_button" onclick="closeFloatingWindows()">
+          <img src="{% static 'imgs/close_icon.png' %}" alt="Close window" draggable="false">
+        </div>
+      </div>
+      <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="context" value="delete_profile">
+        <div class="floating_content">
+          <div class="floating_text">Willst du dein Profilbild wirklich löschen? Diese Aktion ist nicht wiederherstellbar!</div>
+        </div>
+        <button class="button card_button red" type="submit">
+          <img src="{% static 'imgs/delete_icon_round_red.png' %}" alt="Delete" draggable="false">
+          <div><p>Löschen</p></div>
+        </button>
+      </form>
+    </div>
+  </div>
+  <!-- NAVBAR -->
+  <div class="navbar_hide_button" onclick="toggleNavbar()">
+    <img id="navbar_hide_button_img" src="{% static 'imgs/menu_icon.png' %}" alt="Open menu" draggable="false">
+  </div>
+  <div class="navbar" id="navbar">
+    <div class="navbar_header">
+      <img src="{% static 'imgs/logo.png' %}" alt="DVM Planner Logo" draggable="false">
+      <p>DVM Planner</p>
+    </div>
+    <ul>
+      <li><a class="navbar_item" href="/dashboard/"><div>Dashboard</div></a></li>
+      <li><a class="navbar_item" href="/reports/"><div>Arbeitsberichte</div></a></li>
+      <li><a class="navbar_item" href="/review/"><div>Ergebnisse</div></a></li>
+      {% if role == 'admin' %}
+        <li><a class="navbar_item" href="/admin/"><div>Admin Dashboard</div></a></li>
+      {% endif %}
+      <li><a class="navbar_item highlighted"><div>Profil</div></a></li>
+    </ul>
+    <a class="button navbar_add_button small_text" href="/addreport/">
+      <img src="{% static 'imgs/add_icon_round_red.png' %}" alt="Add report" draggable="false">
+      <div><p>Bericht hinzufügen</p></div>
+    </a>
+  </div>    
+  <!-- CONTENT -->
+  <div class="content" id="content">
+    <div class="topbar">
+      <div class="topbar_text">Profil</div>
+      <div class="button profile_button" id="profile_button">
+        {% if img == True %}
+          <img src="{% static 'profiles/' %}{{uid}}.png" alt="Profile picture of {{uid}}" draggable="false">
+        {% else %}
+          <img src="{% static 'profiles/' %}_default.png" alt="Default profile picture" draggable="false">
+        {% endif %}
+        <div><p>{{ username }}</p></div>
+      </div>
+    </div>
+    <div class="usermenu hidden_usermenu" id="usermenu">
+      <a class="button usermenu_button" href="/login/">
+        <img src="{% static 'imgs/change_user_icon_round.png' %}" alt="Change user" draggable="false">
+        <div><p>Profil wechseln</p></div>
+      </a>
+      <a class="button usermenu_button" href="/signup/">
+        <img src="{% static 'imgs/logout_icon_round.png' %}" alt="Logout" draggable="false">
+        <div><p>Ausloggen</p></div>
+      </a>
+    </div>
+    <!-- PROFILE -->
+    <div class="card">
+      <h1>Profildaten</h1>
+      <div class="border_item profile_data overflow">
+        <div class="profile_image">
+          {% if img == True %}
+            <img src="{% static 'profiles/' %}{{uid}}.png" alt="Profile picture of {{uid}}" draggable="false">
+          {% else %}
+            <img src="{% static 'profiles/' %}_default.png" alt="Default profile picture" draggable="false">
+          {% endif %}
+        </div>
+        <div class="profile_content">
+          <div class="profile_item">
+            <div class="item_name">Benutzername</div>
+            <div class="item_text nowrap">{{ username }}</div>
+          </div>
+          <div class="profile_content_split">
+            <div class="profile_item">
+              <div class="item_name">Vorname</div>
+              <div class="item_text nowrap">{{ first_name }}</div>
+            </div>
+            <div class="profile_item">
+              <div class="item_name">Nachname</div>
+              <div class="item_text nowrap">{{ last_name }}</div>
+            </div>
+          </div>
+          <div class="profile_item">
+            <div class="item_name">E-Mail</div>
+            <div class="item_text nowrap">{{ email }}</div>
+          </div>
+          <div class="profile_item">
+            <div class="item_name">Erstellt</div>
+            <div class="item_text nowrap">{{ creation_date }}</div>
+          </div>
+          <div class="profile_item">
+            <div class="item_name">Rolle</div>
+            {% if role == 'normal' %}
+              <div class="role_normal item_text">Normal</div>
+            {% elif role == 'vip' %}
+              <div class="role_vip item_text">VIP</div>
+            {% elif role == 'admin' %}
+              <div class="role_admin item_text">Admin</div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="space_top_2">
+        <h2>Profil bearbeiten</h2>
+        <div class="wrapped_content">
+          <button class="button card_button small_text" onclick="editProfile('{{ username }}', '{{ first_name }}', '{{ last_name }}', '{{ email }}')">
+            <img src="{% static 'imgs/edit_icon_round.png' %}" alt="Edit profile data" draggable="false">
+            <div><p>Daten bearbeiten</p></div>
+          </button>
+          <button class="button card_button small_text" onclick="editPassword()">
+            <img src="{% static 'imgs/edit_icon_round.png' %}" alt="Edit password" draggable="false">
+            <div><p>Passwort ändern</p></div>
+          </button>
+          {% if img == True %}
+            <button class="button card_button small_text" onclick="editPicture(false)">
+              <img src="{% static 'imgs/img_icon_round.png' %}" alt="Edit profile picture" draggable="false">
+              <div><p>Profilbild ändern</p></div>
+            </button>
+            <button class="button card_button small_text" onclick="removePicture()">
+              <img src="{% static 'imgs/delete_icon_round.png' %}" alt="Remove profile picture" draggable="false">
+              <div><p>Profilbild entfernen</p></div>
+            </button>
+          {% else %}
+            <button class="button card_button small_text" onclick="editPicture(true)">
+              <img src="{% static 'imgs/add_icon_round.png' %}" alt="Add profile picture" draggable="false">
+              <div><p>Profilbild hinzufügen</p></div>
+            </button>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% if role != 'admin' %}
+      <div class="card">
+        <h1>Bewerbungen</h1>
+        <h2>
+          {% if requested_role == '' %}
+            Aktuell keine ausstehende Bewerbung
+          {% else %}
+            Aktuell ausstehende Bewerbung auf die Rolle
+            {% if requested_role == 'vip' %}
+              <span class="role_vip">VIP</span>
+            {% elif requested_role == 'admin' %}
+              <span class="role_admin">Admin</span>
+            {% endif %}
+          {% endif %}
+        </h2>
+        {% if requested_role != '' %}
+          <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="context" value="application">
+            <input type="hidden" name="type" value="withdrawal">
+            <button class="button card_button small_text" type="submit">
+              <img src="{% static 'imgs/withdraw_icon_round.png' %}" alt="Withdraw application" draggable="false">
+              <div><p>Bewerbung zurückziehen</p></div>
+            </button>
+          </form>
+        {% elif role == 'normal' %}
+          <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="context" value="application">
+            <input type="hidden" name="type" value="vip">
+            <button class="button card_button small_text" type="submit">
+              <img src="{% static 'imgs/apply_icon_round.png' %}" alt="Apply as VIP" draggable="false">
+              <div><p>Als <span class="role_vip">VIP</span> bewerben</p></div>
+            </button>
+          </form>
+        {% else %}
+          <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="context" value="application">
+            <input type="hidden" name="type" value="admin">
+            <button class="button card_button small_text" type="submit">
+              <img src="{% static 'imgs/apply_icon_round.png' %}" alt="Apply as Admin" draggable="false">
+              <div><p>Als <span class="role_admin">Admin</span> bewerben</p></div>
+            </button>
+          </form>
+        {% endif %}
+      </div>
+    {% endif %}
+    <div class="card">
+      <h1>Profil löschen</h1>
+      <button class="button card_button red" onclick="deleteProfile()">
+        <img src="{% static 'imgs/delete_icon_round_red.png' %}" alt="Delete profile" draggable="false">
+        <div><p>Löschen</p></div>
+      </button>
+    </div>
+  </div>
+</body>
+</html>
