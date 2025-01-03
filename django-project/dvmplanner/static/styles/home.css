@@ -1,0 +1,22 @@
+.home_container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20vh;
+}
+
+.home_box {
+  width: 60%;
+}
+
+.wrapped_buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+}
+
+.home_text {
+  font-size: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+}

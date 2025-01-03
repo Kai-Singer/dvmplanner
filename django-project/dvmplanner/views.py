@@ -9,7 +9,9 @@ if not finders.find(f'profiles/{uid}.png'):
   uid = '_default'
 
 def home(request):
-  return redirect(dashboard)
+  # redirect if logged in
+  data = {}
+  return render(request, 'dvmplanner/home.html', data)
 
 def dashboard(request):
   # usernames = []

@@ -45,10 +45,15 @@
   margin-right: 20px;
 }
 
-.login_header a {
-  all: unset;
+.login_buttons {
   margin-left: auto;
+  display: flex;
+  gap: 20px;
   margin-right: 10px;
+}
+
+.login_buttons a {
+  all: unset;
   font-size: 20px;
   padding: 15px;
   border-radius: 15px;
@@ -57,9 +62,10 @@
   transition: all .2s;
   font-weight: bold;
   cursor: pointer;
+  display: block;
 }
 
-.login_header a:hover {
+.login_buttons a:hover {
   transform: scale(1.1);
 }
 

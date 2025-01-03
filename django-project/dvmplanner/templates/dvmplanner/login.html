@@ -16,7 +16,10 @@
       <div class="login_header">
         <img src="{% static 'imgs/logo.png' %}" alt="DVM Planner Logo" draggable="false">
         <p>DVM Planner</p>
-        <a href="/signup/">Registrieren</a>
+        <div class="login_buttons">
+          <a href="{% url 'home' %}">Zurück</a>
+          <a href="{% url 'signup' %}">Registrieren</a>
+        </div>
       </div>
       <div class="login_form">
         <h1 class="login_title">Anmelden</h1>

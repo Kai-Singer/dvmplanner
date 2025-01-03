@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="de">
+{% load static %}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="{% static 'imgs/logo_favicon.png' %}">
+  <link rel="stylesheet" href="{% static 'styles/main.css' %}">
+  <link rel="stylesheet" href="{% static 'styles/home.css' %}">
+  <script src="{% static 'scripts/main.js' %}" defer></script>
+  <title>DVM Planner</title>
+</head>
+<body>
+  <div class="navbar_header">
+    <img src="{% static 'imgs/logo.png' %}" alt="DVM Planner Logo" draggable="false">
+    <p>DVM Planner</p>
+  </div>
+  <div class="home_container">
+    <div class="home_box">
+      <div class="home_text">
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Neque, maiores eum, distinctio adipisci repellat quis sunt esse quas natus magni cumque et. Enim voluptatem quas nostrum ut dolore ab dicta, nesciunt necessitatibus, distinctio, cumque nulla quaerat quibusdam perferendis iste eius. Deleniti, et? Recusandae, deserunt odit, dolorum ut temporibus accusamus eum reprehenderit commodi nesciunt ab fuga ad nobis delectus aperiam corporis laudantium itaque officiis quasi magnam ducimus asperiores esse suscipit, similique explicabo! Inventore eos nemo repellendus tempore ab quia, modi similique ipsum iusto dolor dicta fugit obcaecati placeat, perspiciatis eum. Veritatis adipisci eum expedita similique numquam tempora, eligendi corrupti aut labore!
+      </div>
+      <div class="wrapped_buttons">
+        <a class="button card_button" href="{% url 'login' %}">
+          <img src="{% static 'imgs/login_icon_round.png' %}" alt="Login" draggable="false">
+          <div><p>Anmelden</p></div>
+        </a>
+        <a class="button card_button" href="{% url 'signup' %}">
+          <img src="{% static 'imgs/apply_icon_round.png' %}" alt="Signup" draggable="false">
+          <div><p>Registrieren</p></div>
+        </a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
