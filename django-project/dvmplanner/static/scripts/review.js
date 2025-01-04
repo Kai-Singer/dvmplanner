@@ -27,7 +27,7 @@ new Chart(timeChart, {
   options: {
     plugins: {
       legend: {
-        position: 'right',
+        display: false
       },
       tooltip: {
         callbacks: {
@@ -56,7 +56,7 @@ new Chart(sessionsChart, {
   options: {
     plugins: {
       legend: {
-        position: 'right',
+        display: false
       },
       tooltip: {
         callbacks: {

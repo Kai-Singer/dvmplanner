@@ -473,6 +473,29 @@ def dashboard(request):
   # data = {
   #   'usernames': usernames
   # }
+  review_data = [
+    {
+      'module': '1.1.2 Vertiefung Informatik',
+      'time': '12:45:43',
+      'sessions': '14'
+    },
+    {
+      'module': '1.5.1 Systemanalyse (Software-Engineering 3)',
+      'time': '23:34:02',
+      'sessions': '18'
+    },
+    {
+      'module': '2.1.1 Steuerung, Public Management und Projektmanagement',
+      'time': '4:12:52',
+      'sessions': '3'
+    },
+    {
+      'module': '3.3.4 IT-Recht',
+      'time': '7:40:29',
+      'sessions': '5'
+    },
+  ]
+
   data = {
     'active_page': 'dashboard',
     'uid': uid,
@@ -482,7 +505,7 @@ def dashboard(request):
     'role': 'admin',
     'img': True,
     'current_activity': {
-      'status': 'active', # active, paused, finished, none
+      'status': 'none', # active, paused, finished, none
       'day': '02.01.2025',
       'start': '14.34:23 Uhr',
       'entries': [
@@ -506,7 +529,75 @@ def dashboard(request):
       'name': 'Einführung in die Informatik',
       'index': '1.1.1'
     },
-    'modules': modules
+    'modules': modules,
+    'last_reports': [ # last 3-5 reports
+      {
+        'day': '21.11.2024',
+        'start': '10.12:43 Uhr',
+        'end': '12.58:26 Uhr',
+        'end_day': '',
+        'time': '2:45:43',
+        'module_index': '1.3.1',
+        'module_name': 'Betriebs- und Kommunikationssysteme',
+        'notes': 'Weitergearbeitet am Proj...',
+        'long_notes': 'Weitergearbeitet am Projekt. Viel Fortschritt!'
+      },
+      {
+        'day': '21.11.2024',
+        'start': '10.12:43 Uhr',
+        'end': '12.58:26 Uhr',
+        'end_day': '22.11.2024',
+        'time': '2:45:43',
+        'module_index': '1.3.1',
+        'module_name': 'Betriebs- und Kommunikationssysteme',
+        'notes': 'Weitergearbeitet am Projekt',
+        'long_notes': ''
+      },
+      {
+        'day': '21.11.2024',
+        'start': '10.12:43 Uhr',
+        'end': '12.58:26 Uhr',
+        'end_day': '',
+        'time': '2:45:43',
+        'module_index': '1.3.1',
+        'module_name': 'Betriebs- und Kommunikationssysteme',
+        'notes': 'Weitergearbeitet am Proj...',
+        'long_notes': 'Weitergearbeitet am Projekt. Viel Fortschritt!'
+      }
+    ],
+    'total_time': '48:13:06',
+    'total_sessions': '40',
+    'review_data': json.dumps(review_data),
+    'requests': [
+      {
+        'day': '15.12.2024',
+        'time': '10.12:43 Uhr',
+        'first_name': 'Julius',
+        'last_name': 'Cäsar',
+        'username': 'thedestroyer123',
+        'role': 'vip',
+        'requested_role': 'admin',
+      },
+      {
+        'day': '13.12.2024',
+        'time': '15.12:43 Uhr',
+        'first_name': 'Leonardo',
+        'last_name': 'da Vinci',
+        'username': 'the_real_vinci',
+        'role': 'normal',
+        'requested_role': 'vip',
+      },
+      {
+        'day': '12.12.2024',
+        'time': '13.12:43 Uhr',
+        'first_name': 'Marie',
+        'last_name': 'Curie',
+        'username': 'radium',
+        'role': 'vip',
+        'requested_role': 'admin',
+      },
+    ],
+    'requested_role': 'none'
   }
   return render(request, 'dvmplanner/dashboard.html', data)
 

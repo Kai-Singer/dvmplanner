@@ -12,6 +12,11 @@
   padding: 20px;
 }
 
+.chart_item canvas {
+  margin: auto;
+  margin-top: 20px;
+}
+
 .table_filter_dropdown.review_table_module {
   max-width: 600px;
 }

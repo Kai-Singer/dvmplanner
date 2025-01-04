@@ -11,18 +11,20 @@ body {
   --fg3: #adadad;
   --fg4: #555555;
   --fg-transparent: rgba(0, 0, 0, 0.5);
-  --ac1: #ff0000;
+  --ac-red: #ff0000;
   --ac-green: #00a914;
   --ac-blue: #009dff;
+  --ac-black: #000;
   --bg-font: #000;
   --fg1-font: #000;
   --fg2-font: #000;
   --fg3-font: #000;
   --fg4-font: #fff;
-  --ac1-font: #fff;
+  --ac-red-font: #fff;
   --ac-green-font: #fff;
   --ac-blue-font: #fff;
-  --font-ac1: #ff0000;
+  --ac-black-font: #fff;
+  --font-ac-red: #ff0000;
   --font-ac-green: #00a914;
   --font-ac-blue: #009dff;
   --font-user-normal: #797979;
@@ -122,7 +124,7 @@ body {
 }
 
 .status_blocked {
-  color: var(--font-ac1);
+  color: var(--font-ac-red);
   font-weight: bold;
 }
 
@@ -211,7 +213,7 @@ body {
   right: -5px;
   bottom: -12px;
   height: 5px;
-  background-color: var(--ac1);
+  background-color: var(--ac-red);
   border-radius: 10px;
   z-index: -1;
 }
@@ -235,13 +237,13 @@ body {
   right: -5px;
   bottom: -12px;
   height: 5px;
-  background-color: var(--ac1);
+  background-color: var(--ac-red);
   border-radius: 10px;
   z-index: -1;
 }
 
 .navbar_header {
-  background-color: var(--ac1);
+  background-color: var(--ac-red);
   padding: 20px;
   display: flex;
   align-items: center;
@@ -249,7 +251,7 @@ body {
 }
 
 .navbar_header p {
-  color: var(--ac1-font);
+  color: var(--ac-red-font);
   font-weight: bold;
   font-size: 30px;
   margin: 0;
@@ -263,21 +265,21 @@ body {
 
 .navbar_add_button {
   background-color: var(--bg);
-  border-color: var(--ac1);
+  border-color: var(--ac-red);
   margin: auto;
   width: 340px;
   margin-bottom: 20px;
 }
 
 .navbar_add_button div {
-  color: var(--font-ac1);
+  color: var(--font-ac-red);
 }
 
 .navbar_hide_button {
   margin: 10px;
   padding: 10px;
   height: 35px;
-  background-color: var(--ac1);
+  background-color: var(--ac-red);
   border-radius: 10px;
   cursor: pointer;
   user-select: none;
@@ -364,7 +366,7 @@ body {
 .floating_close_button {
   padding: 10px;
   height: 35px;
-  background-color: var(--ac1);
+  background-color: var(--ac-red);
   border-radius: 10px;
   cursor: pointer;
   user-select: none;
@@ -423,7 +425,7 @@ body {
 
 .profile_button {
   background-color: var(--bg);
-  border-color: var(--bg-font);
+  border-color: var(--ac-black);
   width: 340px;
   z-index: 15;
 }
@@ -451,7 +453,7 @@ body {
 
 .usermenu_button {
   background-color: var(--bg);
-  border-color: var(--bg-font);
+  border-color: var(--ac-black);
   width: 340px;
 }
 
@@ -510,7 +512,7 @@ body {
 .card .border_item {
   border-style: solid;
   border-width: 5px;
-  border-color: var(--bg-font);
+  border-color: var(--ac-black);
   border-radius: 15px;
   max-height: 500px;
 }
@@ -521,7 +523,7 @@ body {
 
 .card_button {
   background-color: var(--bg);
-  border-color: var(--bg-font);
+  border-color: var(--ac-black);
   flex: 1;
   min-width: 340px;
   max-width: 340px;
@@ -532,11 +534,11 @@ body {
 }
 
 .card_button.red {
-  border-color: var(--ac1);
+  border-color: var(--ac-red);
 }
 
 .card_button.red div {
-  color: var(--font-ac1);
+  color: var(--font-ac-red);
 }
 
 .card_button.green {
@@ -599,7 +601,7 @@ body {
 }
 
 .table_button {
-  background-color: var(--bg-font);
+  background-color: var(--ac-black);
   transition: all .2s;
   border-radius: 10px;
   border: none;
@@ -615,7 +617,7 @@ body {
 }
 
 .table_button.red {
-  background-color: var(--ac1);
+  background-color: var(--ac-red);
 }
 
 .table_button.green {
@@ -637,7 +639,7 @@ body {
   border-radius: 15px;
   border-style: solid;
   border-width: 5px;
-  border-color: var(--bg-font);
+  border-color: var(--ac-black);
   background-color: var(--bg);
   width: 100%;
   cursor: pointer;
@@ -677,7 +679,7 @@ body {
   border-radius: 15px;
   border-style: solid;
   border-width: 5px;
-  border-color: var(--bg-font);
+  border-color: var(--ac-black);
   margin-top: 5px;
   z-index: 10;
   width: 100%;
@@ -765,7 +767,7 @@ body {
   border-radius: 15px;
   border-style: solid;
   border-width: 5px;
-  border-color: var(--bg-font);
+  border-color: var(--ac-black);
   background-color: var(--bg);
 }
 
@@ -805,7 +807,7 @@ body {
 
 .form_radio_buttons label.radio_role_normal {
   background-color: var(--font-user-normal);
-  color: var(--ac1-font);
+  color: var(--ac-black-font);
   width: 110px;
   display: flex;
   justify-content: center;
@@ -813,7 +815,7 @@ body {
 
 .form_radio_buttons label.radio_role_vip {
   background-color: var(--font-user-vip);
-  color: var(--ac1-font);
+  color: var(--ac-black-font);
   width: 110px;
   display: flex;
   justify-content: center;
@@ -821,7 +823,7 @@ body {
 
 .form_radio_buttons label.radio_role_admin {
   background-color: var(--font-user-admin);
-  color: var(--ac1-font);
+  color: var(--ac-black-font);
   width: 110px;
   display: flex;
   justify-content: center;
@@ -832,7 +834,7 @@ body {
 }
 
 .form_radio_buttons input[type="radio"]:checked + label {
-  border-color: var(--bg-font);
+  border-color: var(--ac-black);
 }
 
 .form_hint {

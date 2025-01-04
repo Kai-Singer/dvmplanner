@@ -24,7 +24,7 @@
 }
 
 .login_header {
-  background-color: var(--ac1);
+  background-color: var(--ac-red);
   padding: 20px;
   display: flex;
   align-items: center;
@@ -33,7 +33,7 @@
 }
 
 .login_header p {
-  color: var(--ac1-font);
+  color: var(--ac-red-font);
   font-weight: bold;
   font-size: 30px;
   margin: 0;
@@ -58,7 +58,7 @@
   padding: 15px;
   border-radius: 15px;
   border: none;
-  background-color: var(--bg);
+  background-color: var(--ac-black);
   transition: all .2s;
   font-weight: bold;
   cursor: pointer;

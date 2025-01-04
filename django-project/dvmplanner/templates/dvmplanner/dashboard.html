@@ -3,10 +3,20 @@
 
 {% block extra_stylesheets %}
   <link rel="stylesheet" href="{% static 'styles/dashboard.css' %}">
+  <link rel="stylesheet" href="{% static 'styles/review.css' %}">
 {% endblock %}
 
 {% block extra_scripts %}
+  <script>
+    const staticArrowRightIcon = "{% static 'imgs/arrow_right_icon.png' %}";
+    const staticArrowLeftIcon = "{% static 'imgs/arrow_left_icon.png' %}";
+  </script>
   <script src="{% static 'scripts/dashboard.js' %}" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+  <script>
+    const reviewData = JSON.parse('{{ review_data|safe }}');
+  </script>
+  <script src="{% static 'scripts/review.js' %}" defer></script>
 {% endblock %}
 
 {% block page_title %}Dashboard{% endblock %}
@@ -76,6 +86,10 @@
             <div><p>Starten</p></div>
           </button>
         </form>
+        <a class="button card_button" href="{% url 'addreport' %}">
+          <img src="{% static 'imgs/add_icon_round.png' %}" alt="Manual report" draggable="false">
+          <div><p>Manueller Eintrag</p></div>
+        </a>
       {% elif current_activity.status == 'active' %}
         <form method="post">
           {% csrf_token %}
@@ -190,4 +204,135 @@
       </div>
     {% endif %}
   </div>
+  <div class="card">
+    <div class="quick_change_container">
+      <h1>Letzte Aktivitäten</h1>
+      <div class="quick_change_buttons">
+        <a href="{% url 'reports' %}">Zu den Arbeitsberichten</a>
+      </div>
+    </div>
+    <div class="border_item overflow">
+      <table>
+        <tr>
+          <th>Tag</th>
+          <th>Beginn</th>
+          <th>Ende</th>
+          <th>Dauer</th>
+          <th>Modul</th>
+          <th>Notizen</th>
+        </tr>
+        {% for report in last_reports %}
+          <tr class="hoverable_tr">
+            <td>{{ report.day }}</td>
+            <td class="nowrap">{{ report.start }}</td>
+            <td class="nowrap">
+              {% if report.end_day != '' %}
+                {{ report.end_day }}<br>
+              {% endif %}
+              {{ report.end }}
+            </td>
+            <td>{{ report.time }}</td>
+            <td>{{ report.module_index }} {{ report.module_name }}</td>
+            {% if report.long_notes != '' %}
+              <td class="flex_td">
+                <div>{{ report.notes }}</div>
+                <button class="table_button tooltip_elem" onclick="toggleLongNote(this, '{{ report.notes }}', '{{ report.long_notes }}')"><img src="{% static 'imgs/arrow_right_icon.png' %}" alt="Expand" draggable="false"><div class="tooltip_text" >Ausklappen</div></button>
+              </td>
+            {% else %}
+              <td class="left_td">
+                <div>{{ report.notes }}</div>
+              </td>
+            {% endif %}
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+  <div class="card">
+    <div class="quick_change_container">
+      <h1>Auswertung</h1>
+      <div class="quick_change_buttons">
+        <a href="{% url 'review' %}">Zu den Ergebnissen</a>
+      </div>
+    </div>
+    <div class="charts_container">
+      <div class="border_item chart_item">
+        <h2>Verteilung nach Arbeitszeit</h2>
+        <div class="total_review">Arbeitszeit gesamt: <span>{{ total_time }}</span></div>
+        <canvas id="review_chart_time"></canvas>
+      </div>
+      <div class="border_item chart_item">
+        <h2>Verteilung nach Sitzungen</h2>
+        <div class="total_review">Sitzungen gesamt: <span>{{ total_sessions }}</span></div>
+        <canvas id="review_chart_sessions"></canvas>
+      </div>
+    </div>
+  </div>
+  {% if role == 'admin' %}
+    <div class="card">
+      <div class="quick_change_container">
+        <h1>Anfragen</h1>
+        <div class="quick_change_buttons">
+          <a href="{% url 'profile' %}">Zum Profil</a>
+          <a href="{% url 'admin' %}">Zum Admin Dashboard</a>
+        </div>
+      </div>
+      <div class="border_item overflow">
+        <table>
+          <tr>
+            <th>Datum</th>
+            <th>Vorname</th>
+            <th>Nachname</th>
+            <th>Nutzername</th>
+            <th>Aktuelle Rolle</th>
+            <th>Anfrage auf</th>
+          </tr>
+          {% for request in requests %}
+            <tr class="hoverable_tr">
+              <td class="nowrap">{{ request.day }}<br>{{ request.time }}</td>
+              <td class="nowrap">{{ request.first_name }}</td>
+              <td class="nowrap">{{ request.last_name }}</td>
+              <td>{{ request.username }}</td>
+              {% if request.role == 'normal' %}
+                <td class="role_normal">Normal</td>
+              {% elif request.role == 'vip' %}
+                <td class="role_vip">VIP</td>
+              {% elif request.role == 'admin' %}
+                <td class="role_admin">Admin</td>
+              {% endif %}
+              {% if request.requested_role == 'normal' %}
+                <td class="role_normal">Normal</td>
+              {% elif request.requested_role == 'vip' %}
+                <td class="role_vip">VIP</td>
+              {% elif request.requested_role == 'admin' %}
+                <td class="role_admin">Admin</td>
+              {% endif %}
+            </tr>
+          {% endfor %}
+        </table>
+      </div>
+    </div>
+  {% endif %}
+  {% if role != 'admin' %}
+    <div class="card">
+      <div class="quick_change_container">
+        <h1>Bewerbungen</h1>
+        <div class="quick_change_buttons">
+          <a href="{% url 'profile' %}">Zum Profil</a>
+        </div>
+      </div>
+      <h2>
+        {% if requested_role == '' %}
+          Aktuell keine ausstehende Bewerbung
+        {% else %}
+          Aktuell ausstehende Bewerbung auf die Rolle
+          {% if requested_role == 'vip' %}
+            <span class="role_vip">VIP</span>
+          {% elif requested_role == 'admin' %}
+            <span class="role_admin">Admin</span>
+          {% endif %}
+        {% endif %}
+      </h2>
+    </div>
+  {% endif %}
 {% endblock %}
