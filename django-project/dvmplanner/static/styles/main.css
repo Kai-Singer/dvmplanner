@@ -706,6 +706,10 @@ body {
   display: block;
 }
 
+.dropdown_content .dropdown_item.not_selectable {
+  cursor: default;
+}
+
 .dropdown_content .dropdown_item.indent_1 {
   margin-left: 20px;
 }

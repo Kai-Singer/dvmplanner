@@ -19,11 +19,13 @@ modules = [
         "submodules": [
           {
             "index": "1.1.1",
-            "name": "Einführung in die Informatik"
+            "name": "Einführung in die Informatik",
+            "semester": "2"
           },
           {
             "index": "1.1.2",
-            "name": "Vertiefung Informatik"
+            "name": "Vertiefung Informatik",
+            "semester": "3"
           }
         ]
       },
@@ -33,7 +35,8 @@ modules = [
         "submodules": [
           {
             "index": "1.2.1",
-            "name": "E-Government mit Exkursionen"
+            "name": "E-Government mit Exkursionen",
+            "semester": "1"
           }
         ]
       },
@@ -43,15 +46,18 @@ modules = [
         "submodules": [
           {
             "index": "1.3.1",
-            "name": "Betriebs- und Kommunikationssysteme"
+            "name": "Betriebs- und Kommunikationssysteme",
+            "semester": "3"
           },
           {
             "index": "1.3.2",
-            "name": "Verteilte Systeme"
+            "name": "Verteilte Systeme",
+            "semester": "4"
           },
           {
             "index": "1.3.3",
-            "name": "Aktuelle Anwendungen erproben, Web Collagen, Roboter bauen, Raspberry Pi"
+            "name": "Aktuelle Anwendungen erproben, Web Collagen, Roboter bauen, Raspberry Pi",
+            "semester": "4"
           }
         ]
       },
@@ -61,11 +67,13 @@ modules = [
         "submodules": [
           {
             "index": "1.4.1",
-            "name": "Vorgehensmodelle (Software-Engineering 1)"
+            "name": "Vorgehensmodelle (Software-Engineering 1)",
+            "semester": "1"
           },
           {
             "index": "1.4.2",
-            "name": "Requirements-Engineering und Requirements-Management (Software-Engineering 2)"
+            "name": "Requirements-Engineering und Requirements-Management (Software-Engineering 2)",
+            "semester": "2"
           }
         ]
       },
@@ -75,15 +83,18 @@ modules = [
         "submodules": [
           {
             "index": "1.5.1",
-            "name": "Systemanalyse (Software-Engineering 3)"
+            "name": "Systemanalyse (Software-Engineering 3)",
+            "semester": "3"
           },
           {
             "index": "1.5.2",
-            "name": "Softwareentwurf und Implementierung (Software-Engineering 4)"
+            "name": "Softwareentwurf und Implementierung (Software-Engineering 4)",
+            "semester": "4"
           },
           {
             "index": "1.5.3",
-            "name": "Softwarequalität und Test (Software-Engineering 5)"
+            "name": "Softwarequalität und Test (Software-Engineering 5)",
+            "semester": "4"
           }
         ]
       },
@@ -93,11 +104,13 @@ modules = [
         "submodules": [
           {
             "index": "1.6.1",
-            "name": "Cybersecurity"
+            "name": "Cybersecurity",
+            "semester": "6"
           },
           {
             "index": "1.6.2",
-            "name": "ITIL"
+            "name": "ITIL",
+            "semester": "6"
           }
         ]
       },
@@ -107,7 +120,8 @@ modules = [
         "submodules": [
           {
             "index": "1.7.1",
-            "name": "IT-Management"
+            "name": "IT-Management",
+            "semester": "5"
           }
         ]
       },
@@ -117,7 +131,8 @@ modules = [
         "submodules": [
           {
             "index": "1.8.1",
-            "name": "IT-Systeme und Informationssysteme"
+            "name": "IT-Systeme und Informationssysteme",
+            "semester": "5"
           }
         ]
       }
@@ -133,7 +148,8 @@ modules = [
         "submodules": [
           {
             "index": "2.1.1",
-            "name": "Steuerung, Public Management und Projektmanagement"
+            "name": "Steuerung, Public Management und Projektmanagement",
+            "semester": "1"
           }
         ]
       },
@@ -143,7 +159,8 @@ modules = [
         "submodules": [
           {
             "index": "2.2.1",
-            "name": "Organisations- und Prozessmanagement"
+            "name": "Organisations- und Prozessmanagement",
+            "semester": "3"
           }
         ]
       },
@@ -153,7 +170,8 @@ modules = [
         "submodules": [
           {
             "index": "2.3.1",
-            "name": "Öffentliche Betriebswirtschaftslehre"
+            "name": "Öffentliche Betriebswirtschaftslehre",
+            "semester": "5"
           }
         ]
       }
@@ -169,11 +187,13 @@ modules = [
         "submodules": [
           {
             "index": "3.1.1",
-            "name": "Grundlagen des Staats- und Europarechts"
+            "name": "Grundlagen des Staats- und Europarechts",
+            "semester": "1"
           },
           {
             "index": "3.1.2",
-            "name": "Verwaltungsrecht"
+            "name": "Verwaltungsrecht",
+            "semester": "1"
           }
         ]
       },
@@ -183,15 +203,18 @@ modules = [
         "submodules": [
           {
             "index": "3.2.1",
-            "name": "Kommunalrecht"
+            "name": "Kommunalrecht",
+            "semester": "3"
           },
           {
             "index": "3.2.2",
-            "name": "Finanzwirtschaft der Kommunen"
+            "name": "Finanzwirtschaft der Kommunen",
+            "semester": "3"
           },
           {
             "index": "3.2.3",
-            "name": "Staatliches Haushaltsrecht"
+            "name": "Staatliches Haushaltsrecht",
+            "semester": "3"
           }
         ]
       },
@@ -201,19 +224,23 @@ modules = [
         "submodules": [
           {
             "index": "3.3.1",
-            "name": "Grundlagen des Zivilrechts"
+            "name": "Grundlagen des Zivilrechts",
+            "semester": "2"
           },
           {
             "index": "3.3.2",
-            "name": "Grundlagen des Kartell- und Wettbewerbsrechts"
+            "name": "Grundlagen des Kartell- und Wettbewerbsrechts",
+            "semester": "2"
           },
           {
             "index": "3.3.3",
-            "name": "Grundlagen des Handels- und Gesellschaftsrechts"
+            "name": "Grundlagen des Handels- und Gesellschaftsrechts",
+            "semester": "2"
           },
           {
             "index": "3.3.4",
-            "name": "IT-Recht"
+            "name": "IT-Recht",
+            "semester": "2"
           }
         ]
       },
@@ -223,11 +250,13 @@ modules = [
         "submodules": [
           {
             "index": "3.4.1",
-            "name": "Vergaberecht (einschließlich E-Government)"
+            "name": "Vergaberecht (einschließlich E-Government)",
+            "semester": "4"
           },
           {
             "index": "3.4.2",
-            "name": "Beihilferecht"
+            "name": "Beihilferecht",
+            "semester": "4"
           }
         ]
       },
@@ -237,19 +266,23 @@ modules = [
         "submodules": [
           {
             "index": "3.5.1",
-            "name": "Recht Datenschutzes"
+            "name": "Recht Datenschutzes",
+            "semester": "5"
           },
           {
             "index": "3.5.2",
-            "name": "Informationszugangsrecht"
+            "name": "Informationszugangsrecht",
+            "semester": "5"
           },
           {
             "index": "3.5.3",
-            "name": "Arbeitsrecht"
+            "name": "Arbeitsrecht",
+            "semester": "5"
           },
           {
             "index": "3.5.4",
-            "name": "Beamtenrecht"
+            "name": "Beamtenrecht",
+            "semester": "5"
           }
         ]
       },
@@ -259,11 +292,13 @@ modules = [
         "submodules": [
           {
             "index": "3.6.1",
-            "name": "Vertragsgestaltung"
+            "name": "Vertragsgestaltung",
+            "semester": "6"
           },
           {
             "index": "3.6.2",
-            "name": "Rechtliche Kernkompetenzen bei Digitalisierungsprojekten"
+            "name": "Rechtliche Kernkompetenzen bei Digitalisierungsprojekten",
+            "semester": "6"
           }
         ]
       }
@@ -279,15 +314,18 @@ modules = [
         "submodules": [
           {
             "index": "4.1.1",
-            "name": "Strategische und integrale Steuerung"
+            "name": "Strategische und integrale Steuerung",
+            "semester": "1"
           },
           {
             "index": "4.1.2",
-            "name": "Smart Cities und Smart Services"
+            "name": "Smart Cities und Smart Services",
+            "semester": "1"
           },
           {
             "index": "4.1.3",
-            "name": "Grundlagen des Change Managements"
+            "name": "Grundlagen des Change Managements",
+            "semester": "2"
           }
         ]
       },
@@ -297,15 +335,18 @@ modules = [
         "submodules": [
           {
             "index": "4.2.1",
-            "name": "Gestaltung von Kommunikation und Partizipation mit digitalen Medien"
+            "name": "Gestaltung von Kommunikation und Partizipation mit digitalen Medien",
+            "semester": "4"
           },
           {
             "index": "4.2.2",
-            "name": "Führung und Teamentwicklung mit digitalen Medien"
+            "name": "Führung und Teamentwicklung mit digitalen Medien",
+            "semester": "3"
           },
           {
             "index": "4.2.3",
-            "name": "Digitalisierung und digitales Wissensmanagement"
+            "name": "Digitalisierung und digitales Wissensmanagement",
+            "semester": "4"
           }
         ]
       }
@@ -321,7 +362,8 @@ modules = [
         "submodules": [
           {
             "index": "5.1.1",
-            "name": "Praktikum 1"
+            "name": "Praktikum 1",
+            "semester": "1"
           }
         ]
       },
@@ -331,7 +373,8 @@ modules = [
         "submodules": [
           {
             "index": "5.2.1",
-            "name": "Praktikum 7"
+            "name": "Praktikum 7",
+            "semester": "6"
           }
         ]
       }
@@ -347,7 +390,8 @@ modules = [
         "submodules": [
           {
             "index": "6.1.1",
-            "name": "Fallstudie 1"
+            "name": "Fallstudie 1",
+            "semester": "2"
           }
         ]
       },
@@ -357,7 +401,8 @@ modules = [
         "submodules": [
           {
             "index": "6.2.1",
-            "name": "Fallstudie 2"
+            "name": "Fallstudie 2",
+            "semester": "3"
           }
         ]
       },
@@ -367,7 +412,8 @@ modules = [
         "submodules": [
           {
             "index": "6.3.1",
-            "name": "Fallstudie 3"
+            "name": "Fallstudie 3",
+            "semester": "4"
           }
         ]
       },
@@ -377,7 +423,8 @@ modules = [
         "submodules": [
           {
             "index": "6.4.1",
-            "name": "Fallstudie 4"
+            "name": "Fallstudie 4",
+            "semester": "5"
           }
         ]
       },
@@ -387,7 +434,8 @@ modules = [
         "submodules": [
           {
             "index": "6.5.1",
-            "name": "Fallstudie 5"
+            "name": "Fallstudie 5",
+            "semester": "6"
           }
         ]
       }
@@ -403,7 +451,8 @@ modules = [
         "submodules": [
           {
             "index": "7.1.1",
-            "name": "Bachelorarbeit"
+            "name": "Bachelorarbeit",
+            "semester": "6"
           }
         ]
       }
@@ -476,7 +525,7 @@ def reports(request):
     'role': 'admin',
     'img': True,
     'current_module': '[Alle]',
-    'current_semester': '1. Semester',
+    'current_semester': '[Alle]',
     'modules': modules,
     'reports': [
       {
@@ -520,35 +569,28 @@ def reports(request):
   return render(request, 'dvmplanner/reports.html', data)
 
 def review(request):
-  # review_data = {
-  #   'modules': modules,
-  #   'reports': [
-  #     {
-  #       'day': '24.11.2024',
-  #       'start': '01.12:43',
-  #       'end_day': '21.11.2024',
-  #       'end': '02.58:26',
-  #       'time': '2:45:43',
-  #       'module_index': '1.1.2'
-  #     },
-  #     {
-  #       'day': '21.11.2024',
-  #       'start': '10.12:43',
-  #       'end_day': '22.11.2024',
-  #       'end': '12.58:26',
-  #       'time': '10:45:43',
-  #       'module_index': '1.3.1'
-  #     },
-  #     {
-  #       'day': '22.01.2025',
-  #       'start': '22.12:43',
-  #       'end_day': '21.11.2024',
-  #       'end': '23.58:26',
-  #       'time': '0:02:43',
-  #       'module_index': '8.0.0'
-  #     }
-  #   ]
-  # }
+  review_data = [
+    {
+      'module': '1.1.2 Vertiefung Informatik',
+      'time': '12:45:43',
+      'sessions': '14'
+    },
+    {
+      'module': '1.5.1 Systemanalyse (Software-Engineering 3)',
+      'time': '23:34:02',
+      'sessions': '18'
+    },
+    {
+      'module': '2.1.1 Steuerung, Public Management und Projektmanagement',
+      'time': '4:12:52',
+      'sessions': '3'
+    },
+    {
+      'module': '3.3.4 IT-Recht',
+      'time': '7:40:29',
+      'sessions': '5'
+    },
+  ]
   data = {
     'active_page': 'review',
     'uid': uid,
@@ -557,12 +599,42 @@ def review(request):
     'last_name': 'Mustermann',
     'role': 'admin',
     'img': True,
-    # 'placeholder_module': {
-    #   'name': 'Einführung in die Informatik',
-    #   'index': '1.1.1'
-    # },
-    # 'modules': modules,
-    # 'review_data': json.dumps(review_data)
+    'current_module': '[Alle]',
+    'current_semester': '[Alle]',
+    'modules': modules,
+    'total_time': '48:13:06',
+    'total_sessions': '40',
+    'reviews': [
+      {
+        'module': '1.1.2 Vertiefung Informatik',
+        'semester': '3',
+        'time': '12:45:43',
+        'percentage': '26,57 %',
+        'sessions': '14'
+      },
+      {
+        'module': '1.5.1 Systemanalyse (Software-Engineering 3)',
+        'semester': '3',
+        'time': '23:34:02',
+        'percentage': '48,88 %',
+        'sessions': '18'
+      },
+      {
+        'module': '2.1.1 Steuerung, Public Management und Projektmanagement',
+        'semester': '1',
+        'time': '4:12:52',
+        'percentage': '8,74 %',
+        'sessions': '3'
+      },
+      {
+        'module': '3.3.4 IT-Recht',
+        'semester': '2',
+        'time': '7:40:29',
+        'percentage': '15,92 %',
+        'sessions': '5'
+      },
+    ],
+    'review_data': json.dumps(review_data)
   }
   return render(request, 'dvmplanner/review.html', data)
 

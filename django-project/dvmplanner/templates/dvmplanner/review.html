@@ -2,17 +2,15 @@
 {% load static %}
 
 {% block extra_stylesheets %}
-  <!-- <link rel="stylesheet" href="{% static 'styles/review.css' %}"> -->
+  <link rel="stylesheet" href="{% static 'styles/review.css' %}">
 {% endblock %}
 
 {% block extra_scripts %}
-  <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
   <script>
-    const review_data = JSON.parse('{{ review_data|safe }}');
-    const modules = review_data.modules;
-    const reports = review_data.reports;
+    const reviewData = JSON.parse('{{ review_data|safe }}');
   </script>
-  <script src="{% static 'scripts/review.js' %}" defer></script> -->
+  <script src="{% static 'scripts/review.js' %}" defer></script>
 {% endblock %}
 
 {% block page_title %}Ergebnisse{% endblock %}
@@ -25,48 +23,148 @@
 
 {% block content %}
   <!-- REVIEW -->
-  <!-- <div class="card">
-    <h1>Lernzeitverteilung nach Tageszeit</h1>
+  <div class="card">
+    <h1>Auswertung der Arbeitsberichte</h1>
     <div class="table_filter">
       <div class="table_filter_text">Modul:</div>
-      <div class="dropdown table_filter_dropdown">
+      <div class="dropdown table_filter_dropdown review_table_module">
         <div class="dropdown_button">
-          <div>{{ placeholder_module.index }} {{ placeholder_module.name }}</div>
+          <div>{{ current_module }}</div>
           <img src="{% static 'imgs/expand_dropdown.png' %}" alt="" draggable="false">
         </div>
         <div class="dropdown_content">
-            <div class="dropdown_item" onclick="">[Alle]</div>
+          <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="context" value="review_dropdown_select_module">
+            <input type="hidden" name="index" value="all">
+            <div class="dropdown_item_container">
+              <button class="dropdown_item" type="submit">[Alle]</button>
+            </div>
+          </form>
           {% for modulegroup in modules %}
-            <div class="dropdown_item" onclick="">{{ modulegroup.index }} {{ modulegroup.name }}</div>
+            <form method="post">
+              {% csrf_token %}
+              <input type="hidden" name="context" value="review_dropdown_select_module">
+              <input type="hidden" name="index" value="{{ modulegroup.index }}">
+              <div class="dropdown_item_container">
+                <button class="dropdown_item" type="submit">{{ modulegroup.index }} {{ modulegroup.name }}</button>
+              </div>
+            </form>
             {% for module in modulegroup.modules %}
-              <div class="dropdown_item indent_1" onclick="">{{ module.index }} {{ module.name }}</div>
+              <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="context" value="review_dropdown_select_module">
+                <input type="hidden" name="index" value="{{ modulegroup.index }}">
+                <div class="dropdown_item_container">
+                  <button class="dropdown_item indent_1" type="submit">{{ module.index }} {{ module.name }}</button>
+                </div>
+              </form>
               {% for submodule in module.submodules %}
-                <div class="dropdown_item indent_2" onclick="">{{ submodule.index }} {{ submodule.name }}</div>
+                <div class="dropdown_item indent_2 not_selectable">{{ submodule.index }} {{ submodule.name }}</div>
               {% endfor %}
             {% endfor %}
           {% endfor %}
         </div>
       </div>
       <div class="table_filter_text spacing_left">Semester:</div>
-      <div class="dropdown table_filter_dropdown">
+      <div class="dropdown table_filter_dropdown review_table_semester">
         <div class="dropdown_button">
-          <div>1. Semester</div>
+          <div>{{ current_semester }}</div>
           <img src="{% static 'imgs/expand_dropdown.png' %}" alt="" draggable="false">
         </div>
         <div class="dropdown_content">
-          <div class="dropdown_item" onclick="">1. Semester</div>
-          <div class="dropdown_item" onclick="">2. Semester</div>
-          <div class="dropdown_item" onclick="">3. Semester</div>
-          <div class="dropdown_item" onclick="">4. Semester</div>
-          <div class="dropdown_item" onclick="">5. Semester</div>
-          <div class="dropdown_item" onclick="">6. Semester</div>
+          <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="context" value="reports_dropdown_select_semester">
+            <input type="hidden" name="semester" value="all">
+            <div class="dropdown_item_container">
+              <button class="dropdown_item" type="submit">[Alle]</button>
+            </div>
+          </form>
+          <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="context" value="reports_dropdown_select_semester">
+            <input type="hidden" name="semester" value="1">
+            <div class="dropdown_item_container">
+              <button class="dropdown_item" type="submit">1. Semester</button>
+            </div>
+          </form>
+          <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="context" value="reports_dropdown_select_semester">
+            <input type="hidden" name="semester" value="2">
+            <div class="dropdown_item_container">
+              <button class="dropdown_item" type="submit">2. Semester</button>
+            </div>
+          </form>
+          <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="context" value="reports_dropdown_select_semester">
+            <input type="hidden" name="semester" value="3">
+            <div class="dropdown_item_container">
+              <button class="dropdown_item" type="submit">3. Semester</button>
+            </div>
+          </form>
+          <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="context" value="reports_dropdown_select_semester">
+            <input type="hidden" name="semester" value="4">
+            <div class="dropdown_item_container">
+              <button class="dropdown_item" type="submit">4. Semester</button>
+            </div>
+          </form>
+          <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="context" value="reports_dropdown_select_semester">
+            <input type="hidden" name="semester" value="5">
+            <div class="dropdown_item_container">
+              <button class="dropdown_item" type="submit">5. Semester</button>
+            </div>
+          </form>
+          <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="context" value="reports_dropdown_select_semester">
+            <input type="hidden" name="semester" value="6">
+            <div class="dropdown_item_container">
+              <button class="dropdown_item" type="submit">6. Semester</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
-    <div class="border_item chart_item">
-      <canvas id="chart_test"></canvas>
+    <div class="border_item overflow">
+      <table>
+        <tr>
+          <th>Modul</th>
+          <th>Semester</th>
+          <th>Kumulative Arbeitszeit</th>
+          <th>Prozentueller Anteil</th>
+          <th>Sitzungsanzahl</th>
+        </tr>
+        {% for review in reviews %}
+          <tr class="hoverable_tr">
+            <td>{{ review.module }}</td>
+            <td class="nowrap">{{ review.semester }}. Semester</td>
+            <td class="nowrap">{{ review.time }}</td>
+            <td class="nowrap">{{ review.percentage }}</td>
+            <td>{{ review.sessions }}</td>
+          </tr>
+        {% endfor %}
+      </table>
     </div>
-  </div> -->
+    <div class="charts_container">
+      <div class="border_item chart_item">
+        <h2>Verteilung nach Arbeitszeit</h2>
+        <div class="total_review">Arbeitszeit gesamt: <span>{{ total_time }}</span></div>
+        <canvas id="review_chart_time"></canvas>
+      </div>
+      <div class="border_item chart_item">
+        <h2>Verteilung nach Sitzungen</h2>
+        <div class="total_review">Sitzungen gesamt: <span>{{ total_sessions }}</span></div>
+        <canvas id="review_chart_sessions"></canvas>
+      </div>
+    </div>
+  </div>
   <!-- DOWNLOAD & PRINT -->
   <div class="card">
     <h1>Ergebnisbericht</h1>

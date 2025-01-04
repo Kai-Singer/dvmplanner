@@ -1,3 +1,29 @@
-/* .chart_item {
+.charts_container {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  width: 100%;
+}
+
+.chart_item {
   background-color: var(--bg);
-} */
+  flex: 1;
+  padding: 20px;
+}
+
+.table_filter_dropdown.review_table_module {
+  max-width: 600px;
+}
+
+.table_filter_dropdown.review_table_semester {
+  max-width: 160px;
+}
+
+.total_review {
+  font-size: 20px;
+}
+
+.total_review span{
+  font-weight: bold;
+}

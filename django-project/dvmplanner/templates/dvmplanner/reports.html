@@ -185,6 +185,14 @@
           <form method="post">
             {% csrf_token %}
             <input type="hidden" name="context" value="reports_dropdown_select_semester">
+            <input type="hidden" name="semester" value="all">
+            <div class="dropdown_item_container">
+              <button class="dropdown_item" type="submit">[Alle]</button>
+            </div>
+          </form>
+          <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="context" value="reports_dropdown_select_semester">
             <input type="hidden" name="semester" value="1">
             <div class="dropdown_item_container">
               <button class="dropdown_item" type="submit">1. Semester</button>
