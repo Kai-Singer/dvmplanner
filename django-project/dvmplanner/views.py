@@ -748,6 +748,7 @@ def admin(request):
         'username': 'thedestroyer123',
         'role': 'vip',
         'requested_role': 'admin',
+        'id': 'u0001'
       },
       {
         'day': '13.12.2024',
@@ -757,6 +758,7 @@ def admin(request):
         'username': 'the_real_vinci',
         'role': 'normal',
         'requested_role': 'vip',
+        'id': 'u0002'
       },
       {
         'day': '12.12.2024',
@@ -766,6 +768,7 @@ def admin(request):
         'username': 'radium',
         'role': 'vip',
         'requested_role': 'admin',
+        'id': 'u0003'
       },
     ],
     'current_users_filter_role': '[Alle]',

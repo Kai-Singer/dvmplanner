@@ -58,7 +58,7 @@
   padding: 15px;
   border-radius: 15px;
   border: none;
-  background-color: var(--ac-black);
+  background-color: var(--bg);
   transition: all .2s;
   font-weight: bold;
   cursor: pointer;

@@ -149,7 +149,10 @@
                 <td class="nowrap">{{ entry.end }}</td>
                 <td>{{ entry.time }}</td>
                 <td class="no_select">
-                  <button class="table_button red tooltip_elem" onclick="deleteEntry('{{ forloop.counter0 }}')"><img src="{% static 'imgs/delete_icon.png' %}" alt="Delete" draggable="false"><div class="tooltip_text">Löschen</div></button>
+                  <button class="table_button red tooltip_elem" onclick="deleteEntry('{{ forloop.counter0 }}')">
+                    <img src="{% static 'imgs/delete_icon.png' %}" alt="Delete" draggable="false">
+                    <div class="tooltip_text">Löschen</div>
+                  </button>
                 </td>
               </tr>
             {% endfor %}
@@ -236,7 +239,10 @@
             {% if report.long_notes != '' %}
               <td class="flex_td">
                 <div>{{ report.notes }}</div>
-                <button class="table_button tooltip_elem" onclick="toggleLongNote(this, '{{ report.notes }}', '{{ report.long_notes }}')"><img src="{% static 'imgs/arrow_right_icon.png' %}" alt="Expand" draggable="false"><div class="tooltip_text" >Ausklappen</div></button>
+                <button class="table_button tooltip_elem" onclick="toggleLongNote(this, '{{ report.notes }}', '{{ report.long_notes }}')">
+                  <img src="{% static 'imgs/arrow_right_icon.png' %}" alt="Expand" draggable="false">
+                  <div class="tooltip_text" >Ausklappen</div>
+                </button>
               </td>
             {% else %}
               <td class="left_td">

@@ -263,8 +263,26 @@
               <td class="role_admin">Admin</td>
             {% endif %}
             <td class="no_select">
-              <button class="table_button green tooltip_elem"><img src="{% static 'imgs/accept_icon.png' %}" alt="Accept" draggable="false"><div class="tooltip_text" >Akzeptieren</div></button>
-              <button class="table_button red tooltip_elem"><img src="{% static 'imgs/decline_icon.png' %}" alt="Decline" draggable="false"><div class="tooltip_text" >Ablehnen</div></button>
+              <form method="post" class="table_button_form">
+                {% csrf_token %}
+                <input type="hidden" name="context" value="request_action">
+                <input type="hidden" name="action" value="accept">
+                <input type="hidden" name="id" value="{{ request.id }}">
+                <button class="table_button green tooltip_elem" type="submit">
+                  <img src="{% static 'imgs/accept_icon.png' %}" alt="Accept" draggable="false">
+                  <div class="tooltip_text">Akzeptieren</div>
+                </button>
+              </form>
+              <form method="post" class="table_button_form">
+                {% csrf_token %}
+                <input type="hidden" name="context" value="request_action">
+                <input type="hidden" name="action" value="decline">
+                <input type="hidden" name="id" value="{{ request.id }}">
+                <button class="table_button red tooltip_elem" type="submit">
+                  <img src="{% static 'imgs/decline_icon.png' %}" alt="Decline" draggable="false">
+                  <div class="tooltip_text">Ablehnen</div>
+                </button>
+              </form>
             </td>
           </tr>
         {% endfor %}
@@ -390,11 +408,32 @@
               <td>Gelöscht</td>
             {% endif %}
             <td class="no_select">
-              <button class="table_button tooltip_elem" onclick="changeRole('{{ user.id }}', '{{ user.username }}', '{{ user.role }}')"><img src="{% static 'imgs/edit_icon.png' %}" alt="Change role" draggable="false"><div class="tooltip_text" >Rolle ändern</div></button>
+              <button class="table_button tooltip_elem" onclick="changeRole('{{ user.id }}', '{{ user.username }}', '{{ user.role }}')">
+                <img src="{% static 'imgs/edit_icon.png' %}" alt="Change role" draggable="false">
+                <div class="tooltip_text" >Rolle ändern</div>
+              </button>
               {% if user.status == 'blocked' %}
-                <button class="table_button green tooltip_elem"><img src="{% static 'imgs/unblock_icon.png' %}" alt="Unblock" draggable="false"><div class="tooltip_text" >Entsperren</div></button>
+                <form method="post" class="table_button_form">
+                  {% csrf_token %}
+                  <input type="hidden" name="context" value="block_user">
+                  <input type="hidden" name="action" value="block">
+                  <input type="hidden" name="id" value="{{ user.id }}">
+                  <button class="table_button green tooltip_elem" type="submit">
+                    <img src="{% static 'imgs/unblock_icon.png' %}" alt="Unblock" draggable="false">
+                    <div class="tooltip_text" >Entsperren</div>
+                  </button>
+                </form>
               {% else %}
-                <button class="table_button red tooltip_elem"><img src="{% static 'imgs/block_icon.png' %}" alt="Block" draggable="false"><div class="tooltip_text" >Sperren</div></button>
+                <form method="post" class="table_button_form">
+                  {% csrf_token %}
+                  <input type="hidden" name="context" value="block_user">
+                  <input type="hidden" name="action" value="unblock">
+                  <input type="hidden" name="id" value="{{ user.id }}">
+                  <button class="table_button red tooltip_elem" type="submit">
+                    <img src="{% static 'imgs/block_icon.png' %}" alt="Block" draggable="false">
+                    <div class="tooltip_text" >Sperren</div>
+                  </button>
+                </form>
               {% endif %}
             </td>
           </tr>
@@ -413,8 +452,14 @@
             <div>{{ modulegroup.name }}</div>
           </div>
           <div class="module_buttons">
-            <button class="table_button tooltip_elem" onclick="editModule('{{ modulegroup.index }}', '{{ modulegroup.name }}', null)"><img src="{% static 'imgs/edit_icon.png' %}" alt="Edit" draggable="false"><div class="tooltip_text" >Bearbeiten</div></button>
-            <button class="table_button red tooltip_elem" onclick="deleteModule('{{ modulegroup.index }}', '{{ modulegroup.name }}')"><img src="{% static 'imgs/delete_icon.png' %}" alt="Delete" draggable="false"><div class="tooltip_text" >Löschen</div></button>
+            <button class="table_button tooltip_elem" onclick="editModule('{{ modulegroup.index }}', '{{ modulegroup.name }}', null)">
+              <img src="{% static 'imgs/edit_icon.png' %}" alt="Edit" draggable="false">
+              <div class="tooltip_text" >Bearbeiten</div>
+            </button>
+            <button class="table_button red tooltip_elem" onclick="deleteModule('{{ modulegroup.index }}', '{{ modulegroup.name }}')">
+              <img src="{% static 'imgs/delete_icon.png' %}" alt="Delete" draggable="false">
+              <div class="tooltip_text" >Löschen</div>
+            </button>
           </div>
         </div>
         {% for module in modulegroup.modules %}
@@ -424,8 +469,14 @@
               <div>{{ module.name }}</div>
             </div>
             <div class="module_buttons">
-              <button class="table_button tooltip_elem" onclick="editModule('{{ module.index }}', '{{ module.name }}', null)"><img src="{% static 'imgs/edit_icon.png' %}" alt="Edit" draggable="false"><div class="tooltip_text" >Bearbeiten</div></button>
-              <button class="table_button red tooltip_elem" onclick="deleteModule('{{ module.index }}', '{{ module.name }}')"><img src="{% static 'imgs/delete_icon.png' %}" alt="Delete" draggable="false"><div class="tooltip_text" >Löschen</div></button>
+              <button class="table_button tooltip_elem" onclick="editModule('{{ module.index }}', '{{ module.name }}', null)">
+                <img src="{% static 'imgs/edit_icon.png' %}" alt="Edit" draggable="false">
+                <div class="tooltip_text" >Bearbeiten</div>
+              </button>
+              <button class="table_button red tooltip_elem" onclick="deleteModule('{{ module.index }}', '{{ module.name }}')">
+                <img src="{% static 'imgs/delete_icon.png' %}" alt="Delete" draggable="false">
+                <div class="tooltip_text" >Löschen</div>
+              </button>
             </div>
           </div>
           {% for submodule in module.submodules %}
@@ -436,8 +487,14 @@
                 <div class="semester">{{ submodule.semester }}. Semester</div>
               </div>
               <div class="module_buttons">
-                <button class="table_button tooltip_elem" onclick="editModule('{{ submodule.index }}', '{{ submodule.name }}', '{{ submodule.semester }}')"><img src="{% static 'imgs/edit_icon.png' %}" alt="Edit" draggable="false"><div class="tooltip_text" >Bearbeiten</div></button>
-                <button class="table_button red tooltip_elem" onclick="deleteModule('{{ submodule.index }}', '{{ submodule.name }}')"><img src="{% static 'imgs/delete_icon.png' %}" alt="Delete" draggable="false"><div class="tooltip_text" >Löschen</div></button>
+                <button class="table_button tooltip_elem" onclick="editModule('{{ submodule.index }}', '{{ submodule.name }}', '{{ submodule.semester }}')">
+                  <img src="{% static 'imgs/edit_icon.png' %}" alt="Edit" draggable="false">
+                  <div class="tooltip_text" >Bearbeiten</div>
+                </button>
+                <button class="table_button red tooltip_elem" onclick="deleteModule('{{ submodule.index }}', '{{ submodule.name }}')">
+                  <img src="{% static 'imgs/delete_icon.png' %}" alt="Delete" draggable="false">
+                  <div class="tooltip_text" >Löschen</div>
+                </button>
               </div>
             </div>
           {% endfor %}
