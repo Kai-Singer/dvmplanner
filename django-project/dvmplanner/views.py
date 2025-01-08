@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from django.core.files.storage import FileSystemStorage
 from django.contrib.staticfiles import finders
 from dvmplanner.scripts.users import User
+from datetime import datetime
 import os, json
 
 uid = 'u0000'
@@ -599,7 +600,11 @@ def dashboard(request):
     ],
     'requested_role': 'none'
   }
-  return render(request, 'dvmplanner/dashboard.html', data)
+
+  if 'uid' in request.session:
+    return render(request, 'dvmplanner/dashboard.html', data)
+  else:
+    return redirect(home)
 
 def reports(request):
   '''
@@ -657,7 +662,11 @@ def reports(request):
       },
     ]
   }
-  return render(request, 'dvmplanner/reports.html', data)
+
+  if 'uid' in request.session:
+    return render(request, 'dvmplanner/reports.html', data)
+  else:
+    return redirect(home)
 
 def review(request):
   review_data = [
@@ -727,7 +736,11 @@ def review(request):
     ],
     'review_data': json.dumps(review_data)
   }
-  return render(request, 'dvmplanner/review.html', data)
+
+  if 'uid' in request.session:
+    return render(request, 'dvmplanner/review.html', data)
+  else:
+    return redirect(home)
 
 def admin(request):
   data = {
@@ -807,7 +820,11 @@ def admin(request):
     ],
     'modules': modules
   }
-  return render(request, 'dvmplanner/admin.html', data)
+
+  if 'uid' in request.session:
+    return render(request, 'dvmplanner/admin.html', data)
+  else:
+    return redirect(home)
 
 def profile(request):
   data = {
@@ -823,7 +840,11 @@ def profile(request):
     'creation_date': '28.12.2024, 13.48:11 Uhr',
     'requested_role': ''
   }
-  return render(request, 'dvmplanner/profile.html', data)
+
+  if 'uid' in request.session:
+    return render(request, 'dvmplanner/profile.html', data)
+  else:
+    return redirect(home)
 
 def addreport(request):
   data = {
@@ -840,12 +861,30 @@ def addreport(request):
     },
     'modules': modules
   }
-  return render(request, 'dvmplanner/addreport.html', data)
+
+  if 'uid' in request.session:
+    return render(request, 'dvmplanner/addreport.html', data)
+  else:
+    return redirect(home)
 
 def login(request):
-  data = {}
-  return render(request, 'dvmplanner/login.html', data)
+  if request.POST.get('context', '') == 'login':
+    username = request.POST.get('username', '')
+    pwd = request.POST.get('pwd', '')
+    uid = ''
+    for file in os.listdir(f'data/users/'):
+      with open(f'data/users/{file}', 'r') as fileContents:
+        fileContents = json.load(fileContents)
+        if (fileContents['username'] == username or fileContents['email'] == username) and fileContents['pwd'] == pwd:
+          uid = file.split('.')[0]
+    if uid != '':
+      request.session['uid'] = uid
+      return redirect(dashboard)
+    else:
+      # ERROR LOGIN FAILED
+      return render(request, 'dvmplanner/login.html')
+  else:
+    return render(request, 'dvmplanner/login.html')
 
 def signup(request):
-  data = {}
-  return render(request, 'dvmplanner/signup.html', data)
+  return render(request, 'dvmplanner/signup.html')

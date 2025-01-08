@@ -1,6 +1,7 @@
 from dvmplanner.scripts.main import BASE_DIR
+from dvmplanner.scripts.modules import Submodule
 from datetime import datetime
-import os, json
+import os, json, csv
 
 class User:
   @staticmethod
@@ -11,27 +12,55 @@ class User:
       path = os.path.join(userspath, filename)
       file = open(path, 'r', encoding = 'utf-8')
       user = json.loads(file.read())
-      userobj = User(user['username'], user['first_name'], user['last_name'], user['email'], user['pwd'], user['status'], user['blocked'])
+      creation_date = datetime.strptime(user['creation_date'], '%Y-%m-%d %H:%M:%S')
+      userobj = User(user['uid'], user['username'], user['first_name'], user['last_name'], user['email'], user['pwd'], creation_date, user['img'], user['role'], user['requested_role'], user['status'], user['current_activity'])
+      reports = Report.getUserReports(userobj)
+      userobj.updateReports(reports)
       users.append(userobj)
       file.close()
     return users
 
-  def __init__(self, username: str, first_name: str, last_name: str, email: str, pwd: str, status: str, blocked: bool, reports: list['Report']):
+  def __init__(self, uid: str, username: str, first_name: str, last_name: str, email: str, pwd: str, creation_date: datetime, img: bool, role: str, requested_role: str, status: str, current_activity: dict, reports: list['Report'] = []):
+    self.__uid = uid
     self.__username = username
     self.__first_name = first_name
     self.__last_name = last_name
     self.__email = email
     self.__pwd = pwd
+    self.__creation_date = creation_date
+    self.__img = img
+    self.__role = role
+    self.__requested_role = requested_role
     self.__status = status
-    self.__blocked = blocked
+    self.__current_activity = current_activity
     self.__reports = reports
 
-  def getUsername(self):
-    return self.__username
+  def getUid(self):
+    return self.__uid
+  
+  def updateReports(self, reports: list['Report']):
+    self.__reports = reports
   
 class Report:
-  def __init__(self, user: User, start: datetime, end: datetime, submodule: 'Submodule', notes: str):
+  @staticmethod
+  def getUserReports(user: User):
+    reports = []
+    uid = user.getUid()
+    path = f'{BASE_DIR}/data/reports/{uid}.csv'
+    file = open(path, 'r', encoding = 'utf-8')
+    reader = csv.DictReader(file, delimiter = ';')
+    file.close()
+    for report in reader:
+      start = datetime.strptime(report['start'], '%Y-%m-%d %H:%M:%S')
+      end = datetime.strptime(report['end'], '%Y-%m-%d %H:%M:%S')
+      submodule = Submodule.getByIndex(report['submodule'])
+      reportobj = Report(user, report['id'], start, end, submodule, report['notes'])
+      reports.append(reportobj)
+    return reports
+  
+  def __init__(self, user: User, rid: str, start: datetime, end: datetime, submodule: 'Submodule', notes: str):
     self.__user = user
+    self.__rid = rid
     self.__start = start
     self.__end = end
     self.__submodule = submodule
