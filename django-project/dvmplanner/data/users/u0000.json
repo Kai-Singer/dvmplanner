@@ -8,7 +8,8 @@
   "creation_date": "2024-12-28 13:48:11",
   "img": true,
   "role": "normal",
-  "requested_role": "",
+  "requested_role": "vip",
+  "request_date": "2024-12-29 13:48:11",
   "status": "active",
   "current_activity": {
     "status": "active",
