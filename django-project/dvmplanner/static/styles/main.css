@@ -482,7 +482,26 @@ body {
 }
 
 .notification {
-  /*!*/
+  position: fixed;
+  bottom: 20px;
+  right: -300px;
+  background-color: var(--ac-red);
+  color: var(--ac-red-font);
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  font-size: 20px;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.notification.show {
+  transform: translateX(-320px);
+  opacity: 1;
+}
+
+.notification.hide {
+  transform: translateX(0);
+  opacity: 0;
 }
 
 /* --- CARDS --- */

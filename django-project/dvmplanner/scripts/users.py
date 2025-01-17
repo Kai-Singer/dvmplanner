@@ -27,6 +27,36 @@ class User:
       if user.getUsername() == login or user.getEmail() == login:
         result = user
     return result
+  
+  @staticmethod
+  def getUserByUsername(username: str):
+    result = None
+    for user in User.getUsers():
+      if user.getUsername() == username:
+        result = user
+    return result
+  
+  @staticmethod
+  def getUserByEmail(email: str):
+    result = None
+    for user in User.getUsers():
+      if user.getEmail() == email:
+        result = user
+    return result
+  
+  @staticmethod
+  def createUser(username: str, first_name: str, last_name: str, email: str, pwd: str):
+    uid = 0
+    for user in User.getUsers():
+      userUid = user.getUid()
+      userUid = int(userUid[1:])
+      if userUid > uid:
+        uid = userUid
+    uid = f'u{str(uid + 1).zfill(4)}'
+    creation_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    createdUser = User(uid, username, first_name, last_name, email, pwd, creation_date, False, 'normal', '', 'active', { 'status': 'none' })
+    createdUser.updateJSON()
+    return createdUser
 
   def __init__(self, uid: str, username: str, first_name: str, last_name: str, email: str, pwd: str, creation_date: datetime, img: bool, role: str, requested_role: str, status: str, current_activity: dict, reports: list['Report'] = []):
     self.__uid = uid
@@ -57,6 +87,26 @@ class User:
 
   def checkPwd(self, pwd: str):
     return pwd == self.__pwd
+  
+  def updateJSON(self):
+    data = {
+      'uid': self.__uid,
+      'username': self.__username,
+      'first_name': self.__first_name,
+      'last_name': self.__last_name,
+      'email': self.__email,
+      'pwd': self.__pwd,
+      'creation_date': self.__creation_date,
+      'img': self.__img,
+      'role': self.__role,
+      'requested_role': self.__requested_role,
+      'status': self.__status,
+      'current_activity': self.__current_activity
+    }
+    userspath = BASE_DIR + '/data/users/'
+    file = open(os.path.join(userspath, f'{self.__uid}.json'), 'w', encoding = 'utf-8')
+    file.write(json.dumps(data, indent = 2))
+    file.close()
   
 class Report:
   @staticmethod

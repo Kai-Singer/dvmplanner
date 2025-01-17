@@ -1,3 +1,24 @@
+window.addEventListener('DOMContentLoaded', () => {
+  const notification = document.getElementById('notification');
+
+  if (notification) {
+    setTimeout(() => {
+      notification.classList.add('show');
+    }, 500);
+
+    setTimeout(() => {
+      notification.classList.remove('show');
+      notification.classList.add('hide');
+    }, 4000);
+
+    notification.addEventListener('transitionend', () => {
+      if (notification.classList.contains('hide')) {
+        notification.remove();
+      }
+    });
+  }
+});
+
 const profile_button = document.getElementById('profile_button');
 const usermenu = document.getElementById('usermenu');
 

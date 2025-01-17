@@ -599,8 +599,7 @@ def dashboard(request):
         'requested_role': 'admin',
       },
     ],
-    'requested_role': 'none',
-    'notification': 'Hello'
+    'requested_role': 'none'
   }
 
   if 'uid' in request.session:
@@ -879,12 +878,44 @@ def login(request):
         request.session['uid'] = user.getUid()
         return redirect(dashboard)
       else:
-        print('Falsches Passwort!')
+        data = {
+          'notification': 'Falsches Passwort!'
+        }
+        return render(request, 'dvmplanner/login.html', data)
     else:
-      print('Falscher Login!')
-    return render(request, 'dvmplanner/login.html')
+      data = {
+        'notification': 'Falscher Benutzername oder E-Mail!'
+      }
+      return render(request, 'dvmplanner/login.html', data)
   else:
     return render(request, 'dvmplanner/login.html')
 
 def signup(request):
-  return render(request, 'dvmplanner/signup.html')
+  if request.POST.get('context', '') == 'signup':
+    username = request.POST.get('username', '')
+    firstName = request.POST.get('first_name', '')
+    lastName = request.POST.get('last_name', '')
+    email = request.POST.get('email', '')
+    pwd = request.POST.get('pwd', '')
+    pwdRepeat = request.POST.get('pwd_repeat', '')
+    if User.getUserByEmail(email):
+      data = {
+        'notification': 'Die E-Mail ist bereits vergeben!'
+      }
+      return render(request, 'dvmplanner/signup.html', data)
+    elif User.getUserByUsername(username):
+      data = {
+        'notification': 'Der Benutzername ist bereits vergeben!'
+      }
+      return render(request, 'dvmplanner/signup.html', data)
+    elif pwd != pwdRepeat:
+      data = {
+        'notification': 'Die Passwörter stimmen nicht überein!'
+      }
+      return render(request, 'dvmplanner/signup.html', data)
+    else:
+      user = User.createUser(username, firstName, lastName, email, pwd)
+      request.session['uid'] = user.getUid()
+      return redirect(dashboard)
+  else:
+    return render(request, 'dvmplanner/signup.html')

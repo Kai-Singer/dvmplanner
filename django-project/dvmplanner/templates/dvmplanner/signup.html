@@ -11,6 +11,11 @@
   <title>Registrieren - DVM Planner</title>
 </head>
 <body>
+  {% if notification %}
+    <div class="notification" id="notification">
+      {{ notification }}
+    </div>
+  {% endif %}
   <div class="login_container">
     <div class="login_box">
       <div class="login_header">
@@ -43,7 +48,7 @@
             </div>
             <div class="form_item">
               <div class="form_name">E-Mail</div>
-              <input class="login_input" type="text" name="email" required>
+              <input class="login_input" type="email" name="email" required>
             </div>
             <div class="login_content_split">
               <div class="form_item">
