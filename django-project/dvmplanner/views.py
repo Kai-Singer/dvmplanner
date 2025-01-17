@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from django.core.files.storage import FileSystemStorage
 from django.contrib.staticfiles import finders
 from dvmplanner.scripts.users import User
+from dvmplanner.scripts.main import BASE_DIR
 from datetime import datetime
 import os, json
 
@@ -598,7 +599,8 @@ def dashboard(request):
         'requested_role': 'admin',
       },
     ],
-    'requested_role': 'none'
+    'requested_role': 'none',
+    'notification': 'Hello'
   }
 
   if 'uid' in request.session:
@@ -871,18 +873,16 @@ def login(request):
   if request.POST.get('context', '') == 'login':
     username = request.POST.get('username', '')
     pwd = request.POST.get('pwd', '')
-    uid = ''
-    for file in os.listdir(f'data/users/'):
-      with open(f'data/users/{file}', 'r') as fileContents:
-        fileContents = json.load(fileContents)
-        if (fileContents['username'] == username or fileContents['email'] == username) and fileContents['pwd'] == pwd:
-          uid = file.split('.')[0]
-    if uid != '':
-      request.session['uid'] = uid
-      return redirect(dashboard)
+    user = User.getUserByLogin(username)
+    if user is not None:
+      if user.checkPwd(pwd):
+        request.session['uid'] = user.getUid()
+        return redirect(dashboard)
+      else:
+        print('Falsches Passwort!')
     else:
-      # ERROR LOGIN FAILED
-      return render(request, 'dvmplanner/login.html')
+      print('Falscher Login!')
+    return render(request, 'dvmplanner/login.html')
   else:
     return render(request, 'dvmplanner/login.html')
 

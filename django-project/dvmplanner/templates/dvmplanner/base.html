@@ -44,6 +44,11 @@
   </div>
   <!-- CONTENT -->
   <div class="content" id="content">
+    {% if notification %}
+      <div class="notification">
+        {{ notification }}
+      </div>
+    {% endif %}
     <div class="topbar">
       <div class="topbar_text">{% block header_title %}Placeholder{% endblock %}</div>
       <div class="button profile_button" id="profile_button">

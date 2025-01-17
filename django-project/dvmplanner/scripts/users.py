@@ -20,6 +20,14 @@ class User:
       file.close()
     return users
 
+  @staticmethod
+  def getUserByLogin(login: str):
+    result = None
+    for user in User.getUsers():
+      if user.getUsername() == login or user.getEmail() == login:
+        result = user
+    return result
+
   def __init__(self, uid: str, username: str, first_name: str, last_name: str, email: str, pwd: str, creation_date: datetime, img: bool, role: str, requested_role: str, status: str, current_activity: dict, reports: list['Report'] = []):
     self.__uid = uid
     self.__username = username
@@ -38,8 +46,17 @@ class User:
   def getUid(self):
     return self.__uid
   
+  def getUsername(self):
+    return self.__username
+  
+  def getEmail(self):
+    return self.__email
+  
   def updateReports(self, reports: list['Report']):
     self.__reports = reports
+
+  def checkPwd(self, pwd: str):
+    return pwd == self.__pwd
   
 class Report:
   @staticmethod
@@ -49,13 +66,13 @@ class Report:
     path = f'{BASE_DIR}/data/reports/{uid}.csv'
     file = open(path, 'r', encoding = 'utf-8')
     reader = csv.DictReader(file, delimiter = ';')
-    file.close()
     for report in reader:
       start = datetime.strptime(report['start'], '%Y-%m-%d %H:%M:%S')
       end = datetime.strptime(report['end'], '%Y-%m-%d %H:%M:%S')
       submodule = Submodule.getByIndex(report['submodule'])
       reportobj = Report(user, report['id'], start, end, submodule, report['notes'])
       reports.append(reportobj)
+    file.close()
     return reports
   
   def __init__(self, user: User, rid: str, start: datetime, end: datetime, submodule: 'Submodule', notes: str):
