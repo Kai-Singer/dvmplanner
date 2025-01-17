@@ -494,12 +494,12 @@ body {
   transition: transform 0.5s ease, opacity 0.5s ease;
 }
 
-.notification.show {
+.notification.shown_notification {
   transform: translateX(-320px);
   opacity: 1;
 }
 
-.notification.hide {
+.notification.hidden_notification {
   transform: translateX(0);
   opacity: 0;
 }

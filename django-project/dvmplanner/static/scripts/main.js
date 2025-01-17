@@ -3,16 +3,16 @@ window.addEventListener('DOMContentLoaded', () => {
 
   if (notification) {
     setTimeout(() => {
-      notification.classList.add('show');
+      notification.classList.add('shown_notification');
     }, 500);
 
     setTimeout(() => {
-      notification.classList.remove('show');
-      notification.classList.add('hide');
+      notification.classList.remove('shown_notification');
+      notification.classList.add('hidden_notification');
     }, 4000);
 
     notification.addEventListener('transitionend', () => {
-      if (notification.classList.contains('hide')) {
+      if (notification.classList.contains('hidden_notification')) {
         notification.remove();
       }
     });

@@ -601,6 +601,9 @@ def dashboard(request):
     ],
     'requested_role': 'none'
   }
+  if 'notification' in request.session:
+    data['notification'] = request.session.get('notification')
+    del request.session['notification']
 
   if 'uid' in request.session:
     return render(request, 'dvmplanner/dashboard.html', data)
@@ -876,6 +879,7 @@ def login(request):
     if user is not None:
       if user.checkPwd(pwd):
         request.session['uid'] = user.getUid()
+        request.session['notification'] = f'Erfolgreich als {user.getUsername()} angemeldet.'
         return redirect(dashboard)
       else:
         data = {
@@ -916,6 +920,7 @@ def signup(request):
     else:
       user = User.createUser(username, firstName, lastName, email, pwd)
       request.session['uid'] = user.getUid()
+      request.session['notification'] = f'Der Benutzer {username} wurde angelegt.'
       return redirect(dashboard)
   else:
     return render(request, 'dvmplanner/signup.html')
