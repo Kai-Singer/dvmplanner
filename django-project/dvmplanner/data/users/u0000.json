@@ -7,29 +7,8 @@
   "pwd": "123",
   "creation_date": "2024-12-28 13:48:11",
   "img": true,
-  "role": "normal",
+  "role": "admin",
   "requested_role": "vip",
   "request_date": "2024-12-29 13:48:11",
-  "status": "active",
-  "current_activity": {
-    "status": "active",
-    "day": "02.01.2025",
-    "start": "14.34:23 Uhr",
-    "entries": [
-      {
-        "day": "02.01.2025",
-        "start": "14.34:23 Uhr",
-        "end_day": "02.01.2025",
-        "end": "15.53:40 Uhr",
-        "time": "2:19:17"
-      },
-      {
-        "day": "02.01.2025",
-        "start": "14.34:23 Uhr",
-        "end_day": "02.01.2025",
-        "end": "15.53:40 Uhr",
-        "time": "2:19:17"
-      }
-    ]
-  }
+  "status": "active"
 }

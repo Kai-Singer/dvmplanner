@@ -11,6 +11,11 @@
   <title>DVM Planner</title>
 </head>
 <body>
+  {% if notification %}
+    <div class="notification" id="notification">
+      {{ notification }}
+    </div>
+  {% endif %}
   <div class="navbar_header">
     <img src="{% static 'imgs/logo.png' %}" alt="DVM Planner Logo" draggable="false">
     <p>DVM Planner</p>

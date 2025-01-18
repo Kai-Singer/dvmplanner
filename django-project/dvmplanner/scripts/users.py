@@ -1,6 +1,6 @@
 from dvmplanner.scripts.main import BASE_DIR, formatTimedelta
 from dvmplanner.scripts.modules import Submodule
-from datetime import datetime
+from datetime import datetime, timedelta
 import os, json, csv
 
 class User:
@@ -14,7 +14,7 @@ class User:
       user = json.loads(file.read())
       creation_date = datetime.strptime(user['creation_date'], '%Y-%m-%d %H:%M:%S')
       request_date = datetime.strptime(user['request_date'], '%Y-%m-%d %H:%M:%S')
-      userobj = User(user['uid'], user['username'], user['first_name'], user['last_name'], user['email'], user['pwd'], creation_date, user['img'], user['role'], user['requested_role'], request_date, user['status'], user['current_activity'])
+      userobj = User(user['uid'], user['username'], user['first_name'], user['last_name'], user['email'], user['pwd'], creation_date, user['img'], user['role'], user['requested_role'], request_date, user['status'])
       reports = Report.getUserReports(userobj)
       userobj.updateReports(reports)
       users.append(userobj)
@@ -38,9 +38,9 @@ class User:
       if userUid > uid:
         uid = userUid
     uid = f'u{ str(uid + 1).zfill(4) }'
-    creation_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    createdUser = User(uid, username, first_name, last_name, email, pwd, creation_date, False, 'normal', '', 'active', { 'status': 'none' })
+    createdUser = User(uid, username, first_name, last_name, email, pwd, datetime.now(), False, 'normal', '', datetime.now(), 'active', { 'status': 'none' })
     createdUser.updateJSON()
+    createdUser.updateReportCSV()
     return createdUser
   
   @staticmethod
@@ -65,7 +65,7 @@ class User:
       del request['datetime']
     return requests
 
-  def __init__(self, uid: str, username: str, first_name: str, last_name: str, email: str, pwd: str, creation_date: datetime, img: bool, role: str, requested_role: str, request_date: datetime, status: str, current_activity: dict, reports: list['Report'] = []):
+  def __init__(self, uid: str, username: str, first_name: str, last_name: str, email: str, pwd: str, creation_date: datetime, img: bool, role: str, requested_role: str, request_date: datetime, status: str,reports: list['Report'] = []):
     self.__uid = uid
     self.__username = username
     self.__first_name = first_name
@@ -78,7 +78,6 @@ class User:
     self.__requested_role = requested_role
     self.__request_date = request_date
     self.__status = status
-    self.__current_activity = current_activity
     self.__reports = reports
 
   def getData(self, keyName: str):
@@ -94,7 +93,6 @@ class User:
       'requested_role': self.__requested_role,
       'request_date': self.__request_date,
       'status': self.__status,
-      'current_activity': self.__current_activity,
       'reports': self.__reports
     }
     return data[keyName]
@@ -105,7 +103,6 @@ class User:
   def checkPwd(self, pwd: str):
     return pwd == self.__pwd
   
-  #! FÜR JSON FORMATIEREN!
   def updateJSON(self):
     data = {
       'uid': self.__uid,
@@ -114,18 +111,111 @@ class User:
       'last_name': self.__last_name,
       'email': self.__email,
       'pwd': self.__pwd,
-      'creation_date': self.__creation_date,
+      'creation_date': self.__creation_date.strftime('%Y-%m-%d %H:%M:%S'),
       'img': self.__img,
       'role': self.__role,
       'requested_role': self.__requested_role,
-      'request_date': self.__request_date,
-      'status': self.__status,
-      'current_activity': self.__current_activity
+      'request_date': self.__request_date.strftime('%Y-%m-%d %H:%M:%S'),
+      'status': self.__status
     }
     userspath = BASE_DIR + '/data/users/'
     file = open(os.path.join(userspath, f'{ self.__uid }.json'), 'w', encoding = 'utf-8')
     file.write(json.dumps(data, indent = 2))
     file.close()
+
+  def updateReportCSV(self):
+    fieldnames = [ 'id', 'start', 'end', 'submodule', 'notes' ]
+    path = f'{ BASE_DIR }/data/reports/{ self.__uid }.csv'
+    file = open(path, 'w', encoding = 'utf-8')
+    writer = csv.DictWriter(file, fieldnames = fieldnames, delimiter = ';')
+    writer.writeheader()
+    for report in self.__reports:
+      writer.writerow({
+        'id': report.getData('rid'),
+        'start': report.getData('start').strftime('%Y-%m-%d %H:%M:%S'),
+        'end': report.getData('end').strftime('%Y-%m-%d %H:%M:%S'),
+        'submodule': report.getData('submodule').getCompleteIndex(),
+        'notes': report.getData('notes'),
+      })
+    file.close()
+
+  def getFormattedReview(self):
+    totalTime = timedelta(0)
+    totalSessions = 0
+    reviewDataRaw = {}
+    for report in self.__reports:
+      totalTime += report.getData('end') - report.getData('start')
+      totalSessions += 1
+      moduleIndex = report.getData('submodule').getCompleteIndex()
+      if moduleIndex not in reviewDataRaw:
+        reviewDataRaw[moduleIndex] = {
+          'time': timedelta(0),
+          'sessions': 0
+        }
+      reviewDataRaw[moduleIndex]['time'] += report.getData('end') - report.getData('start')
+      reviewDataRaw[moduleIndex]['sessions'] += 1
+    formattedTotalTime = formatTimedelta(totalTime)
+    reviewDataJSON = []
+    reviewData = []
+    reviewDataRaw = { key: reviewDataRaw[key] for key in sorted(reviewDataRaw) }
+    for module in reviewDataRaw:
+      submodule = Submodule.getByIndex(module)
+      time = reviewDataRaw[module]['time']
+      moduleName = f'{ module } { submodule.getData('name') }'
+      sessions = reviewDataRaw[module]['sessions']
+      reviewDataJSON.append({
+        'module': moduleName,
+        'time': formatTimedelta(time),
+        'sessions': sessions
+      })
+      percentage = (time.total_seconds() / totalTime.total_seconds()) * 100
+      percentage = f'{percentage:.2f}'.replace('.', ',') + ' %'
+      reviewData.append({
+        'module': moduleName,
+        'semester': str(submodule.getData('semester')),
+        'time': formatTimedelta(time),
+        'percentage': percentage,
+        'sessions': sessions
+      })
+    return {
+      'totalTime': formattedTotalTime,
+      'totalSessions': totalSessions,
+      'reviewData': reviewData,
+      'reviewDataJSON': json.dumps(reviewDataJSON)
+    }
+  
+  '''
+  [
+        {
+          'module': '1.1.2 Vertiefung Informatik',
+          'semester': '3',
+          'time': '12:45:43',
+          'percentage': '26,57 %',
+          'sessions': '14'
+        },
+        {
+          'module': '1.5.1 Systemanalyse (Software-Engineering 3)',
+          'semester': '3',
+          'time': '23:34:02',
+          'percentage': '48,88 %',
+          'sessions': '18'
+        },
+        {
+          'module': '2.1.1 Steuerung, Public Management und Projektmanagement',
+          'semester': '1',
+          'time': '4:12:52',
+          'percentage': '8,74 %',
+          'sessions': '3'
+        },
+        {
+          'module': '3.3.4 IT-Recht',
+          'semester': '2',
+          'time': '7:40:29',
+          'percentage': '15,92 %',
+          'sessions': '5'
+        },
+      ]
+'''
   
 class Report:
   @staticmethod

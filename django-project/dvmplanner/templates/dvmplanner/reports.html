@@ -241,56 +241,60 @@
         </div>
       </div>
     </div>
-    <div class="border_item overflow">
-      <table>
-        <tr>
-          <th>Tag</th>
-          <th>Beginn</th>
-          <th>Ende</th>
-          <th>Dauer</th>
-          <th>Modul</th>
-          <th>Notizen</th>
-          <th>Aktionen</th>
-        </tr>
-        {% for report in reports %}
-          <tr class="hoverable_tr">
-            <td>{{ report.day }}</td>
-            <td class="nowrap">{{ report.start }}</td>
-            <td class="nowrap">
-              {% if report.end_day != '' %}
-                {{ report.end_day }}<br>
+    {% if reports|length > 0 %}
+      <div class="border_item overflow">
+        <table>
+          <tr>
+            <th>Tag</th>
+            <th>Beginn</th>
+            <th>Ende</th>
+            <th>Dauer</th>
+            <th>Modul</th>
+            <th>Notizen</th>
+            <th>Aktionen</th>
+          </tr>
+          {% for report in reports %}
+            <tr class="hoverable_tr">
+              <td>{{ report.day }}</td>
+              <td class="nowrap">{{ report.start }}</td>
+              <td class="nowrap">
+                {% if report.end_day != '' %}
+                  {{ report.end_day }}<br>
+                {% endif %}
+                {{ report.end }}
+              </td>
+              <td>{{ report.time }}</td>
+              <td>{{ report.module_index }} {{ report.module_name }}</td>
+              {% if report.long_notes != '' %}
+                <td class="flex_td">
+                  <div>{{ report.notes }}</div>
+                  <button class="table_button tooltip_elem" onclick="toggleLongNote(this, '{{ report.notes }}', '{{ report.long_notes }}')">
+                    <img src="{% static 'imgs/arrow_right_icon.png' %}" alt="Expand" draggable="false">
+                    <div class="tooltip_text" >Ausklappen</div>
+                  </button>
+                </td>
+              {% else %}
+                <td class="left_td">
+                  <div>{{ report.notes }}</div>
+                </td>
               {% endif %}
-              {{ report.end }}
-            </td>
-            <td>{{ report.time }}</td>
-            <td>{{ report.module_index }} {{ report.module_name }}</td>
-            {% if report.long_notes != '' %}
-              <td class="flex_td">
-                <div>{{ report.notes }}</div>
-                <button class="table_button tooltip_elem" onclick="toggleLongNote(this, '{{ report.notes }}', '{{ report.long_notes }}')">
-                  <img src="{% static 'imgs/arrow_right_icon.png' %}" alt="Expand" draggable="false">
-                  <div class="tooltip_text" >Ausklappen</div>
+              <td class="no_select">
+                <button class="table_button tooltip_elem" onclick="editReport('{{ report.id }}', '{{ report.day }}', '{{ report.start }}', '{{ report.end_day }}', '{{ report.end }}', '{{ report.module_index }}', '{{ report.module_name }}', '{{ report.notes }}', '{{ report.long_notes }}')">
+                  <img src="{% static 'imgs/edit_icon.png' %}" alt="Edit" draggable="false">
+                  <div class="tooltip_text" >Bearbeiten</div>
+                </button>
+                <button class="table_button red tooltip_elem" onclick="deleteReport('{{ report.id }}')">
+                  <img src="{% static 'imgs/delete_icon.png' %}" alt="Delete" draggable="false">
+                  <div class="tooltip_text" >Löschen</div>
                 </button>
               </td>
-            {% else %}
-              <td class="left_td">
-                <div>{{ report.notes }}</div>
-              </td>
-            {% endif %}
-            <td class="no_select">
-              <button class="table_button tooltip_elem" onclick="editReport('{{ report.id }}', '{{ report.day }}', '{{ report.start }}', '{{ report.end_day }}', '{{ report.end }}', '{{ report.module_index }}', '{{ report.module_name }}', '{{ report.notes }}', '{{ report.long_notes }}')">
-                <img src="{% static 'imgs/edit_icon.png' %}" alt="Edit" draggable="false">
-                <div class="tooltip_text" >Bearbeiten</div>
-              </button>
-              <button class="table_button red tooltip_elem" onclick="deleteReport('{{ report.id }}')">
-                <img src="{% static 'imgs/delete_icon.png' %}" alt="Delete" draggable="false">
-                <div class="tooltip_text" >Löschen</div>
-              </button>
-            </td>
-          </tr>
-        {% endfor %}
-      </table>
-    </div>
+            </tr>
+          {% endfor %}
+        </table>
+      </div>
+    {% else %}
+      <p>Mit der aktuellen Filterung konnten keine Arbeitsberichte deines Accounts gefunden werden. Probiere es mit einer anderen Filterung erneut oder erstelle einen neuen Arbeitsbericht.</p>
+    {% endif %}
   </div>
   <!-- VIP-TOOLS -->
   {% if role == 'vip' or role == 'admin' %}

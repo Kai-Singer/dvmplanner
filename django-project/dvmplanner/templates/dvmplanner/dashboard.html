@@ -214,45 +214,49 @@
         <a href="{% url 'reports' %}">Zu den Arbeitsberichten</a>
       </div>
     </div>
-    <div class="border_item overflow">
-      <table>
-        <tr>
-          <th>Tag</th>
-          <th>Beginn</th>
-          <th>Ende</th>
-          <th>Dauer</th>
-          <th>Modul</th>
-          <th>Notizen</th>
-        </tr>
-        {% for report in last_reports %}
-          <tr class="hoverable_tr">
-            <td>{{ report.day }}</td>
-            <td class="nowrap">{{ report.start }}</td>
-            <td class="nowrap">
-              {% if report.end_day != '' %}
-                {{ report.end_day }}<br>
-              {% endif %}
-              {{ report.end }}
-            </td>
-            <td>{{ report.time }}</td>
-            <td>{{ report.module_index }} {{ report.module_name }}</td>
-            {% if report.long_notes != '' %}
-              <td class="flex_td">
-                <div>{{ report.notes }}</div>
-                <button class="table_button tooltip_elem" onclick="toggleLongNote(this, '{{ report.notes }}', '{{ report.long_notes }}')">
-                  <img src="{% static 'imgs/arrow_right_icon.png' %}" alt="Expand" draggable="false">
-                  <div class="tooltip_text" >Ausklappen</div>
-                </button>
-              </td>
-            {% else %}
-              <td class="left_td">
-                <div>{{ report.notes }}</div>
-              </td>
-            {% endif %}
+    {% if last_reports|length > 0 %}
+      <div class="border_item overflow">
+        <table>
+          <tr>
+            <th>Tag</th>
+            <th>Beginn</th>
+            <th>Ende</th>
+            <th>Dauer</th>
+            <th>Modul</th>
+            <th>Notizen</th>
           </tr>
-        {% endfor %}
-      </table>
-    </div>
+          {% for report in last_reports %}
+            <tr class="hoverable_tr">
+              <td>{{ report.day }}</td>
+              <td class="nowrap">{{ report.start }}</td>
+              <td class="nowrap">
+                {% if report.end_day != '' %}
+                  {{ report.end_day }}<br>
+                {% endif %}
+                {{ report.end }}
+              </td>
+              <td>{{ report.time }}</td>
+              <td>{{ report.module_index }} {{ report.module_name }}</td>
+              {% if report.long_notes != '' %}
+                <td class="flex_td">
+                  <div>{{ report.notes }}</div>
+                  <button class="table_button tooltip_elem" onclick="toggleLongNote(this, '{{ report.notes }}', '{{ report.long_notes }}')">
+                    <img src="{% static 'imgs/arrow_right_icon.png' %}" alt="Expand" draggable="false">
+                    <div class="tooltip_text" >Ausklappen</div>
+                  </button>
+                </td>
+              {% else %}
+                <td class="left_td">
+                  <div>{{ report.notes }}</div>
+                </td>
+              {% endif %}
+            </tr>
+          {% endfor %}
+        </table>
+      </div>
+    {% else %}
+      <p>Du hast bisher keine aufgezeichneten Aktivitäten. Erstelle doch mal einen neuen Bericht.</p>
+    {% endif %}
   </div>
   <div class="card">
     <div class="quick_change_container">
@@ -261,18 +265,22 @@
         <a href="{% url 'review' %}">Zu den Ergebnissen</a>
       </div>
     </div>
-    <div class="charts_container">
-      <div class="border_item chart_item">
-        <h2>Verteilung nach Arbeitszeit</h2>
-        <div class="total_review">Arbeitszeit gesamt: <span>{{ total_time }}</span></div>
-        <canvas id="review_chart_time"></canvas>
+    {% if total_sessions > 0 %}
+      <div class="charts_container">
+        <div class="border_item chart_item">
+          <h2>Verteilung nach Arbeitszeit</h2>
+          <div class="total_review">Arbeitszeit gesamt: <span>{{ total_time }}</span></div>
+          <canvas id="review_chart_time"></canvas>
+        </div>
+        <div class="border_item chart_item">
+          <h2>Verteilung nach Sitzungen</h2>
+          <div class="total_review">Sitzungen gesamt: <span>{{ total_sessions }}</span></div>
+          <canvas id="review_chart_sessions"></canvas>
+        </div>
       </div>
-      <div class="border_item chart_item">
-        <h2>Verteilung nach Sitzungen</h2>
-        <div class="total_review">Sitzungen gesamt: <span>{{ total_sessions }}</span></div>
-        <canvas id="review_chart_sessions"></canvas>
-      </div>
-    </div>
+    {% else %}
+      <p>Du hast bisher keine aufgezeichneten Aktivitäten. Eine Auswertung konnte deshalb nicht angefertigt werden.</p>
+    {% endif %}
   </div>
   {% if role == 'admin' %}
     <div class="card">
@@ -283,40 +291,44 @@
           <a href="{% url 'admin' %}">Zum Admin Dashboard</a>
         </div>
       </div>
-      <div class="border_item overflow">
-        <table>
-          <tr>
-            <th>Datum</th>
-            <th>Vorname</th>
-            <th>Nachname</th>
-            <th>Nutzername</th>
-            <th>Aktuelle Rolle</th>
-            <th>Anfrage auf</th>
-          </tr>
-          {% for request in requests %}
-            <tr class="hoverable_tr">
-              <td class="nowrap">{{ request.day }}<br>{{ request.time }}</td>
-              <td class="nowrap">{{ request.first_name }}</td>
-              <td class="nowrap">{{ request.last_name }}</td>
-              <td>{{ request.username }}</td>
-              {% if request.role == 'normal' %}
-                <td class="role_normal">Normal</td>
-              {% elif request.role == 'vip' %}
-                <td class="role_vip">VIP</td>
-              {% elif request.role == 'admin' %}
-                <td class="role_admin">Admin</td>
-              {% endif %}
-              {% if request.requested_role == 'normal' %}
-                <td class="role_normal">Normal</td>
-              {% elif request.requested_role == 'vip' %}
-                <td class="role_vip">VIP</td>
-              {% elif request.requested_role == 'admin' %}
-                <td class="role_admin">Admin</td>
-              {% endif %}
+      {% if requests|length > 0 %}
+        <div class="border_item overflow">
+          <table>
+            <tr>
+              <th>Datum</th>
+              <th>Vorname</th>
+              <th>Nachname</th>
+              <th>Nutzername</th>
+              <th>Aktuelle Rolle</th>
+              <th>Anfrage auf</th>
             </tr>
-          {% endfor %}
-        </table>
-      </div>
+            {% for request in requests %}
+              <tr class="hoverable_tr">
+                <td class="nowrap">{{ request.day }}<br>{{ request.time }}</td>
+                <td class="nowrap">{{ request.first_name }}</td>
+                <td class="nowrap">{{ request.last_name }}</td>
+                <td>{{ request.username }}</td>
+                {% if request.role == 'normal' %}
+                  <td class="role_normal">Normal</td>
+                {% elif request.role == 'vip' %}
+                  <td class="role_vip">VIP</td>
+                {% elif request.role == 'admin' %}
+                  <td class="role_admin">Admin</td>
+                {% endif %}
+                {% if request.requested_role == 'normal' %}
+                  <td class="role_normal">Normal</td>
+                {% elif request.requested_role == 'vip' %}
+                  <td class="role_vip">VIP</td>
+                {% elif request.requested_role == 'admin' %}
+                  <td class="role_admin">Admin</td>
+                {% endif %}
+              </tr>
+            {% endfor %}
+          </table>
+        </div>
+      {% else %}
+        <p>Aktuell gibt es keine offenen Anfragen. Warte darauf bis ein Nutzer eine Anfrage abschickt.</p>
+      {% endif %}
     </div>
   {% endif %}
   {% if role != 'admin' %}
