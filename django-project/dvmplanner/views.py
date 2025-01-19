@@ -7,40 +7,85 @@ from dvmplanner.scripts.main import BASE_DIR, formatTimedelta
 from datetime import datetime, timedelta
 import os, json
 
-'''
-  "current_activity": {
-    "status": "active",
-    "day": "02.01.2025",
-    "start": "14.34:23 Uhr",
-    "entries": [
-      {
-        "day": "02.01.2025",
-        "start": "14.34:23 Uhr",
-        "end_day": "02.01.2025",
-        "end": "15.53:40 Uhr",
-        "time": "2:19:17"
-      },
-      {
-        "day": "02.01.2025",
-        "start": "14.34:23 Uhr",
-        "end_day": "02.01.2025",
-        "end": "15.53:40 Uhr",
-        "time": "2:19:17"
-      }
-    ]
-  }
-'''
-
 def home(request):
   if 'uid' in request.session:
     return redirect(dashboard)
+  
   else:
     data = {}
+    if 'notification' in request.session:
+      data['notification'] = request.session['notification']
+      del request.session['notification']
+
     return render(request, 'dvmplanner/home.html', data)
 
 def dashboard(request):
   if 'uid' in request.session:
-    user = User.getUserByKey('uid', request.session.get('uid'))
+    user = User.getUserByKey('uid', request.session['uid'])
+
+    if request.POST.get('context', '') == 'start_report':
+      if 'current_activity' in request.session:
+        del request.session['current_activity']
+      request.session['current_activity'] = { 
+        'status': 'active',
+        'entries': [
+          {
+            'start': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+            'end': ''
+          }
+        ]
+      }
+
+    elif request.POST.get('context', '') == 'pause_report':
+      currentActivitySession = request.session['current_activity']
+      currentActivitySession['status'] = 'paused'
+      currentActivitySession['entries'][-1]['end'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+      request.session['current_activity'] = currentActivitySession
+      
+    elif request.POST.get('context', '') == 'resume_report':
+      currentActivitySession = request.session['current_activity']
+      currentActivitySession['status'] = 'active'
+      currentActivitySession['entries'].append({
+        'start': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+        'end': ''
+      })
+      request.session['current_activity'] = currentActivitySession
+
+    elif request.POST.get('context', '') == 'finish_report':
+      currentActivitySession = request.session['current_activity']
+      if currentActivitySession['status'] == 'active':
+        currentActivitySession['entries'][-1]['end'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+      currentActivitySession['status'] = 'finished'
+      request.session['current_activity'] = currentActivitySession
+
+    elif request.POST.get('context', '') == 'checkin_report':
+      entries = request.session['current_activity']['entries']
+      missingEnd = False
+      for entry in entries:
+        if entry['end'] == '':
+          missingEnd = True
+      if len(entries) <= 0:
+        request.session['notification'] = 'Du kannst einen Arbeitsbericht ohne aufgezeichnete Zeiten nicht abspeichern!'
+      elif missingEnd:
+        request.session['notification'] = 'Beende zuerst alle Zeiten bevor du den Arbeitsbericht abspeichern kannst!'
+      else:
+        moduleIndex = request.POST.get('module', '1.1.1')
+        module = Submodule.getByIndex(moduleIndex)
+        notes = request.POST.get('notes', '')
+        for entry in entries:
+          start = datetime.strptime(entry['start'], '%Y-%m-%d %H:%M:%S')
+          end = datetime.strptime(entry['end'], '%Y-%m-%d %H:%M:%S')
+          user.addReport(start, end, module, notes)
+        del request.session['current_activity']
+
+    elif request.POST.get('context', '') == 'delete_entries':
+      del request.session['current_activity']
+
+    elif request.POST.get('context', '') == 'delete_entry':
+      entryIndex = request.POST.get('index', 0)
+      currentActivitySession = request.session['current_activity']
+      del currentActivitySession['entries'][int(entryIndex)]
+      request.session['current_activity'] = currentActivitySession
 
     lastReports = []
     latestReports = sorted(user.getData('reports'), key = lambda x: x.getData('start'), reverse = True)[:5]
@@ -50,11 +95,28 @@ def dashboard(request):
     modules = Submodule.getAllFormattedModules()
     reviewData = user.getFormattedReview()
 
-    current_activity = {}
+    currentActivity = {}
     if 'current_activity' in request.session:
-      current_activity = request.session.get('current_activity')
+      currentActivitySession = request.session['current_activity']
+      currentActivity['status'] = currentActivitySession['status']
+      currentActivity['entries'] = []
+      for entry in currentActivitySession['entries']:
+        start = datetime.strptime(entry['start'], '%Y-%m-%d %H:%M:%S')
+        currentActivityEntry = {
+          'day': start.strftime('%d.%m.%Y'),
+          'start': start.strftime('%H.%M:%S Uhr'),
+          'end_day': '',
+          'end': '',
+          'time': ''
+        }
+        if entry['end'] != '':
+          end = datetime.strptime(entry['end'], '%Y-%m-%d %H:%M:%S')
+          currentActivityEntry['end_day'] = end.strftime('%d.%m.%Y')
+          currentActivityEntry['end'] = end.strftime('%H.%M:%S Uhr')
+          currentActivityEntry['time'] = formatTimedelta(end - start)
+        currentActivity['entries'].append(currentActivityEntry)
     else:
-      current_activity['status'] = 'none'
+      currentActivity['status'] = 'none'
 
     data = {
       'active_page': 'dashboard',
@@ -64,7 +126,7 @@ def dashboard(request):
       'last_name': user.getData('last_name'),
       'role': user.getData('role'),
       'img': user.getData('img'),
-      'current_activity': current_activity,
+      'current_activity': currentActivity,
       'placeholder_module': {
         'name': modules[0]['modules'][0]['submodules'][0]['name'],
         'index': modules[0]['modules'][0]['submodules'][0]['index']
@@ -79,7 +141,7 @@ def dashboard(request):
     }
 
     if 'notification' in request.session:
-      data['notification'] = request.session.get('notification')
+      data['notification'] = request.session['notification']
       del request.session['notification']
 
     return render(request, 'dvmplanner/dashboard.html', data)
@@ -89,7 +151,7 @@ def dashboard(request):
 
 def reports(request):
   if 'uid' in request.session:
-    user = User.getUserByKey('uid', request.session.get('uid'))
+    user = User.getUserByKey('uid', request.session['uid'])
 
     reports = []
     for report in user.getData('reports'):
@@ -112,7 +174,7 @@ def reports(request):
     }
 
     if 'notification' in request.session:
-      data['notification'] = request.session.get('notification')
+      data['notification'] = request.session['notification']
       del request.session['notification']
 
     return render(request, 'dvmplanner/reports.html', data)
@@ -122,7 +184,7 @@ def reports(request):
 
 def review(request):
   if 'uid' in request.session:
-    user = User.getUserByKey('uid', request.session.get('uid'))
+    user = User.getUserByKey('uid', request.session['uid'])
 
     reviewData = user.getFormattedReview()
     current_module = '[Alle]'
@@ -146,7 +208,7 @@ def review(request):
     }
 
     if 'notification' in request.session:
-      data['notification'] = request.session.get('notification')
+      data['notification'] = request.session['notification']
       del request.session['notification']
 
     return render(request, 'dvmplanner/review.html', data)
@@ -156,7 +218,7 @@ def review(request):
 
 def admin(request):
   if 'uid' in request.session:
-    user = User.getUserByKey('uid', request.session.get('uid'))
+    user = User.getUserByKey('uid', request.session['uid'])
     if user.getData('role') == 'admin':
 
       current_requests_filter_role = '[Alle]'
@@ -193,7 +255,7 @@ def admin(request):
       }
 
       if 'notification' in request.session:
-        data['notification'] = request.session.get('notification')
+        data['notification'] = request.session['notification']
         del request.session['notification']
 
       return render(request, 'dvmplanner/admin.html', data)
@@ -207,7 +269,7 @@ def admin(request):
 
 def profile(request):
   if 'uid' in request.session:
-    user = User.getUserByKey('uid', request.session.get('uid'))
+    user = User.getUserByKey('uid', request.session['uid'])
     data = {
       'active_page': 'profile',
       'uid': user.getData('uid'),
@@ -222,7 +284,7 @@ def profile(request):
     }
 
     if 'notification' in request.session:
-      data['notification'] = request.session.get('notification')
+      data['notification'] = request.session['notification']
       del request.session['notification']
 
     return render(request, 'dvmplanner/profile.html', data)
@@ -232,7 +294,7 @@ def profile(request):
 
 def addreport(request):
   if 'uid' in request.session:
-    user = User.getUserByKey('uid', request.session.get('uid'))
+    user = User.getUserByKey('uid', request.session['uid'])
 
     modules = Submodule.getAllFormattedModules()
 
@@ -252,7 +314,7 @@ def addreport(request):
     }
 
     if 'notification' in request.session:
-      data['notification'] = request.session.get('notification')
+      data['notification'] = request.session['notification']
       del request.session['notification']
 
     return render(request, 'dvmplanner/addreport.html', data)
@@ -286,7 +348,7 @@ def login(request):
   else:
     data = {}
     if 'notification' in request.session:
-      data['notification'] = request.session.get('notification')
+      data['notification'] = request.session['notification']
       del request.session['notification']
 
     return render(request, 'dvmplanner/login.html', data)
@@ -321,7 +383,7 @@ def signup(request):
   else:
     data = {}
     if 'notification' in request.session:
-      data['notification'] = request.session.get('notification')
+      data['notification'] = request.session['notification']
       del request.session['notification']
 
     return render(request, 'dvmplanner/signup.html', data)

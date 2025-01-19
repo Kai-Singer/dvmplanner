@@ -149,10 +149,12 @@
                 <td class="nowrap">{{ entry.end }}</td>
                 <td>{{ entry.time }}</td>
                 <td class="no_select">
-                  <button class="table_button red tooltip_elem" onclick="deleteEntry('{{ forloop.counter0 }}')">
-                    <img src="{% static 'imgs/delete_icon.png' %}" alt="Delete" draggable="false">
-                    <div class="tooltip_text">Löschen</div>
-                  </button>
+                  {% if entry.end != '' and current_activity.entries|length > 1 %}
+                    <button class="table_button red tooltip_elem" onclick="deleteEntry('{{ forloop.counter0 }}')">
+                      <img src="{% static 'imgs/delete_icon.png' %}" alt="Delete" draggable="false">
+                      <div class="tooltip_text">Löschen</div>
+                    </button>
+                  {% endif %}
                 </td>
               </tr>
             {% endfor %}
@@ -165,7 +167,6 @@
         <form method="post">
           {% csrf_token %}
           <input type="hidden" name="context" value="checkin_report">
-          <input type="hidden" name="times" id="checkin_report_times" value="Placeholder">
           <div class="checkin_data">
             <div class="form_item">
               <div class="form_name">Modul</div>

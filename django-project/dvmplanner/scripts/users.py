@@ -100,6 +100,17 @@ class User:
   def updateReports(self, reports: list['Report']):
     self.__reports = reports
 
+  def addReport(self, start: datetime, end: datetime, submodule: Submodule, notes: str):
+    rid = 0
+    for reportEntry in self.__reports:
+      entryRid = int(reportEntry.getData('rid')[1:])
+      if entryRid > rid:
+        rid = entryRid
+    rid = f'r{str(rid + 1).zfill(4)}'
+    report = Report(self, rid, start, end, submodule, notes)
+    self.__reports.append(report)
+    self.updateReportCSV()
+
   def checkPwd(self, pwd: str):
     return pwd == self.__pwd
   
@@ -126,7 +137,7 @@ class User:
   def updateReportCSV(self):
     fieldnames = [ 'id', 'start', 'end', 'submodule', 'notes' ]
     path = f'{ BASE_DIR }/data/reports/{ self.__uid }.csv'
-    file = open(path, 'w', encoding = 'utf-8')
+    file = open(path, 'w', newline = '', encoding = 'utf-8')
     writer = csv.DictWriter(file, fieldnames = fieldnames, delimiter = ';')
     writer.writeheader()
     for report in self.__reports:
@@ -183,39 +194,6 @@ class User:
       'reviewData': reviewData,
       'reviewDataJSON': json.dumps(reviewDataJSON)
     }
-  
-  '''
-  [
-        {
-          'module': '1.1.2 Vertiefung Informatik',
-          'semester': '3',
-          'time': '12:45:43',
-          'percentage': '26,57 %',
-          'sessions': '14'
-        },
-        {
-          'module': '1.5.1 Systemanalyse (Software-Engineering 3)',
-          'semester': '3',
-          'time': '23:34:02',
-          'percentage': '48,88 %',
-          'sessions': '18'
-        },
-        {
-          'module': '2.1.1 Steuerung, Public Management und Projektmanagement',
-          'semester': '1',
-          'time': '4:12:52',
-          'percentage': '8,74 %',
-          'sessions': '3'
-        },
-        {
-          'module': '3.3.4 IT-Recht',
-          'semester': '2',
-          'time': '7:40:29',
-          'percentage': '15,92 %',
-          'sessions': '5'
-        },
-      ]
-'''
   
 class Report:
   @staticmethod
