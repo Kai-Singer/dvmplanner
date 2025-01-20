@@ -99,8 +99,9 @@ def dashboard(request):
     if 'current_activity' in request.session:
       currentActivitySession = request.session['current_activity']
       currentActivity['status'] = currentActivitySession['status']
+      currentActivityEntries = sorted(currentActivitySession['entries'], key = lambda x: x['start'], reverse = True)
       currentActivity['entries'] = []
-      for entry in currentActivitySession['entries']:
+      for entry in currentActivityEntries:
         start = datetime.strptime(entry['start'], '%Y-%m-%d %H:%M:%S')
         currentActivityEntry = {
           'day': start.strftime('%d.%m.%Y'),
