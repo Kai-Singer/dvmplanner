@@ -141,11 +141,15 @@ class User:
     writer = csv.DictWriter(file, fieldnames = fieldnames, delimiter = ';')
     writer.writeheader()
     for report in self.__reports:
+      if report.getData('submodule') == None:
+        moduleIndex = '0.0.0'
+      else:
+        moduleIndex = report.getData('submodule').getCompleteIndex()
       writer.writerow({
         'id': report.getData('rid'),
         'start': report.getData('start').strftime('%Y-%m-%d %H:%M:%S'),
         'end': report.getData('end').strftime('%Y-%m-%d %H:%M:%S'),
-        'submodule': report.getData('submodule').getCompleteIndex(),
+        'submodule': moduleIndex,
         'notes': report.getData('notes'),
       })
     file.close()
@@ -157,7 +161,10 @@ class User:
     for report in self.__reports:
       totalTime += report.getData('end') - report.getData('start')
       totalSessions += 1
-      moduleIndex = report.getData('submodule').getCompleteIndex()
+      if report.getData('submodule') == None:
+        moduleIndex = '0.0.0'
+      else:
+        moduleIndex = report.getData('submodule').getCompleteIndex()
       if moduleIndex not in reviewDataRaw:
         reviewDataRaw[moduleIndex] = {
           'time': timedelta(0),
@@ -172,7 +179,13 @@ class User:
     for module in reviewDataRaw:
       submodule = Submodule.getByIndex(module)
       time = reviewDataRaw[module]['time']
-      moduleName = f'{ module } { submodule.getData('name') }'
+      if submodule == None:
+        moduleNameRaw = '[GELÖSCHTES MODUL]'
+        moduleSemester = '?'
+      else:
+        moduleNameRaw = submodule.getData('name')
+        moduleSemester = str(submodule.getData('semester'))
+      moduleName = f'{ module } { moduleNameRaw }'
       sessions = reviewDataRaw[module]['sessions']
       reviewDataJSON.append({
         'module': moduleName,
@@ -183,7 +196,7 @@ class User:
       percentage = f'{percentage:.2f}'.replace('.', ',') + ' %'
       reviewData.append({
         'module': moduleName,
-        'semester': str(submodule.getData('semester')),
+        'semester': moduleSemester,
         'time': formatTimedelta(time),
         'percentage': percentage,
         'sessions': sessions
@@ -232,6 +245,12 @@ class Report:
     else:
       notes = self.__notes
       longNotes = ''
+    if self.__submodule == None:
+      moduleIndex = '0.0.0'
+      moduleName = '[GELÖSCHTES MODUL]'
+    else:
+      moduleIndex = self.__submodule.getCompleteIndex()
+      moduleName = self.__submodule.getData('name')
     data = {
       'id': self.__rid,
       'day': startDay,
@@ -239,8 +258,8 @@ class Report:
       'end': end,
       'end_day': endDay,
       'time': formatTimedelta(self.__end - self.__start),
-      'module_index': self.__submodule.getCompleteIndex(),
-      'module_name': self.__submodule.getData('name'),
+      'module_index': moduleIndex,
+      'module_name': moduleName,
       'notes': notes,
       'long_notes': longNotes
     }

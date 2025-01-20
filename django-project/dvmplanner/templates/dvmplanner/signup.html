@@ -12,8 +12,8 @@
 </head>
 <body>
   {% if notification %}
-    <div class="notification" id="notification">
-      {{ notification }}
+    <div class="notification {% if notification.success %}notification_success{% endif %}" id="notification">
+      {{ notification.msg }}
     </div>
   {% endif %}
   <div class="login_container">

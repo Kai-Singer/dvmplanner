@@ -494,6 +494,10 @@ body {
   transition: transform 0.5s ease, opacity 0.5s ease;
 }
 
+.notification.notification_success {
+  background-color: var(--ac-green);
+}
+
 .notification.shown_notification {
   transform: translateX(-1020px);
   opacity: 1;

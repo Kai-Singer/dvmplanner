@@ -45,8 +45,8 @@
   <!-- CONTENT -->
   <div class="content" id="content">
     {% if notification %}
-      <div class="notification" id="notification">
-        {{ notification }}
+      <div class="notification {% if notification.success %}notification_success{% endif %}" id="notification">
+        {{ notification.msg }}
       </div>
     {% endif %}
     <div class="topbar">
@@ -61,14 +61,22 @@
       </div>
     </div>
     <div class="usermenu hidden_usermenu" id="usermenu">
-      <a class="button usermenu_button" href="{% url 'login' %}">
-        <img src="{% static 'imgs/change_user_icon_round.png' %}" alt="Change user" draggable="false">
-        <div><p>Profil wechseln</p></div>
-      </a>
-      <a class="button usermenu_button" href="{% url 'home' %}">
-        <img src="{% static 'imgs/logout_icon_round.png' %}" alt="Logout" draggable="false">
-        <div><p>Ausloggen</p></div>
-      </a>
+      <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="context" value="change_user">
+        <button class="button card_button" type="submit">
+          <img src="{% static 'imgs/change_user_icon_round.png' %}" alt="Change user" draggable="false">
+          <div><p>Profil wechseln</p></div>
+        </button>
+      </form>
+      <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="context" value="logout">
+        <button class="button card_button" type="submit">
+          <img src="{% static 'imgs/logout_icon_round.png' %}" alt="Logout" draggable="false">
+          <div><p>Ausloggen</p></div>
+        </button>
+      </form>
     </div>
     {% block content %}{% endblock %}
   </div>  

@@ -22,8 +22,25 @@ def home(request):
 def dashboard(request):
   if 'uid' in request.session:
     user = User.getUserByKey('uid', request.session['uid'])
+    context = request.POST.get('context', '')
 
-    if request.POST.get('context', '') == 'start_report':
+    if context == 'logout':
+      request.session.flush()
+      request.session['notification'] = {
+        'msg': 'Du wurdest erfolgreich abgemeldet.',
+        'success': True
+      }
+      return redirect(home)
+
+    elif context == 'change_user':
+      request.session.flush()
+      request.session['notification'] = {
+        'msg': 'Du wurdest erfolgreich abgemeldet.',
+        'success': True
+      }
+      return redirect(login)
+
+    elif context == 'start_report':
       if 'current_activity' in request.session:
         del request.session['current_activity']
       request.session['current_activity'] = { 
@@ -36,13 +53,13 @@ def dashboard(request):
         ]
       }
 
-    elif request.POST.get('context', '') == 'pause_report':
+    elif context == 'pause_report':
       currentActivitySession = request.session['current_activity']
       currentActivitySession['status'] = 'paused'
       currentActivitySession['entries'][-1]['end'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
       request.session['current_activity'] = currentActivitySession
       
-    elif request.POST.get('context', '') == 'resume_report':
+    elif context == 'resume_report':
       currentActivitySession = request.session['current_activity']
       currentActivitySession['status'] = 'active'
       currentActivitySession['entries'].append({
@@ -51,24 +68,34 @@ def dashboard(request):
       })
       request.session['current_activity'] = currentActivitySession
 
-    elif request.POST.get('context', '') == 'finish_report':
+    elif context == 'finish_report':
       currentActivitySession = request.session['current_activity']
       if currentActivitySession['status'] == 'active':
         currentActivitySession['entries'][-1]['end'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
       currentActivitySession['status'] = 'finished'
       request.session['current_activity'] = currentActivitySession
 
-    elif request.POST.get('context', '') == 'checkin_report':
+    elif context == 'checkin_report':
       entries = request.session['current_activity']['entries']
       missingEnd = False
       for entry in entries:
         if entry['end'] == '':
           missingEnd = True
       if len(entries) <= 0:
-        request.session['notification'] = 'Du kannst einen Arbeitsbericht ohne aufgezeichnete Zeiten nicht abspeichern!'
+        request.session['notification'] = {
+          'msg': 'Du kannst einen Arbeitsbericht ohne aufgezeichnete Zeiten nicht abspeichern!',
+          'success': False
+        }
       elif missingEnd:
-        request.session['notification'] = 'Beende zuerst alle Zeiten bevor du den Arbeitsbericht abspeichern kannst!'
+        request.session['notification'] = {
+          'msg': 'Beende zuerst alle Zeiten bevor du den Arbeitsbericht abspeichern kannst!',
+          'success': False
+        }
       else:
+        request.session['notification'] = {
+          'msg': 'Der Arbeitsbericht wurde erfolgreich abgespeichert.',
+          'success': True
+        }
         moduleIndex = request.POST.get('module', '1.1.1')
         module = Submodule.getByIndex(moduleIndex)
         notes = request.POST.get('notes', '')
@@ -78,10 +105,10 @@ def dashboard(request):
           user.addReport(start, end, module, notes)
         del request.session['current_activity']
 
-    elif request.POST.get('context', '') == 'delete_entries':
+    elif context == 'delete_entries':
       del request.session['current_activity']
 
-    elif request.POST.get('context', '') == 'delete_entry':
+    elif context == 'delete_entry':
       entryIndex = request.POST.get('index', 0)
       currentActivitySession = request.session['current_activity']
       del currentActivitySession['entries'][int(entryIndex)]
@@ -148,11 +175,32 @@ def dashboard(request):
     return render(request, 'dvmplanner/dashboard.html', data)
   
   else:
+    request.session['notification'] = {
+      'msg': 'Bitte melde dich zuerst an, bevor du auf diesen Bereich zugreifen kannst!',
+      'success': False
+    }
     return redirect(home)
 
 def reports(request):
   if 'uid' in request.session:
     user = User.getUserByKey('uid', request.session['uid'])
+    context = request.POST.get('context', '')
+
+    if context == 'logout':
+      request.session.flush()
+      request.session['notification'] = {
+        'msg': 'Du wurdest erfolgreich abgemeldet.',
+        'success': True
+      }
+      return redirect(home)
+
+    elif context == 'change_user':
+      request.session.flush()
+      request.session['notification'] = {
+        'msg': 'Du wurdest erfolgreich abgemeldet.',
+        'success': True
+      }
+      return redirect(login)
 
     reports = []
     for report in user.getData('reports'):
@@ -181,11 +229,32 @@ def reports(request):
     return render(request, 'dvmplanner/reports.html', data)
   
   else:
+    request.session['notification'] = {
+      'msg': 'Bitte melde dich zuerst an, bevor du auf diesen Bereich zugreifen kannst!',
+      'success': False
+    }
     return redirect(home)
 
 def review(request):
   if 'uid' in request.session:
     user = User.getUserByKey('uid', request.session['uid'])
+    context = request.POST.get('context', '')
+
+    if context == 'logout':
+      request.session.flush()
+      request.session['notification'] = {
+        'msg': 'Du wurdest erfolgreich abgemeldet.',
+        'success': True
+      }
+      return redirect(home)
+
+    elif context == 'change_user':
+      request.session.flush()
+      request.session['notification'] = {
+        'msg': 'Du wurdest erfolgreich abgemeldet.',
+        'success': True
+      }
+      return redirect(login)
 
     reviewData = user.getFormattedReview()
     current_module = '[Alle]'
@@ -215,12 +284,34 @@ def review(request):
     return render(request, 'dvmplanner/review.html', data)
   
   else:
+    request.session['notification'] = {
+      'msg': 'Bitte melde dich zuerst an, bevor du auf diesen Bereich zugreifen kannst!',
+      'success': False
+    }
     return redirect(home)
 
 def admin(request):
   if 'uid' in request.session:
     user = User.getUserByKey('uid', request.session['uid'])
+
     if user.getData('role') == 'admin':
+      context = request.POST.get('context', '')
+
+      if context == 'logout':
+        request.session.flush()
+        request.session['notification'] = {
+          'msg': 'Du wurdest erfolgreich abgemeldet.',
+          'success': True
+        }
+        return redirect(home)
+
+      elif context == 'change_user':
+        request.session.flush()
+        request.session['notification'] = {
+          'msg': 'Du wurdest erfolgreich abgemeldet.',
+          'success': True
+        }
+        return redirect(login)
 
       current_requests_filter_role = '[Alle]'
       current_users_filter_role = '[Alle]'
@@ -262,15 +353,40 @@ def admin(request):
       return render(request, 'dvmplanner/admin.html', data)
       
     else:
-      request.session['notification'] = f'Du hast keine Berechtigungen für das Admin Dashboard.'
+      request.session['notification'] = {
+        'msg': 'Du hast keine Berechtigungen für das Admin Dashboard.',
+        'success': False
+      }
       return redirect(dashboard)
     
   else:
+    request.session['notification'] = {
+      'msg': 'Bitte melde dich zuerst an, bevor du auf diesen Bereich zugreifen kannst!',
+      'success': False
+    }
     return redirect(home)
 
 def profile(request):
   if 'uid' in request.session:
     user = User.getUserByKey('uid', request.session['uid'])
+    context = request.POST.get('context', '')
+
+    if context == 'logout':
+      request.session.flush()
+      request.session['notification'] = {
+        'msg': 'Du wurdest erfolgreich abgemeldet.',
+        'success': True
+      }
+      return redirect(home)
+
+    elif context == 'change_user':
+      request.session.flush()
+      request.session['notification'] = {
+        'msg': 'Du wurdest erfolgreich abgemeldet.',
+        'success': True
+      }
+      return redirect(login)
+    
     data = {
       'active_page': 'profile',
       'uid': user.getData('uid'),
@@ -291,12 +407,33 @@ def profile(request):
     return render(request, 'dvmplanner/profile.html', data)
   
   else:
+    request.session['notification'] = {
+      'msg': 'Bitte melde dich zuerst an, bevor du auf diesen Bereich zugreifen kannst!',
+      'success': False
+    }
     return redirect(home)
 
 def addreport(request):
   if 'uid' in request.session:
     user = User.getUserByKey('uid', request.session['uid'])
+    context = request.POST.get('context', '')
 
+    if context == 'logout':
+      request.session.flush()
+      request.session['notification'] = {
+        'msg': 'Du wurdest erfolgreich abgemeldet.',
+        'success': True
+      }
+      return redirect(home)
+
+    elif context == 'change_user':
+      request.session.flush()
+      request.session['notification'] = {
+        'msg': 'Du wurdest erfolgreich abgemeldet.',
+        'success': True
+      }
+      return redirect(login)
+    
     modules = Submodule.getAllFormattedModules()
 
     data = {
@@ -321,10 +458,16 @@ def addreport(request):
     return render(request, 'dvmplanner/addreport.html', data)
   
   else:
+    request.session['notification'] = {
+      'msg': 'Bitte melde dich zuerst an, bevor du auf diesen Bereich zugreifen kannst!',
+      'success': False
+    }
     return redirect(home)
 
 def login(request):
-  if request.POST.get('context', '') == 'login':
+  context = request.POST.get('context', '')
+
+  if context == 'login':
     username = request.POST.get('username', '')
     pwd = request.POST.get('pwd', '')
 
@@ -335,15 +478,28 @@ def login(request):
     if user is not None:
       if user.checkPwd(pwd):
         request.session['uid'] = user.getData('uid')
-        request.session['notification'] = f'Erfolgreich als { user.getData('username') } angemeldet.'
+        request.session['notification'] = {
+          'msg': f'Erfolgreich als { user.getData('username') } angemeldet.',
+          'success': True
+        }
         return redirect(dashboard)
       
       else:
-        data = { 'notification': 'Falsches Passwort!' }
+        data = {
+          'notification': {
+            'msg': 'Falsches Passwort!',
+            'success': False
+          }
+        }
         return render(request, 'dvmplanner/login.html', data)
       
     else:
-      data = { 'notification': 'Falscher Benutzername oder E-Mail!' }
+      data = {
+        'notification': {
+          'msg': 'Falscher Benutzername oder E-Mail!',
+          'success': False
+        }
+      }
       return render(request, 'dvmplanner/login.html', data)
     
   else:
@@ -355,7 +511,9 @@ def login(request):
     return render(request, 'dvmplanner/login.html', data)
 
 def signup(request):
-  if request.POST.get('context', '') == 'signup':
+  context = request.POST.get('context', '')
+
+  if context == 'signup':
     username = request.POST.get('username', '')
     firstName = request.POST.get('first_name', '')
     lastName = request.POST.get('last_name', '')
@@ -364,21 +522,39 @@ def signup(request):
     pwdRepeat = request.POST.get('pwd_repeat', '')
 
     if User.getUserByKey('email', email):
-      data = { 'notification': 'Die E-Mail ist bereits vergeben!' }
+      data = {
+        'notification': {
+          'msg': 'Die E-Mail ist bereits vergeben!',
+          'success': False
+        }
+      }
       return render(request, 'dvmplanner/signup.html', data)
     
     elif User.getUserByKey('username', username):
-      data = { 'notification': 'Der Benutzername ist bereits vergeben!' }
+      data = {
+        'notification': {
+          'msg': 'Der Benutzername ist bereits vergeben!',
+          'success': False
+        }
+      }
       return render(request, 'dvmplanner/signup.html', data)
     
     elif pwd != pwdRepeat:
-      data = { 'notification': 'Die Passwörter stimmen nicht überein!' }
+      data = {
+        'notification': {
+          'msg': 'Die Passwörter stimmen nicht überein!',
+          'success': False
+        }
+      }
       return render(request, 'dvmplanner/signup.html', data)
     
     else:
       user = User.createUser(username, firstName, lastName, email, pwd)
       request.session['uid'] = user.getData('uid')
-      request.session['notification'] = f'Der Benutzer { username } wurde erfolgreich angelegt.'
+      request.session['notification'] = {
+        'msg': f'Der Benutzer { username } wurde erfolgreich angelegt.',
+        'success': True
+      }
       return redirect(dashboard)
     
   else:
