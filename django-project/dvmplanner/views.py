@@ -1,8 +1,8 @@
 from django.shortcuts import redirect, render
 from django.core.files.storage import FileSystemStorage
 from django.contrib.staticfiles import finders
-from dvmplanner.scripts.users import User
-from dvmplanner.scripts.modules import Submodule
+from dvmplanner.scripts.users import User, Report
+from dvmplanner.scripts.modules import Submodule, Module, ModuleGroup
 from dvmplanner.scripts.main import BASE_DIR, formatTimedelta
 from datetime import datetime, timedelta
 import os, json
@@ -204,15 +204,35 @@ def reports(request):
     
     elif context == 'edit_report':
       id = request.POST.get('id', '')
-      time_begin = request.POST.get('time_begin', '')
+      time_beginn = request.POST.get('time_beginn', '')
       time_end = request.POST.get('time_end', '')
       module = request.POST.get('module', '')
       notes = request.POST.get('notes', '')
-      pass
+      report = user.getReportById(id)
+      time_beginn = datetime.strptime(time_beginn, '%Y-%m-%dT%H:%M')
+      time_end = datetime.strptime(time_end, '%Y-%m-%dT%H:%M')
+      if time_beginn > time_end:
+        request.session['notification'] = {
+          'msg': 'Die Startzeit muss vor der Endzeit sein!',
+          'success': False
+        }
+      else:
+        module = Submodule.getByIndex(module)
+        user.removeReport(report)
+        user.addReport(time_beginn, time_end, module, notes)
+        request.session['notification'] = {
+          'msg': 'Der Arbeitsbericht wurde erfolgreich bearbeitet.',
+          'success': True
+        }
 
     elif context == 'delete_report':
       id = request.POST.get('id', '')
-      pass
+      report = user.getReportById(id)
+      user.removeReport(report)
+      request.session['notification'] = {
+        'msg': 'Der Arbeitsbericht wurde erfolgreich gelöscht.',
+        'success': True
+      }
 
     elif context == 'upload_data':
       file = request.FILES['file']
@@ -223,25 +243,44 @@ def reports(request):
       pass
 
     elif context == 'download_reports':
-      type = request.POST.get('type', '')
+      filetype = request.POST.get('type', '')
       pass
 
     elif context == 'reports_dropdown_select_module':
       index = request.POST.get('index', '')
-      # save in request.session !
-      pass
+      request.session['reports_dropdown_select_module'] = index
 
     elif context == 'reports_dropdown_select_semester':
       semester = request.POST.get('semester', '')
-      # save in request.session !
-      pass
+      request.session['reports_dropdown_select_semester'] = semester
+
+    selectedReports = user.getData('reports')
+    current_module = '[Alle]'
+    if 'reports_dropdown_select_module' in request.session:
+      requestModule = request.session['reports_dropdown_select_module']
+      if requestModule != 'all':
+        if requestModule.count('.') == 0:
+          module = ModuleGroup.getByIndex(requestModule)
+          selectedReports = Report.getReportsByModuleGroup(module, selectedReports)
+        elif requestModule.count('.') == 1:
+          module = Module.getByIndex(requestModule)
+          selectedReports = Report.getReportsByModule(module, selectedReports)
+        else:
+          module = Submodule.getByIndex(requestModule)
+          selectedReports = Report.getReportsBySubmodule(module, selectedReports)
+        current_module = f'{ module.getCompleteIndex() } { module.getData('name') }'
+    
+    current_semester = '[Alle]'
+    if 'reports_dropdown_select_semester' in request.session:
+      requestSemester = request.session['reports_dropdown_select_semester']
+      if requestSemester != 'all':
+        selectedReports = Report.getReportsBySemester(requestSemester, selectedReports)
+        current_semester = f'{requestSemester}. Semester'
     
     reports = []
-    reportsRaw = sorted(user.getData('reports'), key = lambda x: x.getData('start'), reverse = True)
+    reportsRaw = sorted(selectedReports, key = lambda x: x.getData('start'), reverse = True)
     for report in reportsRaw:
       reports.append(report.getFormattedData())
-    current_module = '[Alle]'
-    current_semester = '[Alle]'
 
     data = {
       'active_page': 'reports',

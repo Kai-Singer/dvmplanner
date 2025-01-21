@@ -67,7 +67,13 @@ class Submodule:
     return self.__index
   
   def getCompleteIndex(self):
-    return f'{ self.__module.getModuleGroupIndex() }.{ self.__module.getIndex() }.{ self.__index }'  
+    return f'{ self.__module.getModuleGroupIndex() }.{ self.__module.getIndex() }.{ self.__index }'
+  
+  def getModule(self):
+    return self.__module
+  
+  def getModuleGroup(self):
+    return self.__module.getModuleGroup()
   
   def getData(self, keyName: str):
     data = {
@@ -92,6 +98,17 @@ class Module:
       moduleobj = Module(module.attrib['index'], module.attrib['name'], moduleGroup)
       modules.append(moduleobj)
     return modules
+  
+  @staticmethod
+  def getByIndex(index: str):
+    indexSplit = index.split('.')
+    result = None
+    for moduleGroup in ModuleGroup.getModuleGroups():
+      if moduleGroup.getIndex() == indexSplit[0]:
+        for module in Module.getModules(moduleGroup):
+          if module.getIndex() == indexSplit[1]:
+            result = module
+    return result
     
   def __init__(self, index: int, name: str, moduleGroup: 'ModuleGroup'):
     self.__index = index
@@ -107,6 +124,9 @@ class Module:
   
   def getCompleteIndex(self):
     return f'{ self.__module_group.getIndex() }.{ self.__index }'  
+  
+  def getModuleGroup(self):
+    return self.__module_group
   
   def getData(self, keyName: str):
     data = {
@@ -130,6 +150,14 @@ class ModuleGroup:
       modulegroupobj = ModuleGroup(moduleGroup.attrib['index'], moduleGroup.attrib['name'])
       moduleGroups.append(modulegroupobj)
     return moduleGroups
+  
+  @staticmethod
+  def getByIndex(index: str):
+    result = None
+    for moduleGroup in ModuleGroup.getModuleGroups():
+      if moduleGroup.getIndex() == index:
+        result = moduleGroup
+    return result
     
   def __init__(self, index: int, name: str):
     self.__index = index
@@ -138,6 +166,9 @@ class ModuleGroup:
 
   def getIndex(self):
     return self.__index
+  
+  def getCompleteIndex(self):
+    return self.getIndex()
   
   def getData(self, keyName: str):
     data = {

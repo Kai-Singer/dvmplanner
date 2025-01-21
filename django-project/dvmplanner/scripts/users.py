@@ -1,5 +1,5 @@
 from dvmplanner.scripts.main import BASE_DIR, formatTimedelta
-from dvmplanner.scripts.modules import Submodule
+from dvmplanner.scripts.modules import Submodule, Module, ModuleGroup
 from datetime import datetime, timedelta
 import os, json, csv
 
@@ -109,6 +109,21 @@ class User:
     rid = f'r{str(rid + 1).zfill(4)}'
     report = Report(self, rid, start, end, submodule, notes)
     self.__reports.append(report)
+    self.updateReportCSV()
+
+  def getReportById(self, id: str):
+    report = None
+    for reportEntry in self.getData('reports'):
+      if reportEntry.getData('rid') == id:
+        report = reportEntry
+    return report
+  
+  def removeReport(self, report: 'Report'):
+    newReportList = self.getData('reports')
+    for reportIndex, reportEntry in enumerate(newReportList):
+      if reportEntry.getData('rid') == report.getData('rid'):
+        del newReportList[reportIndex]
+    self.updateReports(newReportList)
     self.updateReportCSV()
 
   def checkPwd(self, pwd: str):
@@ -223,6 +238,46 @@ class Report:
       reports.append(reportobj)
     file.close()
     return reports
+  
+  @staticmethod
+  def getReportsBySemester(semester: int, selectedReports: list['Report']):
+    newSelectedReports = []
+    for report in selectedReports:
+      reportSubmodule = report.getData('submodule')
+      if reportSubmodule != None:
+        if semester == reportSubmodule.getData('semester'):
+          newSelectedReports.append(report)
+    return newSelectedReports
+
+  @staticmethod
+  def getReportsByModuleGroup(moduleGroup: ModuleGroup, selectedReports: list['Report']):
+    newSelectedReports = []
+    for report in selectedReports:
+      reportSubmodule = report.getData('submodule')
+      if reportSubmodule != None:
+        if moduleGroup.getIndex() == reportSubmodule.getModuleGroup().getIndex():
+          newSelectedReports.append(report)
+    return newSelectedReports
+
+  @staticmethod
+  def getReportsByModule(module: Module, selectedReports: list['Report']):
+    newSelectedReports = []
+    for report in selectedReports:
+      reportSubmodule = report.getData('submodule')
+      if reportSubmodule != None:
+        if module.getIndex() == reportSubmodule.getModule().getIndex() and module.getModuleGroup().getIndex() == reportSubmodule.getModuleGroup().getIndex():
+          newSelectedReports.append(report)
+    return newSelectedReports
+
+  @staticmethod
+  def getReportsBySubmodule(submodule: Submodule, selectedReports: list['Report']):
+    newSelectedReports = []
+    for report in selectedReports:
+      reportSubmodule = report.getData('submodule')
+      if reportSubmodule != None:
+        if submodule.getIndex() == reportSubmodule.getIndex() and submodule.getModule().getIndex() == reportSubmodule.getModule().getIndex() and submodule.getModuleGroup().getIndex() == reportSubmodule.getModuleGroup().getIndex():
+          newSelectedReports.append(report)
+    return newSelectedReports
   
   def __init__(self, user: User, rid: str, start: datetime, end: datetime, submodule: 'Submodule', notes: str):
     self.__user = user

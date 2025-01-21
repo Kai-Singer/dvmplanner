@@ -156,7 +156,7 @@
               <form method="post">
                 {% csrf_token %}
                 <input type="hidden" name="context" value="reports_dropdown_select_module">
-                <input type="hidden" name="index" value="{{ modulegroup.index }}">
+                <input type="hidden" name="index" value="{{ module.index }}">
                 <div class="dropdown_item_container">
                   <button class="dropdown_item indent_1" type="submit">{{ module.index }} {{ module.name }}</button>
                 </div>
@@ -165,7 +165,7 @@
                 <form method="post">
                   {% csrf_token %}
                   <input type="hidden" name="context" value="reports_dropdown_select_module">
-                  <input type="hidden" name="index" value="{{ modulegroup.index }}">
+                  <input type="hidden" name="index" value="{{ submodule.index }}">
                   <div class="dropdown_item_container">
                     <button class="dropdown_item indent_2" type="submit">{{ submodule.index }} {{ submodule.name }}</button>
                   </div>
