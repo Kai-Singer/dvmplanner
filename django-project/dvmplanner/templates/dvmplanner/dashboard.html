@@ -75,7 +75,10 @@
   <!-- DASHBOARD -->
   <!-- CHECK-IN REPORT -->
   <div class="card">
-    <div class="live_clock" id="live_clock"></div>
+    <div class="live_clock">
+      <div class="live_date" id="live_date"></div>
+      <div class="live_time" id="live_time"></div>
+    </div>
     <h1>Neuer Arbeitsbericht</h1>
     <div class="wrapped_content">
       {% if current_activity.status == 'none' %}

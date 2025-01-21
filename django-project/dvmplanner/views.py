@@ -201,9 +201,44 @@ def reports(request):
         'success': True
       }
       return redirect(login)
+    
+    elif context == 'edit_report':
+      id = request.POST.get('id', '')
+      time_begin = request.POST.get('time_begin', '')
+      time_end = request.POST.get('time_end', '')
+      module = request.POST.get('module', '')
+      notes = request.POST.get('notes', '')
+      pass
 
+    elif context == 'delete_report':
+      id = request.POST.get('id', '')
+      pass
+
+    elif context == 'upload_data':
+      file = request.FILES['file']
+      # fs = FileSystemStorage('rhabitApp/static/profiles')
+      # if os.path.isfile(f'rhabitApp/static/profiles/{uid}.png'):
+      #   os.remove(f'rhabitApp/static/profiles/{uid}.png')
+      # fs.save(f'{uid}.png', file)
+      pass
+
+    elif context == 'download_reports':
+      type = request.POST.get('type', '')
+      pass
+
+    elif context == 'reports_dropdown_select_module':
+      index = request.POST.get('index', '')
+      # save in request.session !
+      pass
+
+    elif context == 'reports_dropdown_select_semester':
+      semester = request.POST.get('semester', '')
+      # save in request.session !
+      pass
+    
     reports = []
-    for report in user.getData('reports'):
+    reportsRaw = sorted(user.getData('reports'), key = lambda x: x.getData('start'), reverse = True)
+    for report in reportsRaw:
       reports.append(report.getFormattedData())
     current_module = '[Alle]'
     current_semester = '[Alle]'
