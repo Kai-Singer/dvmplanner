@@ -546,6 +546,12 @@ body {
   max-height: 500px;
 }
 
+@media print {
+  .card .border_item {
+    max-height: none;
+  }
+}
+
 .border_item.overflow {
   overflow: auto;
 }
@@ -878,4 +884,10 @@ body {
 
 .form_hint.no_top_margin {
   margin-top: 0;
+}
+
+@media print {
+  .no_print {
+    display: none;
+  }
 }

@@ -17,13 +17,13 @@
 </head>
 <body>
   <!-- FLOATING WINDOWS -->
-  <div class="floating_background" id="floating_background" onclick="closeFloatingWindows()"></div>
+  <div class="floating_background no_print" id="floating_background" onclick="closeFloatingWindows()"></div>
   {% block floating_windows %}{% endblock %}
   <!-- NAVBAR -->
-  <div class="navbar_hide_button" onclick="toggleNavbar()">
+  <div class="navbar_hide_button no_print" onclick="toggleNavbar()">
     <img id="navbar_hide_button_img" src="{% static 'imgs/menu_icon.png' %}" alt="Open menu" draggable="false">
   </div>
-  <div class="navbar" id="navbar">
+  <div class="navbar no_print" id="navbar">
     <div class="navbar_header">
       <img src="{% static 'imgs/logo.png' %}" alt="DVM Planner Logo" draggable="false">
       <p>DVM Planner</p>
@@ -45,11 +45,11 @@
   <!-- CONTENT -->
   <div class="content" id="content">
     {% if notification %}
-      <div class="notification {% if notification.success %}notification_success{% endif %}" id="notification">
+      <div class="notification {% if notification.success %}notification_success{% endif %} no_print" id="notification">
         {{ notification.msg }}
       </div>
     {% endif %}
-    <div class="topbar">
+    <div class="topbar no_print">
       <div class="topbar_text">{% block header_title %}Placeholder{% endblock %}</div>
       <div class="button profile_button" id="profile_button">
         {% if img == True %}
@@ -60,7 +60,7 @@
         <div><p>{{ username }}</p></div>
       </div>
     </div>
-    <div class="usermenu hidden_usermenu" id="usermenu">
+    <div class="usermenu hidden_usermenu no_print" id="usermenu">
       <form method="post">
         {% csrf_token %}
         <input type="hidden" name="context" value="change_user">

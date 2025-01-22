@@ -1,4 +1,5 @@
 from django.shortcuts import redirect, render
+from django.template.loader import render_to_string
 from django.http import HttpResponse
 from django.core.files.storage import FileSystemStorage
 from django.contrib.staticfiles import finders
@@ -8,7 +9,7 @@ from dvmplanner.scripts.main import BASE_DIR, formatTimedelta
 from datetime import datetime, timedelta
 from lxml import etree
 from io import StringIO
-import os, json, csv
+import os, json, csv, shutil
 
 def home(request):
   if 'uid' in request.session:
@@ -503,12 +504,6 @@ def review(request):
       semester = request.POST.get('semester', '')
       request.session['review_dropdown_select_semester'] = semester
 
-    elif context == 'download_review':
-      pass
-
-    elif context == 'print_review':
-      pass
-
     selectedReports = user.getData('reports')
     current_module = '[Alle]'
     if 'review_dropdown_select_module' in request.session:
@@ -660,18 +655,95 @@ def admin(request):
       elif context == 'edit_module':
         index = request.POST.get('index', '')
         semester = request.POST.get('semester', '') # leer bei ModulGruppen & Modulen
-        name = request.POST.get('name', '') 
+        name = request.POST.get('name', '')
+        if index.count('.') == 0:
+          moduleGroup = ModuleGroup.getByIndex(index)
+          moduleGroup.edit(name)
+        elif index.count('.') == 1:
+          module = Module.getByIndex(index)
+          module.edit(name)
+        else:
+          submodule = Submodule.getByIndex(index)
+          submodule.edit(name, semester)
+        request.session['notification'] = {
+          'msg': 'Das Modul wurde erfolgreich bearbeitet.',
+          'success': True
+        }
 
       elif context == 'delete_module':
         index = request.POST.get('index', '')
+        if index.count('.') == 0:
+          moduleGroup = ModuleGroup.getByIndex(index)
+          moduleGroup.remove()
+        elif index.count('.') == 1:
+          module = Module.getByIndex(index)
+          module.remove()
+        else:
+          submodule = Submodule.getByIndex(index)
+          submodule.remove()
+        request.session['notification'] = {
+          'msg': 'Das Modul wurde erfolgreich gelöscht.',
+          'success': True
+        }
 
       elif context == 'add_module':
         index = request.POST.get('index', '')
-        semester = request.POST.get('semester', '') # ignorieren bei ModulGruppen & Modulen
-        name = request.POST.get('name', '') 
+        splittedIndex = index.split('.')
+        semester = request.POST.get('semester', '')
+        name = request.POST.get('name', '')
+        error = ''
+        if len(splittedIndex) < 1 or len(splittedIndex) > 3:
+          error = 'format'
+        for i in splittedIndex:
+          if len(i) != 1:
+            error = 'format'
+          elif not i.isdigit():
+            error = 'format'
+        if len(splittedIndex) == 3:
+          if Submodule.getByIndex(index) != None:
+            error = 'used'
+        elif len(splittedIndex) == 2:
+          if Module.getByIndex(index) != None:
+            error = 'used'
+        elif len(splittedIndex) == 1:
+          if ModuleGroup.getByIndex(index) != None:
+            error = 'used'
+        if error == 'format':
+          request.session['notification'] = {
+            'msg': 'Der Modulindex muss das Format "X.X.X" haben!',
+            'success': False
+          }
+        elif error == 'used':
+          request.session['notification'] = {
+            'msg': 'Der Modulindex ist bereits vergeben!',
+            'success': False
+          }
+        else:
+          if len(splittedIndex) == 1:
+            moduleGroup = ModuleGroup(splittedIndex[0], name)
+            moduleGroup.addToXml()
+          elif len(splittedIndex) == 2:
+            moduleGroup = ModuleGroup.getByIndex(splittedIndex[0])
+            module = Module(splittedIndex[1], name, moduleGroup)
+            module.addToXml()
+          else:
+            module = Module.getByIndex(f'{ splittedIndex[0] }.{ splittedIndex[1] }')
+            submodule = Submodule(splittedIndex[2], name, semester, module)
+            submodule.addToXml()
+          request.session['notification'] = {
+            'msg': 'Das Modul wurde erfolgreich hinzugefügt.',
+            'success': True
+          }
 
       elif context == 'restore_default':
-        pass # ohne Attribute
+        path = f'{ BASE_DIR }/data/modules.xml'
+        if os.path.exists(path):
+          os.remove(path)
+        shutil.copy(f'{ BASE_DIR }/data/z_modules_default.xml', path)
+        request.session['notification'] = {
+            'msg': 'Das Standard Modulhandbuch wurde erfolgreich geladen.',
+            'success': True
+          }    
 
       elif context == 'requests_dropdown_select_role':
         role = request.POST.get('role', '')
