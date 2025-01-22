@@ -380,74 +380,78 @@
         </div>
       </div>
     </div>
-    <div class="border_item overflow">
-      <table>
-        <tr>
-          <th>Erstellt</th>
-          <th>Vorname</th>
-          <th>Nachname</th>
-          <th>Nutzername</th>
-          <th>Rolle</th>
-          <th>Status</th>
-          <th>Aktionen</th>
-        </tr>
-        {% for user in users %}
-          <tr class="hoverable_tr">
-            <td class="nowrap {% if user.status == 'deleted' %} status_deleted {% endif %}">{{ user.day }}<br>{{ user.time }}</td>
-            <td class="nowrap {% if user.status == 'deleted' %} status_deleted {% endif %}">{{ user.first_name }}</td>
-            <td class="nowrap {% if user.status == 'deleted' %} status_deleted {% endif %}">{{ user.last_name }}</td>
-            <td class="{% if user.status == 'deleted' %} status_deleted {% endif %}">{{ user.username }}</td>
-            {% if user.role == 'normal' %}
-              <td class="role_normal {% if user.status == 'deleted' %} status_deleted {% endif %}">Normal</td>
-            {% elif user.role == 'vip' %}
-              <td class="role_vip {% if user.status == 'deleted' %} status_deleted {% endif %}">VIP</td>
-            {% elif user.role == 'admin' %}
-              <td class="role_admin {% if user.status == 'deleted' %} status_deleted {% endif %}">Admin</td>
-            {% endif %}
-            {% if user.status == 'active' %}
-              <td class="status_active">Aktiv</td>
-            {% elif user.status == 'blocked' %}
-              <td class="status_blocked">Gesperrt</td>
-            {% elif user.status == 'deleted' %}
-              <td>Gelöscht</td>
-            {% endif %}
-            <td class="no_select">
-              {% if user.status != 'deleted' %}
-                <button class="table_button tooltip_elem" onclick="changeRole('{{ user.id }}', '{{ user.username }}', '{{ user.role }}')">
-                  <img src="{% static 'imgs/edit_icon.png' %}" alt="Change role" draggable="false">
-                  <div class="tooltip_text" >Rolle ändern</div>
-                </button>
-                {% if uid != user.id %}
-                  {% if user.status == 'blocked' %}
-                    <form method="post" class="table_button_form">
-                      {% csrf_token %}
-                      <input type="hidden" name="context" value="block_user">
-                      <input type="hidden" name="action" value="unblock">
-                      <input type="hidden" name="id" value="{{ user.id }}">
-                      <button class="table_button green tooltip_elem" type="submit">
-                        <img src="{% static 'imgs/unblock_icon.png' %}" alt="Unblock" draggable="false">
-                        <div class="tooltip_text" >Entsperren</div>
-                      </button>
-                    </form>
-                  {% else %}
-                    <form method="post" class="table_button_form">
-                      {% csrf_token %}
-                      <input type="hidden" name="context" value="block_user">
-                      <input type="hidden" name="action" value="block">
-                      <input type="hidden" name="id" value="{{ user.id }}">
-                      <button class="table_button red tooltip_elem" type="submit">
-                        <img src="{% static 'imgs/block_icon.png' %}" alt="Block" draggable="false">
-                        <div class="tooltip_text" >Sperren</div>
-                      </button>
-                    </form>
+    {% if users|length > 0 %}
+      <div class="border_item overflow">
+        <table>
+          <tr>
+            <th>Erstellt</th>
+            <th>Vorname</th>
+            <th>Nachname</th>
+            <th>Nutzername</th>
+            <th>Rolle</th>
+            <th>Status</th>
+            <th>Aktionen</th>
+          </tr>
+          {% for user in users %}
+            <tr class="hoverable_tr">
+              <td class="nowrap {% if user.status == 'deleted' %} status_deleted {% endif %}">{{ user.day }}<br>{{ user.time }}</td>
+              <td class="nowrap {% if user.status == 'deleted' %} status_deleted {% endif %}">{{ user.first_name }}</td>
+              <td class="nowrap {% if user.status == 'deleted' %} status_deleted {% endif %}">{{ user.last_name }}</td>
+              <td class="{% if user.status == 'deleted' %} status_deleted {% endif %}">{{ user.username }}</td>
+              {% if user.role == 'normal' %}
+                <td class="role_normal {% if user.status == 'deleted' %} status_deleted {% endif %}">Normal</td>
+              {% elif user.role == 'vip' %}
+                <td class="role_vip {% if user.status == 'deleted' %} status_deleted {% endif %}">VIP</td>
+              {% elif user.role == 'admin' %}
+                <td class="role_admin {% if user.status == 'deleted' %} status_deleted {% endif %}">Admin</td>
+              {% endif %}
+              {% if user.status == 'active' %}
+                <td class="status_active">Aktiv</td>
+              {% elif user.status == 'blocked' %}
+                <td class="status_blocked">Gesperrt</td>
+              {% elif user.status == 'deleted' %}
+                <td>Gelöscht</td>
+              {% endif %}
+              <td class="no_select">
+                {% if user.status != 'deleted' %}
+                  <button class="table_button tooltip_elem" onclick="changeRole('{{ user.id }}', '{{ user.username }}', '{{ user.role }}')">
+                    <img src="{% static 'imgs/edit_icon.png' %}" alt="Change role" draggable="false">
+                    <div class="tooltip_text" >Rolle ändern</div>
+                  </button>
+                  {% if uid != user.id %}
+                    {% if user.status == 'blocked' %}
+                      <form method="post" class="table_button_form">
+                        {% csrf_token %}
+                        <input type="hidden" name="context" value="block_user">
+                        <input type="hidden" name="action" value="unblock">
+                        <input type="hidden" name="id" value="{{ user.id }}">
+                        <button class="table_button green tooltip_elem" type="submit">
+                          <img src="{% static 'imgs/unblock_icon.png' %}" alt="Unblock" draggable="false">
+                          <div class="tooltip_text" >Entsperren</div>
+                        </button>
+                      </form>
+                    {% else %}
+                      <form method="post" class="table_button_form">
+                        {% csrf_token %}
+                        <input type="hidden" name="context" value="block_user">
+                        <input type="hidden" name="action" value="block">
+                        <input type="hidden" name="id" value="{{ user.id }}">
+                        <button class="table_button red tooltip_elem" type="submit">
+                          <img src="{% static 'imgs/block_icon.png' %}" alt="Block" draggable="false">
+                          <div class="tooltip_text" >Sperren</div>
+                        </button>
+                      </form>
+                    {% endif %}
                   {% endif %}
                 {% endif %}
-              {% endif %}
-            </td>
-          </tr>
-        {% endfor %}
-      </table>
-    </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </table>
+      </div>
+    {% else %}
+      <p>Mit der aktuellen Filterung konnten keine Benutzer gefunden werden.</p>
+    {% endif %}
   </div>
   <!-- MODULES -->
   <div class="card">
