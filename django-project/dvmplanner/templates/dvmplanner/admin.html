@@ -231,63 +231,67 @@
         </div>
       </div>
     </div>
-    <div class="border_item overflow">
-      <table>
-        <tr>
-          <th>Datum</th>
-          <th>Vorname</th>
-          <th>Nachname</th>
-          <th>Nutzername</th>
-          <th>Aktuelle Rolle</th>
-          <th>Anfrage auf</th>
-          <th>Aktionen</th>
-        </tr>
-        {% for request in requests %}
-          <tr class="hoverable_tr">
-            <td class="nowrap">{{ request.day }}<br>{{ request.time }}</td>
-            <td class="nowrap">{{ request.first_name }}</td>
-            <td class="nowrap">{{ request.last_name }}</td>
-            <td>{{ request.username }}</td>
-            {% if request.role == 'normal' %}
-              <td class="role_normal">Normal</td>
-            {% elif request.role == 'vip' %}
-              <td class="role_vip">VIP</td>
-            {% elif request.role == 'admin' %}
-              <td class="role_admin">Admin</td>
-            {% endif %}
-            {% if request.requested_role == 'normal' %}
-              <td class="role_normal">Normal</td>
-            {% elif request.requested_role == 'vip' %}
-              <td class="role_vip">VIP</td>
-            {% elif request.requested_role == 'admin' %}
-              <td class="role_admin">Admin</td>
-            {% endif %}
-            <td class="no_select">
-              <form method="post" class="table_button_form">
-                {% csrf_token %}
-                <input type="hidden" name="context" value="request_action">
-                <input type="hidden" name="action" value="accept">
-                <input type="hidden" name="id" value="{{ request.id }}">
-                <button class="table_button green tooltip_elem" type="submit">
-                  <img src="{% static 'imgs/accept_icon.png' %}" alt="Accept" draggable="false">
-                  <div class="tooltip_text">Akzeptieren</div>
-                </button>
-              </form>
-              <form method="post" class="table_button_form">
-                {% csrf_token %}
-                <input type="hidden" name="context" value="request_action">
-                <input type="hidden" name="action" value="decline">
-                <input type="hidden" name="id" value="{{ request.id }}">
-                <button class="table_button red tooltip_elem" type="submit">
-                  <img src="{% static 'imgs/decline_icon.png' %}" alt="Decline" draggable="false">
-                  <div class="tooltip_text">Ablehnen</div>
-                </button>
-              </form>
-            </td>
+    {% if requests|length > 0 %}
+      <div class="border_item overflow">
+        <table>
+          <tr>
+            <th>Datum</th>
+            <th>Vorname</th>
+            <th>Nachname</th>
+            <th>Nutzername</th>
+            <th>Aktuelle Rolle</th>
+            <th>Anfrage auf</th>
+            <th>Aktionen</th>
           </tr>
-        {% endfor %}
-      </table>
-    </div>
+          {% for request in requests %}
+            <tr class="hoverable_tr">
+              <td class="nowrap">{{ request.day }}<br>{{ request.time }}</td>
+              <td class="nowrap">{{ request.first_name }}</td>
+              <td class="nowrap">{{ request.last_name }}</td>
+              <td>{{ request.username }}</td>
+              {% if request.role == 'normal' %}
+                <td class="role_normal">Normal</td>
+              {% elif request.role == 'vip' %}
+                <td class="role_vip">VIP</td>
+              {% elif request.role == 'admin' %}
+                <td class="role_admin">Admin</td>
+              {% endif %}
+              {% if request.requested_role == 'normal' %}
+                <td class="role_normal">Normal</td>
+              {% elif request.requested_role == 'vip' %}
+                <td class="role_vip">VIP</td>
+              {% elif request.requested_role == 'admin' %}
+                <td class="role_admin">Admin</td>
+              {% endif %}
+              <td class="no_select">
+                <form method="post" class="table_button_form">
+                  {% csrf_token %}
+                  <input type="hidden" name="context" value="request_action">
+                  <input type="hidden" name="action" value="accept">
+                  <input type="hidden" name="id" value="{{ request.id }}">
+                  <button class="table_button green tooltip_elem" type="submit">
+                    <img src="{% static 'imgs/accept_icon.png' %}" alt="Accept" draggable="false">
+                    <div class="tooltip_text">Akzeptieren</div>
+                  </button>
+                </form>
+                <form method="post" class="table_button_form">
+                  {% csrf_token %}
+                  <input type="hidden" name="context" value="request_action">
+                  <input type="hidden" name="action" value="decline">
+                  <input type="hidden" name="id" value="{{ request.id }}">
+                  <button class="table_button red tooltip_elem" type="submit">
+                    <img src="{% static 'imgs/decline_icon.png' %}" alt="Decline" draggable="false">
+                    <div class="tooltip_text">Ablehnen</div>
+                  </button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </table>
+      </div>
+    {% else %}
+      <p>Mit der aktuellen Filterung konnten keine offenen Anfragen gefunden werden.</p>
+    {% endif %}
   </div>
   <!-- USERS -->
   <div class="card">

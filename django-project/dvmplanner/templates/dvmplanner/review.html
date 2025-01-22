@@ -137,38 +137,42 @@
         </div>
       </div>
     </div>
-    <div class="border_item overflow">
-      <table>
-        <tr>
-          <th>Modul</th>
-          <th>Semester</th>
-          <th>Kumulative Arbeitszeit</th>
-          <th>Prozentueller Anteil</th>
-          <th>Sitzungsanzahl</th>
-        </tr>
-        {% for review in reviews %}
-          <tr class="hoverable_tr">
-            <td>{{ review.module }}</td>
-            <td class="nowrap">{{ review.semester }}. Semester</td>
-            <td class="nowrap">{{ review.time }}</td>
-            <td class="nowrap">{{ review.percentage }}</td>
-            <td>{{ review.sessions }}</td>
+    {% if reviews|length > 0 %}
+      <div class="border_item overflow">
+        <table>
+          <tr>
+            <th>Modul</th>
+            <th>Semester</th>
+            <th>Kumulative Arbeitszeit</th>
+            <th>Prozentueller Anteil</th>
+            <th>Sitzungsanzahl</th>
           </tr>
-        {% endfor %}
-      </table>
-    </div>
-    <div class="charts_container no_print">
-      <div class="border_item chart_item">
-        <h2>Verteilung nach Arbeitszeit</h2>
-        <div class="total_review">Arbeitszeit gesamt: <span>{{ total_time }}</span></div>
-        <canvas id="review_chart_time"></canvas>
+          {% for review in reviews %}
+            <tr class="hoverable_tr">
+              <td>{{ review.module }}</td>
+              <td class="nowrap">{{ review.semester }}. Semester</td>
+              <td class="nowrap">{{ review.time }}</td>
+              <td class="nowrap">{{ review.percentage }}</td>
+              <td>{{ review.sessions }}</td>
+            </tr>
+          {% endfor %}
+        </table>
       </div>
-      <div class="border_item chart_item">
-        <h2>Verteilung nach Sitzungen</h2>
-        <div class="total_review">Sitzungen gesamt: <span>{{ total_sessions }}</span></div>
-        <canvas id="review_chart_sessions"></canvas>
+      <div class="charts_container no_print">
+        <div class="border_item chart_item">
+          <h2>Verteilung nach Arbeitszeit</h2>
+          <div class="total_review">Arbeitszeit gesamt: <span>{{ total_time }}</span></div>
+          <canvas id="review_chart_time"></canvas>
+        </div>
+        <div class="border_item chart_item">
+          <h2>Verteilung nach Sitzungen</h2>
+          <div class="total_review">Sitzungen gesamt: <span>{{ total_sessions }}</span></div>
+          <canvas id="review_chart_sessions"></canvas>
+        </div>
       </div>
-    </div>
+    {% else %}
+      <p>Mit der aktuellen Filterung konnten keine Arbeitsberichte deines Accounts ausgewertet werden. Probiere es mit einer anderen Filterung erneut oder erstelle einen neuen Arbeitsbericht.</p>
+    {% endif %}
   </div>
   <!-- DOWNLOAD & PRINT -->
   <div class="card no_print">
