@@ -1,28 +1,50 @@
 from django.shortcuts import redirect, render
+from django.http import HttpResponse
 from django.core.files.storage import FileSystemStorage
 from django.contrib.staticfiles import finders
 from dvmplanner.scripts.users import User, Report
 from dvmplanner.scripts.modules import Submodule, Module, ModuleGroup
 from dvmplanner.scripts.main import BASE_DIR, formatTimedelta
 from datetime import datetime, timedelta
-import os, json
+from lxml import etree
+from io import StringIO
+import os, json, csv
 
 def home(request):
   if 'uid' in request.session:
-    return redirect(dashboard)
-  
-  else:
-    data = {}
-    if 'notification' in request.session:
-      data['notification'] = request.session['notification']
-      del request.session['notification']
+    user = User.getUserByKey('uid', request.session['uid'])
+    if user.getData('status') != 'blocked' and user.getData('status') != 'deleted':
+      return redirect(dashboard)
+    else:
+      request.session.flush()
+    
+  data = {}
+  if 'notification' in request.session:
+    data['notification'] = request.session['notification']
+    del request.session['notification']
 
-    return render(request, 'dvmplanner/home.html', data)
+  return render(request, 'dvmplanner/home.html', data)
 
 def dashboard(request):
   if 'uid' in request.session:
     user = User.getUserByKey('uid', request.session['uid'])
     context = request.POST.get('context', '')
+
+    if user.getData('status') == 'blocked':
+      request.session.flush()
+      request.session['notification'] = {
+        'msg': 'Dein Profil ist gesperrt!',
+        'success': False
+      }
+      return redirect(home)
+    
+    if user.getData('status') == 'deleted':
+      request.session.flush()
+      request.session['notification'] = {
+        'msg': 'Das Profil wurde gelöscht!',
+        'success': False
+      }
+      return redirect(home)
 
     if context == 'logout':
       request.session.flush()
@@ -186,6 +208,22 @@ def reports(request):
     user = User.getUserByKey('uid', request.session['uid'])
     context = request.POST.get('context', '')
 
+    if user.getData('status') == 'blocked':
+      request.session.flush()
+      request.session['notification'] = {
+        'msg': 'Dein Profil ist gesperrt!',
+        'success': False
+      }
+      return redirect(home)
+    
+    if user.getData('status') == 'deleted':
+      request.session.flush()
+      request.session['notification'] = {
+        'msg': 'Das Profil wurde gelöscht!',
+        'success': False
+      }
+      return redirect(home)
+
     if context == 'logout':
       request.session.flush()
       request.session['notification'] = {
@@ -235,16 +273,127 @@ def reports(request):
       }
 
     elif context == 'upload_data':
-      file = request.FILES['file']
-      # fs = FileSystemStorage('rhabitApp/static/profiles')
-      # if os.path.isfile(f'rhabitApp/static/profiles/{uid}.png'):
-      #   os.remove(f'rhabitApp/static/profiles/{uid}.png')
-      # fs.save(f'{uid}.png', file)
-      pass
+      uploadedFile = request.FILES['file']
+      fileExt = os.path.splitext(uploadedFile.name)[1].lower()[1:]
+      transferPath = f'{ BASE_DIR }/data/transfer/{ user.getData('uid') }'
+      if not os.path.exists(transferPath):
+        os.mkdir(transferPath)
+      fs = FileSystemStorage(transferPath)
+      filePath = os.path.join(transferPath, f'reportUpload.{fileExt}')
+      if os.path.isfile(filePath):
+        os.remove(filePath)
+      fs.save(f'reportUpload.{fileExt}', uploadedFile)
+      reports = []
+      file = open(filePath, 'r', encoding = 'utf-8')
+      try:
+        if fileExt == 'xml':
+          xml = etree.parse(StringIO(file.read()))
+          xpath = xml.xpath(f'/reports/report')
+          for report in xpath:
+            start = datetime.strptime(report.attrib['start'], '%Y-%m-%d %H:%M:%S')
+            end = datetime.strptime(report.attrib['end'], '%Y-%m-%d %H:%M:%S')
+            if start > end:
+              raise Exception('Die Startzeit muss vor der Endzeit sein!')
+            if not (report.attrib['id'].startswith('r') and report.attrib['id'][1:].isdigit() and len(report.attrib['id']) == 5):
+              raise Exception('Die Report ID ist nicht konform!')
+            submodule = Submodule.getByIndex(report.attrib['submodule'])
+            reportobj = Report(user, report.attrib['id'], start, end, submodule, report.attrib['notes'])
+            reports.append(reportobj)
+        elif fileExt == 'json':
+          jsonReports = json.loads(file.read())['reports']
+          for report in jsonReports:
+            start = datetime.strptime(report['start'], '%Y-%m-%d %H:%M:%S')
+            end = datetime.strptime(report['end'], '%Y-%m-%d %H:%M:%S')
+            if start > end:
+              raise Exception('Die Startzeit muss vor der Endzeit sein!')
+            if not (report['id'].startswith('r') and report['id'][1:].isdigit() and len(report['id']) == 5):
+              raise Exception('Die Report ID ist nicht konform!')
+            submodule = Submodule.getByIndex(report['submodule'])
+            reportobj = Report(user, report['id'], start, end, submodule, report['notes'])
+            reports.append(reportobj)
+        elif fileExt == 'csv':
+          reader = csv.DictReader(file, delimiter = ';')
+          for report in reader:
+            start = datetime.strptime(report['start'], '%Y-%m-%d %H:%M:%S')
+            end = datetime.strptime(report['end'], '%Y-%m-%d %H:%M:%S')
+            if start > end:
+              raise Exception('Die Startzeit muss vor der Endzeit sein!')
+            if not (report['id'].startswith('r') and report['id'][1:].isdigit() and len(report['id']) == 5):
+              raise Exception('Die Report ID ist nicht konform!')
+            submodule = Submodule.getByIndex(report['submodule'])
+            reportobj = Report(user, report['id'], start, end, submodule, report['notes'])
+            reports.append(reportobj)
+        user.updateReports(reports)
+        user.updateReportCSV()
+      except:
+        request.session['notification'] = {
+          'msg': 'Ein Problem mit der Formatierung oder den Zeiten besteht. Die Daten konnten nicht hochgeladen werden!',
+          'success': False
+        }
+      file.close()
+      os.remove(filePath)
+      os.rmdir(transferPath)
 
     elif context == 'download_reports':
       filetype = request.POST.get('type', '')
-      pass
+      reports = user.getData('reports')
+      userUid = user.getData('uid')
+
+      if filetype == 'xml':
+        root = etree.Element('reports')
+        for report in reports:
+          reportModule = report.getData('submodule')
+          reportModuleIndex = '0.0.0'
+          if reportModule is not None:
+            reportModuleIndex = reportModule.getCompleteIndex()
+          reportElement = etree.Element('report', id = report.getData('rid'), start = report.getData('start').strftime('%Y-%m-%d %H:%M:%S'), end = report.getData('end').strftime('%Y-%m-%d %H:%M:%S'), submodule = reportModuleIndex, notes = report.getData('notes'))
+          root.append(reportElement)
+        xmlData = etree.tostring(root, pretty_print = True, encoding = 'utf-8').decode()
+        response = HttpResponse(xmlData, content_type='application/xml')
+        response['Content-Disposition'] = f'attachment; filename="{ userUid }_reports.xml"'
+        return response
+      
+      elif filetype == 'json':
+        jsonData = {
+          'reports': []
+        }
+        for report in reports:
+          reportModule = report.getData('submodule')
+          reportModuleIndex = '0.0.0'
+          if reportModule is not None:
+            reportModuleIndex = reportModule.getCompleteIndex()
+          jsonData['reports'].append({
+            'id': report.getData('rid'),
+            'start': report.getData('start').strftime('%Y-%m-%d %H:%M:%S'),
+            'end': report.getData('end').strftime('%Y-%m-%d %H:%M:%S'),
+            'submodule': reportModuleIndex,
+            'notes': report.getData('notes')
+          })
+        response = HttpResponse(json.dumps(jsonData, indent = 2), content_type='application/json')
+        response['Content-Disposition'] = f'attachment; filename="{ userUid }_reports.json"'
+        return response
+      
+      elif filetype == 'csv':
+        csvData = StringIO()
+        fieldnames = [ 'id', 'start', 'end', 'submodule', 'notes' ]
+        writer = csv.DictWriter(csvData, fieldnames = fieldnames, delimiter = ';')
+        writer.writeheader()
+        for report in reports:
+          reportModule = report.getData('submodule')
+          reportModuleIndex = '0.0.0'
+          if reportModule is not None:
+            reportModuleIndex = reportModule.getCompleteIndex()
+          writer.writerow({
+            'id': report.getData('rid'),
+            'start': report.getData('start').strftime('%Y-%m-%d %H:%M:%S'),
+            'end': report.getData('end').strftime('%Y-%m-%d %H:%M:%S'),
+            'submodule': reportModuleIndex,
+            'notes': report.getData('notes'),
+          })
+        response = HttpResponse(csvData.getvalue(), content_type='text/csv')
+        response['Content-Disposition'] = f'attachment; filename="{ userUid }_reports.csv"'
+        csvData.close()
+        return response
 
     elif context == 'reports_dropdown_select_module':
       index = request.POST.get('index', '')
@@ -314,6 +463,22 @@ def review(request):
     user = User.getUserByKey('uid', request.session['uid'])
     context = request.POST.get('context', '')
 
+    if user.getData('status') == 'blocked':
+      request.session.flush()
+      request.session['notification'] = {
+        'msg': 'Dein Profil ist gesperrt!',
+        'success': False
+      }
+      return redirect(home)
+    
+    if user.getData('status') == 'deleted':
+      request.session.flush()
+      request.session['notification'] = {
+        'msg': 'Das Profil wurde gelöscht!',
+        'success': False
+      }
+      return redirect(home)
+
     if context == 'logout':
       request.session.flush()
       request.session['notification'] = {
@@ -329,10 +494,42 @@ def review(request):
         'success': True
       }
       return redirect(login)
+    
+    elif context == 'review_dropdown_select_module':
+      index = request.POST.get('index', '')
+      request.session['review_dropdown_select_module'] = index
 
-    reviewData = user.getFormattedReview()
+    elif context == 'review_dropdown_select_semester':
+      semester = request.POST.get('semester', '')
+      request.session['review_dropdown_select_semester'] = semester
+
+    elif context == 'download_review':
+      pass
+
+    elif context == 'print_review':
+      pass
+
+    selectedReports = user.getData('reports')
     current_module = '[Alle]'
+    if 'review_dropdown_select_module' in request.session:
+      requestModule = request.session['review_dropdown_select_module']
+      if requestModule != 'all':
+        if requestModule.count('.') == 0:
+          module = ModuleGroup.getByIndex(requestModule)
+          selectedReports = Report.getReportsByModuleGroup(module, selectedReports)
+        else:
+          module = Module.getByIndex(requestModule)
+          selectedReports = Report.getReportsByModule(module, selectedReports)
+        current_module = f'{ module.getCompleteIndex() } { module.getData('name') }'
+    
     current_semester = '[Alle]'
+    if 'review_dropdown_select_semester' in request.session:
+      requestSemester = request.session['review_dropdown_select_semester']
+      if requestSemester != 'all':
+        selectedReports = Report.getReportsBySemester(requestSemester, selectedReports)
+        current_semester = f'{requestSemester}. Semester'
+
+    reviewData = user.getFormattedReview(selectedReports)
 
     data = {
       'active_page': 'review',
@@ -368,6 +565,22 @@ def admin(request):
   if 'uid' in request.session:
     user = User.getUserByKey('uid', request.session['uid'])
 
+    if user.getData('status') == 'blocked':
+      request.session.flush()
+      request.session['notification'] = {
+        'msg': 'Dein Profil ist gesperrt!',
+        'success': False
+      }
+      return redirect(home)
+    
+    if user.getData('status') == 'deleted':
+      request.session.flush()
+      request.session['notification'] = {
+        'msg': 'Das Profil wurde gelöscht!',
+        'success': False
+      }
+      return redirect(home)
+
     if user.getData('role') == 'admin':
       context = request.POST.get('context', '')
 
@@ -386,13 +599,134 @@ def admin(request):
           'success': True
         }
         return redirect(login)
+      
+      elif context == 'request_action':
+        action = request.POST.get('action', '')
+        userId = request.POST.get('id', '')
+        requestUser = User.getUserByKey('uid', userId)
+
+        if action == 'accept':
+          requestUser.changeData('role', requestUser.getData('requested_role'))
+          requestUser.changeData('requested_role', '')
+          request.session['notification'] = {
+            'msg': 'Die Anfrage wurde erfolgreich akzeptiert.',
+            'success': True
+          }
+
+        elif action == 'decline':
+          requestUser.changeData('requested_role', '')
+          request.session['notification'] = {
+            'msg': 'Die Anfrage wurde erfolgreich abgelehnt.',
+            'success': True
+          }
+
+      elif context == 'change_role':
+        role = request.POST.get('role', '')
+        userId = request.POST.get('id', '')
+        requestUser = User.getUserByKey('uid', userId)
+        requestUser.changeData('requested_role', '')
+        requestUser.changeData('role', role)
+        if userId == user.getData('uid') and role != 'admin':
+          request.session['notification'] = {
+            'msg': 'Du hast keine Berechtigungen mehr für das Admin Dashboard.',
+            'success': False
+          }
+          return redirect(dashboard)
+        else:
+          request.session['notification'] = {
+            'msg': 'Die Rolle wurde erfolgreich geändert.',
+            'success': True
+          }
+
+      elif context == 'block_user':
+        action = request.POST.get('action', '')
+        userId = request.POST.get('id', '')
+        requestUser = User.getUserByKey('uid', userId)
+
+        if action == 'block':
+          requestUser.changeData('status', 'blocked')
+          request.session['notification'] = {
+            'msg': 'Der Benutzer wurde erfolgreich gesperrt.',
+            'success': True
+          }
+
+        elif action == 'unblock':
+          requestUser.changeData('status', 'active')
+          request.session['notification'] = {
+            'msg': 'Der Benutzer wurde erfolgreich entsperrt.',
+            'success': True
+          }
+
+      elif context == 'edit_module':
+        index = request.POST.get('index', '')
+        semester = request.POST.get('semester', '') # leer bei ModulGruppen & Modulen
+        name = request.POST.get('name', '') 
+
+      elif context == 'delete_module':
+        index = request.POST.get('index', '')
+
+      elif context == 'add_module':
+        index = request.POST.get('index', '')
+        semester = request.POST.get('semester', '') # ignorieren bei ModulGruppen & Modulen
+        name = request.POST.get('name', '') 
+
+      elif context == 'restore_default':
+        pass # ohne Attribute
+
+      elif context == 'requests_dropdown_select_role':
+        role = request.POST.get('role', '')
+        request.session['requests_dropdown_select_role'] = role
+
+      elif context == 'users_dropdown_select_role':
+        role = request.POST.get('role', '')
+        request.session['users_dropdown_select_role'] = role
+
+      elif context == 'users_dropdown_select_status':
+        status = request.POST.get('status', '')
+        request.session['users_dropdown_select_status'] = status
 
       current_requests_filter_role = '[Alle]'
+      if 'requests_dropdown_select_role' in request.session:
+        requestRole = request.session['requests_dropdown_select_role']
+        if requestRole == 'vip':
+          requests = User.getFormattedRequests('vip')
+          current_requests_filter_role = 'VIP'
+        elif requestRole == 'admin':
+          requests = User.getFormattedRequests('admin')
+          current_requests_filter_role = 'Admin'
+        else:
+          requests = User.getFormattedRequests()
+      else:
+        requests = User.getFormattedRequests()
+
       current_users_filter_role = '[Alle]'
+      if 'users_dropdown_select_role' in request.session:
+        current_users_filter_role = {
+          'all': '[Alle]',
+          'normal': 'Normal',
+          'vip': 'VIP',
+          'admin': 'Admin'
+        }[request.session['users_dropdown_select_role']]
+
       current_users_filter_status = '[Alle]'
+      if 'users_dropdown_select_status' in request.session:
+        current_users_filter_status = {
+          'all': '[Alle]',
+          'active': 'Aktiv',
+          'blocked': 'Gesperrt',
+          'deleted': 'Gelöscht'
+        }[request.session['users_dropdown_select_status']]
 
       users = []
       for userEntry in User.getUsers():
+        if 'users_dropdown_select_role' in request.session:
+          requestRoleSelect = request.session['users_dropdown_select_role']
+          if requestRoleSelect != 'all' and requestRoleSelect != userEntry.getData('role'):
+            continue
+        if 'users_dropdown_select_status' in request.session:
+          requestStatusSelect = request.session['users_dropdown_select_status']
+          if requestStatusSelect != 'all' and requestStatusSelect != userEntry.getData('status'):
+            continue
         users.append({
           'day': userEntry.getData('creation_date').strftime('%d.%m.%Y'),
           'time': userEntry.getData('creation_date').strftime('%H.%M:%S Uhr'),
@@ -413,7 +747,7 @@ def admin(request):
         'role': user.getData('role'),
         'img': user.getData('img'),
         'current_requests_filter_role': current_requests_filter_role,
-        'requests': User.getFormattedRequests(),
+        'requests': requests,
         'current_users_filter_role': current_users_filter_role,
         'current_users_filter_status': current_users_filter_status,
         'users': users,
@@ -424,7 +758,8 @@ def admin(request):
         data['notification'] = request.session['notification']
         del request.session['notification']
 
-      return render(request, 'dvmplanner/admin.html', data)
+      if user.getData('role') == 'admin':
+        return render(request, 'dvmplanner/admin.html', data)
       
     else:
       request.session['notification'] = {
@@ -445,6 +780,22 @@ def profile(request):
     user = User.getUserByKey('uid', request.session['uid'])
     context = request.POST.get('context', '')
 
+    if user.getData('status') == 'blocked':
+      request.session.flush()
+      request.session['notification'] = {
+        'msg': 'Dein Profil ist gesperrt!',
+        'success': False
+      }
+      return redirect(home)
+    
+    if user.getData('status') == 'deleted':
+      request.session.flush()
+      request.session['notification'] = {
+        'msg': 'Das Profil wurde gelöscht!',
+        'success': False
+      }
+      return redirect(home)
+
     if context == 'logout':
       request.session.flush()
       request.session['notification'] = {
@@ -460,6 +811,103 @@ def profile(request):
         'success': True
       }
       return redirect(login)
+    
+    elif context == 'edit_profile':
+      username = request.POST.get('username', '')
+      first_name = request.POST.get('first_name', '')
+      last_name = request.POST.get('last_name', '')
+      email = request.POST.get('email', '')
+
+      if User.getUserByKey('email', email) and email != user.getData('email'):
+        request.session['notification'] = {
+          'msg': 'Die neue E-Mail ist bereits vergeben!',
+          'success': False
+        }
+      elif User.getUserByKey('username', username) and username != user.getData('username'):
+        request.session['notification'] = {
+          'msg': 'Die neue Benutzername ist bereits vergeben!',
+          'success': False
+        }
+      else:
+        user.changeData('username', username)
+        user.changeData('first_name', first_name)
+        user.changeData('last_name', last_name)
+        user.changeData('email', email)
+        request.session['notification'] = {
+          'msg': 'Die neuen Daten wurden erfolgreich bearbeitet.',
+          'success': True
+        }
+
+    elif context == 'edit_password':
+      old_pwd = request.POST.get('old_pwd', '')
+      pwd = request.POST.get('pwd', '')
+      pwd_repeat = request.POST.get('pwd_repeat', '')
+
+      if user.checkPwd(old_pwd):
+        if pwd == pwd_repeat:
+          user.changeData('pwd', pwd)
+          request.session['notification'] = {
+            'msg': 'Das Passwort wurde erfolgreich geändert.',
+            'success': True
+          }
+        else:
+          request.session['notification'] = {
+            'msg': 'Die neuen Passwörter stimmen nicht überein!',
+            'success': False
+          }
+      else:
+        request.session['notification'] = {
+          'msg': 'Das eingegebene alte Passwort ist falsch!',
+          'success': False
+        }
+
+    elif context == 'edit_picture':
+      uploadedPicture = request.FILES['file']
+      path = f'{ BASE_DIR }/static/profiles'
+      fs = FileSystemStorage(path)
+      filePath = os.path.join(path, f'{user.getData('uid')}.png')
+      if os.path.isfile(filePath):
+        os.remove(filePath)
+      fs.save(f'{user.getData('uid')}.png', uploadedPicture)
+      user.changeData('img', 'true')
+      request.session['notification'] = {
+        'msg': 'Das Profilbild wurde erfolgreich aktualisiert!',
+        'success': True
+      }
+
+    elif context == 'remove_picture':
+      filePath = f'{ BASE_DIR }/static/profiles/{user.getData('uid')}.png'
+      if os.path.isfile(filePath):
+        os.remove(filePath)
+      user.changeData('img', 'false')
+      request.session['notification'] = {
+        'msg': 'Das Profilbild wurde erfolgreich entfernt!',
+        'success': True
+      }
+
+    elif context == 'delete_profile':
+      user.changeData('status', 'deleted')
+      request.session.flush()
+      request.session['notification'] = {
+        'msg': 'Das Profil wurde erfolgreich gelöscht!',
+        'success': True
+      }
+      return redirect(home)
+
+    elif context == 'application':
+      applicationType = request.POST.get('type', '')
+      if applicationType != 'withdrawal':
+        user.requestRole()
+        request.session['notification'] = {
+          'msg': 'Deine Bewerbung wurde erfolgreich abgeschickt!',
+          'success': True
+        }
+      else:
+        user.changeData('requested_role', '')
+        request.session['notification'] = {
+          'msg': 'Deine Bewerbung wurde erfolgreich zurückgezogen!',
+          'success': True
+        }
     
     data = {
       'active_page': 'profile',
@@ -492,6 +940,22 @@ def addreport(request):
     user = User.getUserByKey('uid', request.session['uid'])
     context = request.POST.get('context', '')
 
+    if user.getData('status') == 'blocked':
+      request.session.flush()
+      request.session['notification'] = {
+        'msg': 'Dein Profil ist gesperrt!',
+        'success': False
+      }
+      return redirect(home)
+    
+    if user.getData('status') == 'deleted':
+      request.session.flush()
+      request.session['notification'] = {
+        'msg': 'Das Profil wurde gelöscht!',
+        'success': False
+      }
+      return redirect(home)
+
     if context == 'logout':
       request.session.flush()
       request.session['notification'] = {
@@ -507,6 +971,26 @@ def addreport(request):
         'success': True
       }
       return redirect(login)
+    
+    elif context == 'add_report':
+      time_beginn = request.POST.get('time_beginn', '')
+      time_end = request.POST.get('time_end', '')
+      module = request.POST.get('module', '')
+      notes = request.POST.get('notes', '')
+      time_beginn = datetime.strptime(time_beginn, '%Y-%m-%dT%H:%M')
+      time_end = datetime.strptime(time_end, '%Y-%m-%dT%H:%M')
+      if time_beginn > time_end:
+        request.session['notification'] = {
+          'msg': 'Die Startzeit muss vor der Endzeit sein!',
+          'success': False
+        }
+      else:
+        module = Submodule.getByIndex(module)
+        user.addReport(time_beginn, time_end, module, notes)
+        request.session['notification'] = {
+          'msg': 'Der Arbeitsbericht wurde erfolgreich hinzugefügt.',
+          'success': True
+        }
     
     modules = Submodule.getAllFormattedModules()
 
@@ -550,18 +1034,36 @@ def login(request):
       user = User.getUserByKey('email', username)
 
     if user is not None:
-      if user.checkPwd(pwd):
-        request.session['uid'] = user.getData('uid')
-        request.session['notification'] = {
-          'msg': f'Erfolgreich als { user.getData('username') } angemeldet.',
-          'success': True
-        }
-        return redirect(dashboard)
+      if user.getData('status') == 'active':
+        if user.checkPwd(pwd):
+          request.session['uid'] = user.getData('uid')
+          request.session['notification'] = {
+            'msg': f'Erfolgreich als { user.getData('username') } angemeldet.',
+            'success': True
+          }
+          return redirect(dashboard)
+        else:
+          data = {
+            'notification': {
+              'msg': 'Falsches Passwort!',
+              'success': False
+            }
+          }
+          return render(request, 'dvmplanner/login.html', data)
       
-      else:
+      elif user.getData('status') == 'blocked':
         data = {
           'notification': {
-            'msg': 'Falsches Passwort!',
+            'msg': 'Dein Profil ist gesperrt!',
+            'success': False
+          }
+        }
+        return render(request, 'dvmplanner/login.html', data)
+      
+      elif user.getData('status') == 'deleted':
+        data = {
+          'notification': {
+            'msg': 'Das Profil wurde gelöscht!',
             'success': False
           }
         }

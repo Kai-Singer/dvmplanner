@@ -344,7 +344,7 @@
           <form method="post">
             {% csrf_token %}
             <input type="hidden" name="context" value="users_dropdown_select_status">
-            <input type="hidden" name="role" value="all">
+            <input type="hidden" name="status" value="all">
             <div class="dropdown_item_container">
               <button class="dropdown_item" type="submit">[Alle]</button>
             </div>
@@ -352,7 +352,7 @@
           <form method="post">
             {% csrf_token %}
             <input type="hidden" name="context" value="users_dropdown_select_status">
-            <input type="hidden" name="role" value="active">
+            <input type="hidden" name="status" value="active">
             <div class="dropdown_item_container">
               <button class="dropdown_item" type="submit">Aktiv</button>
             </div>
@@ -360,7 +360,7 @@
           <form method="post">
             {% csrf_token %}
             <input type="hidden" name="context" value="users_dropdown_select_status">
-            <input type="hidden" name="role" value="blocked">
+            <input type="hidden" name="status" value="blocked">
             <div class="dropdown_item_container">
               <button class="dropdown_item" type="submit">Gesperrt</button>
             </div>
@@ -368,7 +368,7 @@
           <form method="post">
             {% csrf_token %}
             <input type="hidden" name="context" value="users_dropdown_select_status">
-            <input type="hidden" name="role" value="deleted">
+            <input type="hidden" name="status" value="deleted">
             <div class="dropdown_item_container">
               <button class="dropdown_item" type="submit">Gelöscht</button>
             </div>
@@ -408,32 +408,36 @@
               <td>Gelöscht</td>
             {% endif %}
             <td class="no_select">
-              <button class="table_button tooltip_elem" onclick="changeRole('{{ user.id }}', '{{ user.username }}', '{{ user.role }}')">
-                <img src="{% static 'imgs/edit_icon.png' %}" alt="Change role" draggable="false">
-                <div class="tooltip_text" >Rolle ändern</div>
-              </button>
-              {% if user.status == 'blocked' %}
-                <form method="post" class="table_button_form">
-                  {% csrf_token %}
-                  <input type="hidden" name="context" value="block_user">
-                  <input type="hidden" name="action" value="block">
-                  <input type="hidden" name="id" value="{{ user.id }}">
-                  <button class="table_button green tooltip_elem" type="submit">
-                    <img src="{% static 'imgs/unblock_icon.png' %}" alt="Unblock" draggable="false">
-                    <div class="tooltip_text" >Entsperren</div>
-                  </button>
-                </form>
-              {% else %}
-                <form method="post" class="table_button_form">
-                  {% csrf_token %}
-                  <input type="hidden" name="context" value="block_user">
-                  <input type="hidden" name="action" value="unblock">
-                  <input type="hidden" name="id" value="{{ user.id }}">
-                  <button class="table_button red tooltip_elem" type="submit">
-                    <img src="{% static 'imgs/block_icon.png' %}" alt="Block" draggable="false">
-                    <div class="tooltip_text" >Sperren</div>
-                  </button>
-                </form>
+              {% if user.status != 'deleted' %}
+                <button class="table_button tooltip_elem" onclick="changeRole('{{ user.id }}', '{{ user.username }}', '{{ user.role }}')">
+                  <img src="{% static 'imgs/edit_icon.png' %}" alt="Change role" draggable="false">
+                  <div class="tooltip_text" >Rolle ändern</div>
+                </button>
+                {% if uid != user.id %}
+                  {% if user.status == 'blocked' %}
+                    <form method="post" class="table_button_form">
+                      {% csrf_token %}
+                      <input type="hidden" name="context" value="block_user">
+                      <input type="hidden" name="action" value="unblock">
+                      <input type="hidden" name="id" value="{{ user.id }}">
+                      <button class="table_button green tooltip_elem" type="submit">
+                        <img src="{% static 'imgs/unblock_icon.png' %}" alt="Unblock" draggable="false">
+                        <div class="tooltip_text" >Entsperren</div>
+                      </button>
+                    </form>
+                  {% else %}
+                    <form method="post" class="table_button_form">
+                      {% csrf_token %}
+                      <input type="hidden" name="context" value="block_user">
+                      <input type="hidden" name="action" value="block">
+                      <input type="hidden" name="id" value="{{ user.id }}">
+                      <button class="table_button red tooltip_elem" type="submit">
+                        <img src="{% static 'imgs/block_icon.png' %}" alt="Block" draggable="false">
+                        <div class="tooltip_text" >Sperren</div>
+                      </button>
+                    </form>
+                  {% endif %}
+                {% endif %}
               {% endif %}
             </td>
           </tr>

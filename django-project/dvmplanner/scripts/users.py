@@ -38,28 +38,30 @@ class User:
       if userUid > uid:
         uid = userUid
     uid = f'u{ str(uid + 1).zfill(4) }'
-    createdUser = User(uid, username, first_name, last_name, email, pwd, datetime.now(), False, 'normal', '', datetime.now(), 'active', { 'status': 'none' })
+    createdUser = User(uid, username, first_name, last_name, email, pwd, datetime.now(), False, 'normal', '', datetime.now(), 'active')
     createdUser.updateJSON()
     createdUser.updateReportCSV()
     return createdUser
   
   @staticmethod
-  def getFormattedRequests():
+  def getFormattedRequests(filter: str = None):
     users = User.getUsers()
     requests = []
     for user in users:
-      if user.getData('requested_role') != '':
-        requests.append({
-          'datetime': user.getData('request_date'),
-          'day': user.getData('request_date').strftime('%d.%m.%Y'),
-          'time': user.getData('request_date').strftime('%H.%M:%S Uhr'),
-          'first_name': user.getData('first_name'),
-          'last_name': user.getData('last_name'),
-          'username': user.getData('username'),
-          'role': user.getData('role'),
-          'requested_role': user.getData('requested_role'),
-          'id': user.getData('uid'),
-        })
+      userRequestRole = user.getData('requested_role')
+      if userRequestRole != '':
+        if (filter != None and userRequestRole == filter) or filter == None:
+          requests.append({
+            'datetime': user.getData('request_date'),
+            'day': user.getData('request_date').strftime('%d.%m.%Y'),
+            'time': user.getData('request_date').strftime('%H.%M:%S Uhr'),
+            'first_name': user.getData('first_name'),
+            'last_name': user.getData('last_name'),
+            'username': user.getData('username'),
+            'role': user.getData('role'),
+            'requested_role': userRequestRole,
+            'id': user.getData('uid'),
+          })
     requests = sorted(requests, key = lambda x: x['datetime'])
     for request in requests:
       del request['datetime']
@@ -96,6 +98,38 @@ class User:
       'reports': self.__reports
     }
     return data[keyName]
+  
+  def changeData(self, keyName: str, newData: str):
+    if keyName == 'username':
+      self.__username = newData
+    elif keyName == 'first_name':
+      self.__first_name = newData
+    elif keyName == 'last_name':
+      self.__last_name = newData
+    elif keyName == 'email':
+      self.__email = newData
+    elif keyName == 'pwd':
+      self.__pwd = newData
+    elif keyName == 'img':
+      if newData == 'true':
+        self.__img = True
+      elif newData == 'false':
+        self.__img = False
+    elif keyName == 'role':
+      self.__role = newData
+    elif keyName == 'requested_role':
+      self.__requested_role = newData
+    elif keyName == 'status':
+      self.__status = newData
+    self.updateJSON()
+
+  def requestRole(self):
+    if self.__role == 'normal':
+      self.__requested_role = 'vip'
+    elif self.__role == 'vip':
+      self.__requested_role = 'admin'
+    self.__request_date = datetime.now()
+    self.updateJSON()
   
   def updateReports(self, reports: list['Report']):
     self.__reports = reports
@@ -169,11 +203,13 @@ class User:
       })
     file.close()
 
-  def getFormattedReview(self):
+  def getFormattedReview(self, reportsList: list['Report'] = None):
+    if reportsList == None:
+      reportsList = self.__reports
     totalTime = timedelta(0)
     totalSessions = 0
     reviewDataRaw = {}
-    for report in self.__reports:
+    for report in reportsList:
       totalTime += report.getData('end') - report.getData('start')
       totalSessions += 1
       if report.getData('submodule') == None:
@@ -190,10 +226,12 @@ class User:
     formattedTotalTime = formatTimedelta(totalTime)
     reviewDataJSON = []
     reviewData = []
-    reviewDataRaw = { key: reviewDataRaw[key] for key in sorted(reviewDataRaw) }
-    for module in reviewDataRaw:
+    sortedReviewDataRaw = {}
+    for key in sorted(reviewDataRaw):
+      sortedReviewDataRaw[key] = reviewDataRaw[key]
+    for module in sortedReviewDataRaw:
       submodule = Submodule.getByIndex(module)
-      time = reviewDataRaw[module]['time']
+      time = sortedReviewDataRaw[module]['time']
       if submodule == None:
         moduleNameRaw = '[GELÖSCHTES MODUL]'
         moduleSemester = '?'
@@ -201,7 +239,7 @@ class User:
         moduleNameRaw = submodule.getData('name')
         moduleSemester = str(submodule.getData('semester'))
       moduleName = f'{ module } { moduleNameRaw }'
-      sessions = reviewDataRaw[module]['sessions']
+      sessions = sortedReviewDataRaw[module]['sessions']
       reviewDataJSON.append({
         'module': moduleName,
         'time': formatTimedelta(time),
