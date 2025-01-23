@@ -6,7 +6,7 @@
   "email": "Singer_Kai@teams.hs-ludwigsburg.de",
   "pwd": "admin",
   "creation_date": "2025-01-22 12:00:00",
-  "img": false,
+  "img": true,
   "role": "admin",
   "requested_role": "",
   "request_date": "2025-01-22 12:00:00",

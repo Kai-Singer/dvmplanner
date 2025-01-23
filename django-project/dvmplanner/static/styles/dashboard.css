@@ -19,7 +19,6 @@
 .quick_change_container {
   display: flex;
   margin-bottom: 10px;
-  /* align-items: center; */
 }
 
 .quick_change_container h1 {
@@ -71,4 +70,24 @@
 .live_clock .live_time {
   font-size: 30px;
   margin-top: 5px;
+}
+
+.checkin_status {
+  background-color: var(--bg);
+  border-radius: 15px;
+  padding: 10px;
+  margin-left: 20px;
+  user-select: none;
+}
+
+.checkin_status.active {
+  color: var(--ac-green);
+}
+
+.checkin_status.paused {
+  color: var(--ac-blue);
+}
+
+.checkin_status.finished {
+  color: var(--ac-red);
 }

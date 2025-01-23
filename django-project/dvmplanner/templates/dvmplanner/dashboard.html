@@ -79,7 +79,15 @@
       <div class="live_date" id="live_date"></div>
       <div class="live_time" id="live_time"></div>
     </div>
-    <h1>Neuer Arbeitsbericht</h1>
+    {% if current_activity.status == 'active' %}
+      <h1>Neuer Arbeitsbericht<span class="checkin_status active">Aktiv</span></h1>
+    {% elif current_activity.status == 'paused' %}
+      <h1>Neuer Arbeitsbericht<span class="checkin_status paused">Pausiert</span></h1>
+    {% elif current_activity.status == 'finished' %}
+      <h1>Neuer Arbeitsbericht<span class="checkin_status finished">Beendet</span></h1>
+    {% else %}
+      <h1>Neuer Arbeitsbericht</h1>
+    {% endif %}
     <div class="wrapped_content">
       {% if current_activity.status == 'none' %}
         <form method="post">
