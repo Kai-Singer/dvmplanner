@@ -176,16 +176,10 @@
   </div>
   <!-- DOWNLOAD & PRINT -->
   <div class="card no_print">
-    <h1>Ergebnisbericht</h1>
-    <div class="wrapped_content">
-      <button class="button card_button" onclick="downloadPdf('{{ uid }}')">
-        <img src="{% static 'imgs/download_file_icon_round.png' %}" alt="Download PDF" draggable="false">
-        <div><p>PDF Download</p></div>
-      </button>
-      <button class="button card_button" onclick="window.print()">
-        <img src="{% static 'imgs/print_icon_round.png' %}" alt="Print" draggable="false">
-        <div><p>Drucken</p></div>
-      </button>
-    </div>
+    <h1>Ergebnisbericht drucken</h1>
+    <button class="button card_button" onclick="window.print()">
+      <img src="{% static 'imgs/print_icon_round.png' %}" alt="Print" draggable="false">
+      <div><p>Drucken</p></div>
+    </button>
   </div>
 {% endblock %}

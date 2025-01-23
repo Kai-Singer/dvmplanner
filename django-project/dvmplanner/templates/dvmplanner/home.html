@@ -22,18 +22,106 @@
   </div>
   <div class="home_container">
     <div class="home_box">
-      <div class="home_text">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Neque, maiores eum, distinctio adipisci repellat quis sunt esse quas natus magni cumque et. Enim voluptatem quas nostrum ut dolore ab dicta, nesciunt necessitatibus, distinctio, cumque nulla quaerat quibusdam perferendis iste eius. Deleniti, et? Recusandae, deserunt odit, dolorum ut temporibus accusamus eum reprehenderit commodi nesciunt ab fuga ad nobis delectus aperiam corporis laudantium itaque officiis quasi magnam ducimus asperiores esse suscipit, similique explicabo! Inventore eos nemo repellendus tempore ab quia, modi similique ipsum iusto dolor dicta fugit obcaecati placeat, perspiciatis eum. Veritatis adipisci eum expedita similique numquam tempora, eligendi corrupti aut labore!
+      <div class="home_opening">
+        Jetzt kostenlos anmelden oder registrieren um das Tool zu nutzen!
+        <div class="wrapped_buttons">
+          <a class="button card_button" href="{% url 'login' %}">
+            <img src="{% static 'imgs/login_icon_round.png' %}" alt="Login" draggable="false">
+            <div><p>Anmelden</p></div>
+          </a>
+          <a class="button card_button" href="{% url 'signup' %}">
+            <img src="{% static 'imgs/apply_icon_round.png' %}" alt="Signup" draggable="false">
+            <div><p>Registrieren</p></div>
+          </a>
+        </div>
       </div>
-      <div class="wrapped_buttons">
-        <a class="button card_button" href="{% url 'login' %}">
-          <img src="{% static 'imgs/login_icon_round.png' %}" alt="Login" draggable="false">
-          <div><p>Anmelden</p></div>
-        </a>
-        <a class="button card_button" href="{% url 'signup' %}">
-          <img src="{% static 'imgs/apply_icon_round.png' %}" alt="Signup" draggable="false">
-          <div><p>Registrieren</p></div>
-        </a>
+      <div class="home_paragraph">
+        <div class="home_element">
+          <div class="home_text">
+            <h1>Übersichtliches Dashboard</h1>
+            Das DVM Planner Dashboard ist dein zentraler Einstiegspunkt, um den Überblick über deine Lernzeit zu behalten. Hier siehst du auf einen Blick alles, was wichtig ist: Deine täglichen, wöchentlichen und monatlichen Lernzeiten, wie du in deinen Modulen vorankommst und welche Notizen du dir gemacht hast. Das moderne Design und die intuitive Benutzerführung sorgen dafür, dass du immer sofort findest, was du suchst – ganz ohne lästiges Suchen. Und das Beste: Du kannst dein Dashboard individuell anpassen, sodass genau die Infos hervorgehoben werden, die dir am wichtigsten sind. Egal, ob du deine Fortschritte im Auge behalten oder dich einfach nur motivieren möchtest – dein Dashboard ist der perfekte Begleiter.
+          </div>
+        </div>
+        <div class="home_element img_element">
+          <img src="{% static 'imgs_home/dashboard.png' %}" alt="Screenshot of Dashboard" draggable="false">
+        </div>
+      </div>
+      <div class="home_paragraph">
+        <div class="home_element">
+          <div class="home_text">
+            <h1>Direktes Ein- und Ausstempeln</h1>
+            Mit DVM Planner wird Zeitmanagement zum Kinderspiel. Dank der direkten Ein- und Ausstempelfunktion kannst du deine Lernzeit ganz unkompliziert per Knopfdruck starten und beenden. Egal ob du gerade am Laptop, Tablet oder Smartphone bist – ein Klick reicht, und schon wird deine Zeit präzise erfasst. Diese Funktion ist ideal für dich, wenn du flexibel arbeiten möchtest, ohne lange planen zu müssen. Du kannst sofort loslegen und hast dabei immer die volle Kontrolle über deine Arbeitszeit. So bleibt dir mehr Energie für das Wesentliche: das Lernen. Und falls du zwischendurch mal eine Pause brauchst, kannst du genauso einfach wieder ausstempeln.
+          </div>
+        </div>
+        <div class="home_element align_left img_element">
+          <img src="{% static 'imgs_home/checkin_report.png' %}" alt="Screenshot of Checkin Report" draggable="false">
+        </div>
+      </div>
+      <div class="home_paragraph">
+        <div class="home_element">
+          <div class="home_text">
+            <h1>Manuelle Erstellung von Arbeitsberichten</h1>
+            Du hast vergessen, deine Lernzeit live zu erfassen? Kein Problem! Mit DVM Planner kannst du jederzeit nachträglich Arbeitsberichte erstellen. Gib einfach Datum, Dauer, Modul und Notizen ein, und schon ist dein Bericht vollständig. Diese Funktion ist super praktisch, wenn das Leben mal hektisch wird und du nicht immer daran denkst, alles sofort einzutragen. So bleiben deine Daten trotzdem vollständig und präzise. Du kannst die Berichte sogar nutzen, um dir selbst einen Überblick über deine vergangenen Lernphasen zu verschaffen. DVM Planner macht es dir leicht, auch im Nachhinein Ordnung in deine Lernzeit zu bringen – ganz ohne Stress.
+          </div>
+        </div>
+        <div class="home_element img_element">
+          <img src="{% static 'imgs_home/manual_report.png' %}" alt="Screenshot of Manual Report" draggable="false">
+        </div>
+      </div>
+      <div class="home_paragraph">
+        <div class="home_element">
+          <div class="home_text">
+            <h1>Übersichtlicher Ergebnisbericht</h1>
+            Möchtest du wissen, wie gut du vorankommst? Die Ergebnisberichte von DVM Planner geben dir eine klare und strukturierte Übersicht über deine Lernzeiten und Leistungen in den Modulen. Egal, ob du dir tägliche Zusammenfassungen, wöchentliche Trends oder sogar eine Jahresübersicht anschauen willst – alles ist nur einen Klick entfernt. Die visuell ansprechenden Diagramme und Tabellen helfen dir, deine Ziele im Blick zu behalten und mögliche Verbesserungen zu erkennen. So kannst du deine Lernstrategie gezielt anpassen und genau da ansetzen, wo es nötig ist. Die Ergebnisberichte sind dein perfekter Begleiter, um dein Studium noch effektiver zu gestalten.
+          </div>
+        </div>
+        <div class="home_element align_left img_element">
+          <img src="{% static 'imgs_home/review.png' %}" alt="Screenshot of Review" draggable="false">
+        </div>
+      </div>
+      <div class="home_paragraph">
+        <div class="home_element">
+          <div class="home_text">
+            <h1>Leistungsfähige Filterfunktionen</h1>
+            Du suchst nach einer bestimmten Lernzeit oder willst nur Berichte zu einem bestimmten Modul sehen? Mit den leistungsstarken Filterfunktionen von DVM Planner findest du genau das, was du brauchst. Filtere deine Daten nach Datum, Modul, Dauer oder Notizen und behalte auch bei großen Datenmengen den Überblick. Diese Funktion spart dir nicht nur jede Menge Zeit, sondern sorgt auch dafür, dass du immer organisiert bleibst. Egal, ob du dich auf eine Prüfung vorbereitest oder einfach nur nachsehen willst, wie viel Zeit du in ein Modul investiert hast – die Filter helfen dir, den Fokus zu behalten.
+          </div>
+        </div>
+        <div class="home_element img_element">
+          <img src="{% static 'imgs_home/filter.png' %}" alt="Screenshot of Filter" draggable="false">
+        </div>
+      </div>
+      <div class="home_paragraph">
+        <div class="home_element">
+          <div class="home_text">
+            <h1>Raw Data Download für VIPs</h1>
+            Als VIP-Benutzer hast du Zugriff auf ein ganz besonderes Feature: den Download deiner Rohdaten. Damit kannst du deine Lernzeiten und Berichte in einem Format exportieren, das sich perfekt für tiefergehende Analysen eignet. Importiere die Daten in externe Tools, erstelle eigene Auswertungen oder archiviere sie nach deinen Wünschen. Diese Funktion gibt dir die Freiheit, deine Daten genau so zu nutzen, wie es für dich am besten passt. Als VIP genießt du hier die maximale Flexibilität und kannst sicher sein, dass deine Daten immer greifbar und vollständig sind.
+          </div>
+        </div>
+        <div class="home_element align_left img_element">
+          <img src="{% static 'imgs_home/vip_tools.png' %}" alt="Screenshot of VIP Tools" draggable="false">
+        </div>
+      </div>
+      <div class="home_paragraph">
+        <div class="home_element">
+          <div class="home_text">
+            <h1>Übersichtliche Benutzerverwaltung für Admins</h1>
+            Als Admin hast du mit DVM Planner die volle Kontrolle über alle Benutzer. Die intuitive Benutzerverwaltung ermöglicht es dir, Nutzerrollen zu vergeben, Konten zu aktivieren oder zu deaktivieren und Aktivitäten im System zu überwachen. Du kannst mit nur wenigen Klicks sicherstellen, dass jeder Benutzer die passenden Berechtigungen hat und alles reibungslos läuft. Diese Funktion ist besonders wichtig, um Ordnung im System zu halten und sicherzustellen, dass niemand unbefugt Zugriff auf geschützte Bereiche hat. Dank der übersichtlichen Oberfläche ist die Verwaltung kinderleicht und spart dir jede Menge Zeit.
+          </div>
+        </div>
+        <div class="home_element img_element">
+          <img src="{% static 'imgs_home/users.png' %}" alt="Screenshot of Users" draggable="false">
+        </div>
+      </div>
+      <div class="home_paragraph">
+        <div class="home_element">
+          <div class="home_text">
+            <h1>Veränderung der Modulstruktur für Admins on the fly</h1>
+            Flexibilität ist das A und O bei DVM Planner. Als Admin kannst du die Modulstruktur direkt im System anpassen – und das ganz ohne Wartezeiten oder Neustarts. Ob du neue Module hinzufügen, bestehende ändern oder die Struktur komplett neu gestalten möchtest – alles ist in Echtzeit möglich. Diese Funktion gibt dir die Möglichkeit, schnell auf neue Anforderungen zu reagieren und das System immer aktuell zu halten. Damit bleibt DVM Planner nicht nur flexibel, sondern auch genau auf die Bedürfnisse der Nutzer zugeschnitten.
+          </div>
+        </div>
+        <div class="home_element align_left img_element">
+          <img src="{% static 'imgs_home/modules.png' %}" alt="Screenshot of Modules" draggable="false">
+        </div>
       </div>
     </div>
   </div>

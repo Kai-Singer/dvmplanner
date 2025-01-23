@@ -1,0 +1,14 @@
+{
+  "uid": "u0001",
+  "username": "max123",
+  "first_name": "Max",
+  "last_name": "M\u00fcller",
+  "email": "Mueller_Max@teams.hs-ludwigsburg.de",
+  "pwd": "123",
+  "creation_date": "2025-01-23 18:01:19",
+  "img": false,
+  "role": "vip",
+  "requested_role": "admin",
+  "request_date": "2025-01-23 18:04:46",
+  "status": "active"
+}

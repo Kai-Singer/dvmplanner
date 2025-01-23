@@ -544,6 +544,7 @@ body {
   border-color: var(--ac-black);
   border-radius: 15px;
   max-height: 500px;
+  background-color: var(--bg);
 }
 
 @media print {
