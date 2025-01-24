@@ -1,9 +1,9 @@
 function updateClock() {
   const currentTime = new Date();
-  const currentDayName = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag'][currentTime.getDay() - 1]
-  const currentDay = currentTime.getDate()
-  const currentMonth = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'][currentTime.getMonth()]
-  const currentYear = currentTime.getFullYear()
+  const currentDayName = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag'][currentTime.getDay() - 1];
+  const currentDay = currentTime.getDate();
+  const currentMonth = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'][currentTime.getMonth()];
+  const currentYear = currentTime.getFullYear();
   const currentHours = String(currentTime.getHours()).padStart(2, '0');
   const currentMinutes = String(currentTime.getMinutes()).padStart(2, '0');
   const currentSeconds = String(currentTime.getSeconds()).padStart(2, '0');

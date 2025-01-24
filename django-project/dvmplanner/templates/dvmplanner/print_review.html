@@ -112,10 +112,10 @@
   </div>
   <h1>Auswertung der Arbeitsberichte</h1>
   <div class="filter">
-    <div><span class="name">Benutzer: </span>Kai Singer</div>
-    <div><span class="name">Datum: </span>24.01.2025, 09.35 Uhr</div>
-    <div><span class="name">Modul: </span>Alle</div>
-    <div><span class="name">Semester: </span>Alle</div>
+    <div><span class="name">Benutzer: </span>{{ first_name }} {{ last_name }}</div>
+    <div><span class="name">Datum: </span><span id="time_now"></span></div>
+    <div><span class="name">Modul: </span>{{ current_module }}</div>
+    <div><span class="name">Semester: </span>{{ current_semester }}</div>
   </div>
   {% if reviews|length > 0 %}
     <table>
@@ -152,6 +152,15 @@
     <p>Mit der aktuellen Filterung konnten keine Arbeitsberichte von diesem Accounts ausgewertet werden.</p>
   {% endif %}
   <script>
+    const currentTime = new Date();
+    const currentDay = String(currentTime.getDate()).padStart(2, '0');
+    const currentMonth = String(currentTime.getMonth() + 1).padStart(2, '0');
+    const currentYear = currentTime.getFullYear();
+    const currentHours = String(currentTime.getHours()).padStart(2, '0');
+    const currentMinutes = String(currentTime.getMinutes()).padStart(2, '0');
+    const currentSeconds = String(currentTime.getSeconds()).padStart(2, '0');
+    document.getElementById('time_now').innerText = `${ currentDay }.${ currentMonth }.${ currentYear }, ${ currentHours }.${ currentMinutes }:${ currentSeconds } Uhr`;
+
     const reviewData = JSON.parse('{{ review_data|safe }}');
 
     const timeToSeconds = (time) => {
