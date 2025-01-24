@@ -68,7 +68,3 @@ new Chart(sessionsChart, {
     }
   }
 });
-
-function downloadPdf(uid) {
-  //
-}

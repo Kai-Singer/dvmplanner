@@ -24,18 +24,13 @@
 {% block content %}
   <!-- REVIEW -->
   <div class="card">
-    <div class="print_header">
-      <img src="{% static 'imgs/logo_red.png' %}" alt="DVM Planner Logo" draggable="false">
-      <p>DVM Planner</p>
-    </div>
-    <h1 class="no_print">Auswertung der Arbeitsberichte</h1>
-    <h1 class="only_print">Auswertung der Arbeitsberichte von {{ first_name }} {{ last_name }}</h1>
+    <h1>Auswertung der Arbeitsberichte</h1>
     <div class="table_filter">
       <div class="table_filter_text">Modul:</div>
       <div class="dropdown table_filter_dropdown review_table_module">
         <div class="dropdown_button">
           <div>{{ current_module }}</div>
-          <img class="no_print" src="{% static 'imgs/expand_dropdown.png' %}" alt="" draggable="false">
+          <img src="{% static 'imgs/expand_dropdown.png' %}" alt="" draggable="false">
         </div>
         <div class="dropdown_content">
           <form method="post">
@@ -75,7 +70,7 @@
       <div class="dropdown table_filter_dropdown review_table_semester">
         <div class="dropdown_button">
           <div>{{ current_semester }}</div>
-          <img class="no_print" src="{% static 'imgs/expand_dropdown.png' %}" alt="" draggable="false">
+          <img src="{% static 'imgs/expand_dropdown.png' %}" alt="" draggable="false">
         </div>
         <div class="dropdown_content">
           <form method="post">
@@ -158,7 +153,7 @@
           {% endfor %}
         </table>
       </div>
-      <div class="charts_container no_print">
+      <div class="charts_container">
         <div class="border_item chart_item">
           <h2>Verteilung nach Arbeitszeit</h2>
           <div class="total_review">Arbeitszeit gesamt: <span>{{ total_time }}</span></div>
@@ -175,11 +170,15 @@
     {% endif %}
   </div>
   <!-- DOWNLOAD & PRINT -->
-  <div class="card no_print">
+  <div class="card">
     <h1>Ergebnisbericht drucken</h1>
-    <button class="button card_button" onclick="window.print()">
-      <img src="{% static 'imgs/print_icon_round.png' %}" alt="Print" draggable="false">
-      <div><p>Drucken</p></div>
-    </button>
+    <form method="post">
+      {% csrf_token %}
+      <input type="hidden" name="context" value="print_review">
+      <button class="button card_button" type="submit">
+        <img src="{% static 'imgs/print_icon_round.png' %}" alt="Print" draggable="false">
+        <div><p>Druckansicht</p></div>
+      </button>
+    </form>
   </div>
 {% endblock %}

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="de">
+{% load static %}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 10;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 16px;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .header p {
+      color: #ff0000;
+      font-weight: bold;
+      font-size: 30px;
+      margin: 0;
+    }
+
+    .header img {
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
+    }
+
+    h1 {
+      margin-bottom: 12px;
+    }
+
+    .filter {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .name {
+      font-weight: bold;
+    }
+
+    .nowrap {
+      white-space: nowrap;
+    }
+
+    table {
+      overflow: hidden;
+      max-width: 100%;
+      width: fit-content;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      padding: 8px;
+      text-align: center;
+      border: 1px solid #000;
+    }
+
+    .charts_container {
+      display: flex;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      gap: 50px;
+    }
+
+    .chart canvas {
+      margin: auto;
+      margin-top: 20px;
+    }
+
+    a {
+      all: unset;
+      border-radius: 10px;
+      cursor: pointer;
+      user-select: none;
+      transition: all .2s;
+      font-weight: bold;
+      background-color: #ff0000;
+      color: #fff;
+      font-size: 20px;
+      padding: 10px;
+      display: block;
+      max-width: fit-content;
+    }
+
+    a:hover {
+      transform: scale(1.1);
+    }
+
+    @media print {
+      .no_print {
+        display: none;
+      }
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="header">
+    <img src="{% static 'imgs/logo_red.png' %}" alt="DVM Planner Logo" draggable="false">
+    <p>DVM Planner</p>
+  </div>
+  <div class="no_print">
+    <h1>Druckansicht</h1>
+    <a href="{% url 'review' %}">Zurück</a>
+  </div>
+  <h1>Auswertung der Arbeitsberichte</h1>
+  <div class="filter">
+    <div><span class="name">Benutzer: </span>Kai Singer</div>
+    <div><span class="name">Datum: </span>24.01.2025, 09.35 Uhr</div>
+    <div><span class="name">Modul: </span>Alle</div>
+    <div><span class="name">Semester: </span>Alle</div>
+  </div>
+  {% if reviews|length > 0 %}
+    <table>
+      <tr>
+        <th>Modul</th>
+        <th>Semester</th>
+        <th>Kumulative Arbeitszeit</th>
+        <th>Prozentueller Anteil</th>
+        <th>Sitzungsanzahl</th>
+      </tr>
+      {% for review in reviews %}
+        <tr>
+          <td>{{ review.module }}</td>
+          <td class="nowrap">{{ review.semester }}. Semester</td>
+          <td class="nowrap">{{ review.time }}</td>
+          <td class="nowrap">{{ review.percentage }}</td>
+          <td>{{ review.sessions }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+    <div class="charts_container">
+      <div class="chart">
+        <h2>Verteilung nach Arbeitszeit</h2>
+        <div><span class="name">Arbeitszeit gesamt: </span>{{ total_time }}</div>
+        <canvas id="chart_time"></canvas>
+      </div>
+      <div class="chart">
+        <h2>Verteilung nach Sitzungen</h2>
+        <div><span class="name">Sitzungen gesamt: </span>{{ total_sessions }}</div>
+        <canvas id="chart_sessions"></canvas>
+      </div>
+    </div>
+  {% else %}
+    <p>Mit der aktuellen Filterung konnten keine Arbeitsberichte von diesem Accounts ausgewertet werden.</p>
+  {% endif %}
+  <script>
+    const reviewData = JSON.parse('{{ review_data|safe }}');
+
+    const timeToSeconds = (time) => {
+      const [hours, minutes, seconds] = time.split(':').map(x => Number(x));
+      return hours * 3600 + minutes * 60 + seconds;
+    };
+
+    const modules = reviewData.map(data => data.module);
+    const timeData = reviewData.map(data => timeToSeconds(data.time));
+    const sessionsData = reviewData.map(data => data.sessions);
+
+    const timeChart = document.getElementById('chart_time');
+
+    new Chart(timeChart, {
+      type: 'pie',
+      data: {
+        labels: modules,
+        datasets: [{
+          data: timeData
+        }]
+      },
+      options: {
+        plugins: {
+          legend: {
+            display: true,
+            position: 'bottom',
+            labels: {
+              color: 'black',
+              font: {
+                size: 12
+              }
+            }
+          },
+          tooltip: {
+            enabled: false
+          }
+        },
+        animation: {
+          duration: 0
+        },
+        hover: {
+          mode: null,
+        }
+      }
+    });
+
+    const sessionsChart = document.getElementById('chart_sessions');
+
+    new Chart(sessionsChart, {
+      type: 'pie',
+      data: {
+        labels: modules,
+        datasets: [{
+          data: sessionsData
+        }]
+      },
+      options: {
+        plugins: {
+          legend: {
+            display: true,
+            position: 'bottom',
+            labels: {
+              color: 'black',
+              font: {
+                size: 12
+              }
+            }
+          },
+          tooltip: {
+            enabled: false
+          }
+        },
+        animation: {
+          duration: 0
+        },
+        hover: {
+          mode: null,
+        }
+      }
+    });
+
+    window.onload = function() {
+      window.print();
+    }
+  </script>
+</body>
+</html>

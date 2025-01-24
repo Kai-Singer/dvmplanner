@@ -1,12 +1,10 @@
 from django.shortcuts import redirect, render
-from django.template.loader import render_to_string
 from django.http import HttpResponse
 from django.core.files.storage import FileSystemStorage
-from django.contrib.staticfiles import finders
 from dvmplanner.scripts.users import User, Report
 from dvmplanner.scripts.modules import Submodule, Module, ModuleGroup
 from dvmplanner.scripts.main import BASE_DIR, formatTimedelta
-from datetime import datetime, timedelta
+from datetime import datetime
 from lxml import etree
 from io import StringIO
 import os, json, csv, shutil
@@ -543,11 +541,15 @@ def review(request):
       'review_data': reviewData['reviewDataJSON']
     }
 
-    if 'notification' in request.session:
-      data['notification'] = request.session['notification']
-      del request.session['notification']
+    if context == 'print_review':
+      return render(request, 'dvmplanner/print_review.html', data)
+  
+    else:
+      if 'notification' in request.session:
+        data['notification'] = request.session['notification']
+        del request.session['notification']
 
-    return render(request, 'dvmplanner/review.html', data)
+      return render(request, 'dvmplanner/review.html', data)
   
   else:
     request.session['notification'] = {
