@@ -656,7 +656,7 @@ def admin(request):
 
       elif context == 'edit_module':
         index = request.POST.get('index', '')
-        semester = request.POST.get('semester', '') # leer bei ModulGruppen & Modulen
+        semester = request.POST.get('semester', '')
         name = request.POST.get('name', '')
         if index.count('.') == 0:
           moduleGroup = ModuleGroup.getByIndex(index)
@@ -899,7 +899,7 @@ def profile(request):
         }
       elif User.getUserByKey('username', username) and username != user.getData('username'):
         request.session['notification'] = {
-          'msg': 'Die neue Benutzername ist bereits vergeben!',
+          'msg': 'Der neue Benutzername ist bereits vergeben!',
           'success': False
         }
       else:
