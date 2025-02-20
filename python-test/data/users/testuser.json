@@ -1,9 +1,0 @@
-{
-  "username": "test",
-  "first_name": "Max",
-  "last_name": "Mustermann",
-  "email": "Mustermann_Max@teams.hs-ludwigsburg.de",
-  "pwd": "123",
-  "status": "normal",
-  "blocked": false
-}
