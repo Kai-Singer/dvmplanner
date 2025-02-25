@@ -67,7 +67,7 @@ class User:
       del request['datetime']
     return requests
 
-  def __init__(self, uid: str, username: str, first_name: str, last_name: str, email: str, pwd: str, creation_date: datetime, img: bool, role: str, requested_role: str, request_date: datetime, status: str,reports: list['Report'] = []):
+  def __init__(self, uid: str, username: str, first_name: str, last_name: str, email: str, pwd: str, creation_date: datetime, img: bool, role: str, requested_role: str, request_date: datetime, status: str, reports: list['Report'] = []):
     self.__uid = uid
     self.__username = username
     self.__first_name = first_name
